@@ -1,0 +1,136 @@
+@import "../../../pstj/less/button";
+@import "list";
+
+@epg-item-height: 60px;
+@epg-item-bg: #ebebeb;
+@epg-item-bg-hover: #ccc;
+@epg-item-delimiter-bg: @list-label;
+@epg-item-delimiter-color: @list-label-text;
+
+.mtv-hidden {
+  display: none;
+}
+
+.epg-list {
+  padding-top: 35px;
+}
+
+.epg-list-item {
+  background-color: @epg-item-bg;
+  border: 2px solid transparent;
+  position: relative;
+  outline: none;
+  overflow: hidden;
+}
+
+.epg-list-item-hover {
+  background-color: @epg-item-bg-hover;
+  .epg-item-start-time {
+    border-color: @epg-item-bg;
+  }
+}
+
+
+// The ones marked as deleimiter need to be marked visually.
+.epg-list-item.epg-delimiter {
+  border-top: 2px solid @epg-item-delimiter-bg;
+}
+
+.epg-item-start-time {
+	width: 110px;
+  height: @epg-item-height;
+	border-right: 2px solid transparent;
+	font-size: 1.4em;
+	line-height: @epg-item-height;
+	text-align: center;
+  display: inline-block;
+}
+
+.epg-item-name {
+	font-size: 1.4em;
+	line-height: @epg-item-height;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.epg-item-date {
+  background-color: @epg-item-delimiter-bg;
+  color: @epg-item-delimiter-color;
+	height: 20px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	text-align: right;
+  padding-right: 5px;
+  padding-left: 10px;
+  border-bottom-left-radius: 5px;
+}
+
+.epg-item-desc {
+  position: relative;
+  padding: 5px 10px;
+  border-top: 2px solid @epg-item-bg;
+}
+
+.epg-more {
+  max-height: 0px;
+  transition: max-height 500ms, padding-bottom 500ms;
+  padding-bottom: 0;
+}
+
+.epg-list-item.epg-list-item-focused .epg-more {
+  max-height: 120px;
+  transition: max-height 500ms, padding-bottom 500ms;
+  padding-bottom: 18px;
+}
+
+.epg-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 25px;
+  padding-left: 10px;
+}
+
+.epg-header {
+  background-color: @base;
+  width: 50%;
+  border-bottom: 1px solid @panel;
+  position: fixed;
+  top: 50px;
+  height: 35px;
+  z-index: 2;
+
+}
+
+.epg-button {
+  .pstj-button(@panel);
+  line-height: 20px;
+  font-size: 20px;
+  float: left;
+}
+
+.epg-button-hover, .epg-add-button-hover {
+  .pstj-button-hover(lighten(@panel, 10%));
+}
+
+.epg-button-active, .epg-add-button-active {
+  .pstj-button-active();
+}
+
+.epg-add-button {
+  .pstj-button(#838383, white, 1px solid white, 5px 8px, absolute);
+  right: 0;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+.epg-add-button-hover {
+  background-color: @list-label;
+}
+
+.epg-add-button-active {
+  top: 145px;
+}

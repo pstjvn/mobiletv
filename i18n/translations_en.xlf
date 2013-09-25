@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file original="SoyMsgBundle" datatype="x-soy-msg-bundle" xml:space="preserve" source-language="en" target-language="en">
+    <body>
+      <trans-unit id="153799456510623899" datatype="html">
+        <source>Portuguese</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="479807320252147245" datatype="html">
+        <source>Item successfully added to schedule</source>
+        <target/>
+        <note priority="1" from="description">successfully added to epg schedule</note>
+      </trans-unit>
+      <trans-unit id="499386805970351976" datatype="html">
+        <source>Swedish</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="510990609175066066" datatype="html">
+        <source>Thai</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="535382612707798089" datatype="html">
+        <source>Gujarati</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="562043410832963662" datatype="html">
+        <source>Kannada</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="667379770041603912" datatype="html">
+        <source>There seem to be no available items on the thumbdrive. Please make sure the drive is attached properly and try again.</source>
+        <target/>
+        <note priority="1" from="description">error text</note>
+      </trans-unit>
+      <trans-unit id="792060551707690640" datatype="html">
+        <source>Polish</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="830976883152477523" datatype="html">
+        <source>Telugu</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="861663369293303028" datatype="html">
+        <source>Finnish</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="997379501582847615" datatype="html">
+        <source>Azerbaijani</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="1001043467371963032" datatype="html">
+        <source>Catalan</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="1259591166041792435" datatype="html">
+        <source>Estonian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="1407560924967345762" datatype="html">
+        <source>Page</source>
+        <target/>
+        <note priority="1" from="description">The word page in the page N of number of X pages</note>
+      </trans-unit>
+      <trans-unit id="1470838756664816116" datatype="html">
+        <source>Tamil</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="1703221125772306676" datatype="html">
+        <source>Filipino</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="1858110241312746425" datatype="html">
+        <source>German</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="1878553503929537171" datatype="html">
+        <source>VOD</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
+      </trans-unit>
+      <trans-unit id="1979068243359567855" datatype="html">
+        <source>Galician</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="1984433744391130538" datatype="html">
+        <source>Hebrew</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="2023358102072030414" datatype="html">
+        <source>The payment was canceled.</source>
+        <target/>
+        <note priority="1" from="description">message when payment was canceled</note>
+      </trans-unit>
+      <trans-unit id="2159130950882492111" datatype="html">
+        <source>Cancel</source>
+        <target/>
+        <note priority="1" from="description">button label cancel</note>
+      </trans-unit>
+      <trans-unit id="2347585050376586327" datatype="html">
+        <source>Channel started on schedule</source>
+        <target/>
+        <note priority="1" from="description">msg when scheduled switch occurs</note>
+      </trans-unit>
+      <trans-unit id="2719780722934172508" datatype="html">
+        <source>Czech</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="2796693874199805772" datatype="html">
+        <source>Show with the same start time is already in the queue</source>
+        <target/>
+        <note priority="1" from="description">message when show with the same start time is already in the queue</note>
+      </trans-unit>
+      <trans-unit id="2924289692679201020" datatype="html">
+        <source>Danish</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="2935232983274991580" datatype="html">
+        <source>Italian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="3071065188816255493" datatype="html">
+        <source>Dutch</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="3098941349689899577" datatype="html">
+        <source>Belarusian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="3240286309607544294" datatype="html">
+        <source>Albanian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="3256835015813976713" datatype="html">
+        <source>Payment of <x id="END_SPAN"/><x id="START_SPAN_1"/><x id="END_SPAN"/> <x id="START_SPAN_2"/><x id="END_SPAN"/> <x id="START_SPAN_3"/>is required.<x id="START_BREAK"/>Click "OK" to accept the charges.</source>
+        <target/>
+        <note priority="1" from="description">payment required notice</note>
+      </trans-unit>
+      <trans-unit id="3274930735328201769" datatype="html">
+        <source>Basque</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="3479345138280827071" datatype="html">
+        <source>Latvian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="3571391964903695725" datatype="html">
+        <source>Repeat</source>
+        <target/>
+        <note priority="1" from="description">Player playback option</note>
+      </trans-unit>
+      <trans-unit id="3571787957077101820" datatype="html">
+        <source>All (No cam)</source>
+        <target/>
+        <note priority="1" from="description">Player playback option</note>
+      </trans-unit>
+      <trans-unit id="3578644052206125685" datatype="html">
+        <source>Ukrainian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="3611216939636790848" datatype="html">
+        <source>Vietnamese</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="3683417119663608678" datatype="html">
+        <source>Welsh</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="3797570084942068182" datatype="html">
+        <source>Select</source>
+        <target/>
+        <note priority="1" from="description">Select</note>
+      </trans-unit>
+      <trans-unit id="3798070165070620146" datatype="html">
+        <source>Guide</source>
+        <target/>
+        <note priority="1" from="description">Guide</note>
+      </trans-unit>
+      <trans-unit id="3965034336548795149" datatype="html">
+        <source>Maltese</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="3974209330528498872" datatype="html">
+        <source>No type filter</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
+      </trans-unit>
+      <trans-unit id="4284688382567695437" datatype="html">
+        <source>Add to queue</source>
+        <target/>
+        <note priority="1" from="description">Epg add label on button</note>
+      </trans-unit>
+      <trans-unit id="4287008301409320881" datatype="html">
+        <source>Slovenian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="4427914831658018131" datatype="html">
+        <source>Macedonian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="4764935748877100361" datatype="html">
+        <source>Shuffle all</source>
+        <target/>
+        <note priority="1" from="description">Player playback option</note>
+      </trans-unit>
+      <trans-unit id="4824839499745448810" datatype="html">
+        <source>Repeat all</source>
+        <target/>
+        <note priority="1" from="description">Player playback option</note>
+      </trans-unit>
+      <trans-unit id="4825433858141848865" datatype="html">
+        <source>Croatian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="4857565487746698778" datatype="html">
+        <source>Urdu</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="4977087909184008115" datatype="html">
+        <source>Persian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="5004058175814373945" datatype="html">
+        <source>Malay</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="5190825892106392539" datatype="html">
+        <source>Spanish</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="5268438251704661885" datatype="html">
+        <source>Temporary inaccessability on the server, please try again</source>
+        <target/>
+        <note priority="1" from="description">message when we do not understand reply from server</note>
+      </trans-unit>
+      <trans-unit id="5274088121650769883" datatype="html">
+        <source>Chinese</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="5291732135518533248" datatype="html">
+        <source>Armenian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="5463975373819538560" datatype="html">
+        <source>Latin</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="5591181815290819560" datatype="html">
+        <source>PPV</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
+      </trans-unit>
+      <trans-unit id="5682359291233237791" datatype="html">
+        <source>Turkish</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="5762436848890133267" datatype="html">
+        <source>Search for titles</source>
+        <target/>
+        <note priority="1" from="description">input field label</note>
+      </trans-unit>
+      <trans-unit id="5820307029796990185" datatype="html">
+        <source>Icelandic</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="5866254605255506989" datatype="html">
+        <source>English</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="5881876145178332550" datatype="html">
+        <source>of</source>
+        <target/>
+        <note priority="1" from="description">the word of in page N of X pages</note>
+      </trans-unit>
+      <trans-unit id="6054543891893977534" datatype="html">
+        <source>Haitian Creole</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="6145439649200570157" datatype="html">
+        <source>Korean</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="6269202464699193298" datatype="html">
+        <source>Arabic</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="6504829319776439034" datatype="html">
+        <source>The show has already started</source>
+        <target/>
+        <note priority="1" from="description">message when start time is past curent time</note>
+      </trans-unit>
+      <trans-unit id="6821856961727142928" datatype="html">
+        <source>Bulgarian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="6924606686202701860" datatype="html">
+        <source>Japanese</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="7067741492320440272" datatype="html">
+        <source>Greek</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="7137419789978325708" datatype="html">
+        <source>Russian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="7316358832458965912" datatype="html">
+        <source>Unable to load the content, please try again later.</source>
+        <target/>
+        <note priority="1" from="description">error text</note>
+      </trans-unit>
+      <trans-unit id="7318555235181361185" datatype="html">
+        <source>Afrikaans</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="7483720943997095446" datatype="html">
+        <source>Lithuanian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="7498694612839780077" datatype="html">
+        <source>Yiddish</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="7534852371109893889" datatype="html">
+        <source>Esperanto</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="7558413604919060916" datatype="html">
+        <source>Select item</source>
+        <target/>
+        <note priority="1" from="description">Select item</note>
+      </trans-unit>
+      <trans-unit id="7633754075223722162" datatype="html">
+        <source>French</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="7833044528021545549" datatype="html">
+        <source>Configure playback</source>
+        <target/>
+        <note priority="1" from="description">label</note>
+      </trans-unit>
+      <trans-unit id="7891809788881004730" datatype="html">
+        <source>Hungarian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="7941090461604249190" datatype="html">
+        <source>Hindi</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="7993786604152625481" datatype="html">
+        <source>IPTV</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
+      </trans-unit>
+      <trans-unit id="8069284467804715623" datatype="html">
+        <source>Norwegian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="8101351979607717109" datatype="html">
+        <source>Georgian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="8118856427047826368" datatype="html">
+        <source>Romanian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="8312065814232621608" datatype="html">
+        <source>Indonesian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="8473114430329730227" datatype="html">
+        <source>No language filter</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="8537432064872606806" datatype="html">
+        <source>Irish</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="8564202903947049539" datatype="html">
+        <source>Play</source>
+        <target/>
+        <note priority="1" from="description">Player playback option</note>
+      </trans-unit>
+      <trans-unit id="8608389829607915090" datatype="html">
+        <source>Serbian</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="8795047040687500838" datatype="html">
+        <source>Error occured</source>
+        <target/>
+        <note priority="1" from="description">label</note>
+      </trans-unit>
+      <trans-unit id="8890553633144307762" datatype="html">
+        <source>Back</source>
+        <target/>
+        <note priority="1" from="description">back button label</note>
+      </trans-unit>
+      <trans-unit id="8894377483833272091" datatype="html">
+        <source>Price</source>
+        <target/>
+        <note priority="1" from="description">Price label</note>
+      </trans-unit>
+      <trans-unit id="8998179362936748717" datatype="html">
+        <source>OK</source>
+        <target/>
+        <note priority="1" from="description">label</note>
+      </trans-unit>
+      <trans-unit id="9102963095355753902" datatype="html">
+        <source>Slovak</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,209 @@
+{namespace mobiletv.template}
+
+/**
+ * Template for basic app structure.
+ * @param embed If the app should be embedded.
+ */
+{template .mobiletv}
+  <div class="{css container}">
+    {call .topPanel data="all" /}
+    {call .searchPanel /}
+    <div class="{css up}">
+      <div class="{css left}">
+        <div class="{css list} {css playable-list}"></div>
+        <div class="{css epg-container} {css mtv-hidden}">
+          <div class="{css epg-header}">
+            <div class="{css epg-button}">{msg desc="back button label"}Back{/msg}</div>
+            <div class="{css epg-title}"></div>
+          </div>
+          <div class="{css epg-list}"></div>
+        </div>
+      </div>
+    </div>
+    <div class="{css right}">
+      <div class="{css backbutton}">{msg desc="back button label"}Back{/msg}</div>
+      <div class="{css item-title}" data-model="publishName">&nbsp;</div>
+      <div class="{css frame}">
+        <video width="100%" height="100%" controls autoplay></video>
+      </div>
+      <div class="{css description}"></div>
+      <div class="{css branding}"></div>
+    </div>
+  </div>
+  {call .paymnetConfirmation /}
+  {call smstb.template.notification /}
+{/template}
+
+
+
+/**
+ * Template for top panel
+ * @param embed If the application is embedded in aother one.
+ */
+{template .topPanel}
+  <div class="{css panel}">
+    <div class="{css icons}">
+      <div class="{css icon} {css search}" data-action="search"></div>
+      {if $embed != true}
+        <div class="{css icon} {css cart}" data-action="cart"></div>
+        <div class="{css icon} {css private}" data-action="private"></div>
+        <div class="{css icon} {css home}" data-action="statement"></div>
+      {/if}
+    </div>
+  </div>
+{/template}
+
+/** Template for the search panel */
+{template .searchPanel}
+  <div class="{css search-panel}">
+    <div class="{css search-row} {css padded-search-row} {css padded-more-search-row}">
+      <input type="text" class="{css searchfield}" placeholder='{msg desc="input field label"}Search for titles{/msg}'>
+      <div class="{css search-button} {css search-clear}"></div>
+      <div class="{css search-button} {css hide-button}"></div>
+    </div>
+    <div class="{css search-row} {css padded-search-row}">
+      <select class="{css inline-select} {css language-selection}">
+        <option value="">{msg desc="language option"}No language filter{/msg}</option>
+        <option value="Afrikaans">{msg desc="language option"}Afrikaans{/msg}</option>
+        <option value="Albanian">{msg desc="language option"}Albanian{/msg}</option>
+        <option value="Arabic">{msg desc="language option"}Arabic{/msg}</option>
+        <option value="Armenian">{msg desc="language option"}Armenian{/msg}</option>
+        <option value="Azerbaijani">{msg desc="language option"}Azerbaijani{/msg}</option>
+        <option value="Basque">{msg desc="language option"}Basque{/msg}</option>
+        <option value="Belarusian">{msg desc="language option"}Belarusian{/msg}</option>
+        <option value="Bulgarian">{msg desc="language option"}Bulgarian{/msg}</option>
+        <option value="Catalan">{msg desc="language option"}Catalan{/msg}</option>
+        <option value="Chinese">{msg desc="language option"}Chinese{/msg}</option>
+        <option value="Croatian">{msg desc="language option"}Croatian{/msg}</option>
+        <option value="Czech">{msg desc="language option"}Czech{/msg}</option>
+        <option value="Danish">{msg desc="language option"}Danish{/msg}</option>
+        <option value="Dutch">{msg desc="language option"}Dutch{/msg}</option>
+        <option value="English">{msg desc="language option"}English{/msg}</option>
+        <option value="Esperanto">{msg desc="language option"}Esperanto{/msg}</option>
+        <option value="Estonian">{msg desc="language option"}Estonian{/msg}</option>
+        <option value="Filipino">{msg desc="language option"}Filipino{/msg}</option>
+        <option value="Finnish">{msg desc="language option"}Finnish{/msg}</option>
+        <option value="French">{msg desc="language option"}French{/msg}</option>
+        <option value="Galician">{msg desc="language option"}Galician{/msg}</option>
+        <option value="Georgian">{msg desc="language option"}Georgian{/msg}</option>
+        <option value="German">{msg desc="language option"}German{/msg}</option>
+        <option value="Greek">{msg desc="language option"}Greek{/msg}</option>
+        <option value="Gujarati">{msg desc="language option"}Gujarati{/msg}</option>
+        <option value="Haitian Creole">{msg desc="language option"}Haitian Creole{/msg}</option>
+        <option value="Hebrew">{msg desc="language option"}Hebrew{/msg}</option>
+        <option value="Hindi">{msg desc="language option"}Hindi{/msg}</option>
+        <option value="Hungarian">{msg desc="language option"}Hungarian{/msg}</option>
+        <option value="Icelandic">{msg desc="language option"}Icelandic{/msg}</option>
+        <option value="Indonesian">{msg desc="language option"}Indonesian{/msg}</option>
+        <option value="Irish">{msg desc="language option"}Irish{/msg}</option>
+        <option value="Italian">{msg desc="language option"}Italian{/msg}</option>
+        <option value="Japanese">{msg desc="language option"}Japanese{/msg}</option>
+        <option value="Kannada">{msg desc="language option"}Kannada{/msg}</option>
+        <option value="Korean">{msg desc="language option"}Korean{/msg}</option>
+        <option value="Latin">{msg desc="language option"}Latin{/msg}</option>
+        <option value="Latvian">{msg desc="language option"}Latvian{/msg}</option>
+        <option value="Lithuanian">{msg desc="language option"}Lithuanian{/msg}</option>
+        <option value="Macedonian">{msg desc="language option"}Macedonian{/msg}</option>
+        <option value="Malay">{msg desc="language option"}Malay{/msg}</option>
+        <option value="Maltese">{msg desc="language option"}Maltese{/msg}</option>
+        <option value="Norwegian">{msg desc="language option"}Norwegian{/msg}</option>
+        <option value="Persian">{msg desc="language option"}Persian{/msg}</option>
+        <option value="Polish">{msg desc="language option"}Polish{/msg}</option>
+        <option value="Portuguese">{msg desc="language option"}Portuguese{/msg}</option>
+        <option value="Romanian">{msg desc="language option"}Romanian{/msg}</option>
+        <option value="Russian">{msg desc="language option"}Russian{/msg}</option>
+        <option value="Serbian">{msg desc="language option"}Serbian{/msg}</option>
+        <option value="Slovak">{msg desc="language option"}Slovak{/msg}</option>
+        <option value="Slovenian">{msg desc="language option"}Slovenian{/msg}</option>
+        <option value="Spanish">{msg desc="language option"}Spanish{/msg}</option>
+        <option value="Swahili">{msg desc="language option"}Spanish{/msg}</option>
+        <option value="Swedish">{msg desc="language option"}Swedish{/msg}</option>
+        <option value="Tamil">{msg desc="language option"}Tamil{/msg}</option>
+        <option value="Telugu">{msg desc="language option"}Telugu{/msg}</option>
+        <option value="Thai">{msg desc="language option"}Thai{/msg}</option>
+        <option value="Turkish">{msg desc="language option"}Turkish{/msg}</option>
+        <option value="Ukrainian">{msg desc="language option"}Ukrainian{/msg}</option>
+        <option value="Urdu">{msg desc="language option"}Urdu{/msg}</option>
+        <option value="Vietnamese">{msg desc="language option"}Vietnamese{/msg}</option>
+        <option value="Welsh">{msg desc="language option"}Welsh{/msg}</option>
+        <option value="Yiddish">{msg desc="language option"}Yiddish{/msg}</option>
+      </select>
+      <div class="{css search-button} {css language-clear}"></div>
+    </div>
+    <div class="{css search-row} {css padded-search-row}">
+      <select class="{css inline-select} {css type-selection}">
+        <option value="">{msg desc="type option"}No type filter{/msg}</option>
+        <option value="iptv">{msg desc="type option"}IPTV{/msg}</option>
+        <option value="vod">{msg desc="type option"}VOD{/msg}</option>
+        <option value="ppv">{msg desc="type option"}PPV{/msg}</option>
+      </select>
+      <div class="{css search-button} {css type-clear}"></div>
+    </div>
+  </div>
+{/template}
+
+
+/**
+ * Provides the simple epg list item template (inline template).
+ * @param start The start hour:minute of the item.
+ * @param title The name of the program.
+ * @param description The program description.
+ * @param delimiter The day it is starting, formatted appropriately or an ampty string.
+ */
+{template .epgitem}
+  <div class="{css epg-list-item}
+    {if $delimiter != ''}
+      {sp}{css epg-delimiter}
+    {/if}
+    ">
+    <div class="{css epg-item-start-time}">{$start}</div>
+    <div class="{css epg-item-name}">{$title}</div>
+    {if $delimiter != ''}
+      <div class="{css epg-item-date}">{$delimiter}</div>
+    {/if}
+    <div class="{css epg-more}">
+      <div class="{css epg-item-desc}">
+        <strong>{$title}</strong>:{sp}{$description}
+        <div class="{css epg-add-button}">{msg desc="Epg add label on button"}Add to queue{/msg}</div>
+      </div>
+
+    </div>
+  </div>
+{/template}
+
+
+/**
+ * The template is for the paymnet popup for the mobile app.
+ */
+{template .paymnetConfirmation}
+  <div class="{css overlay}">
+    <div class="{css centerer}">
+      <div class="{css dialog}">
+        <div class="{css close}"></div>
+        <div class="{css confirm-panel}">
+          <div class="{css warning-sign}"></div>
+          <span class="{css notice}">{msg desc="payment required notice"}Payment of{sp}</span>
+          <span class="{css notice}" data-model="price"></span>{sp}
+          <span class="{css notice}" data-model="currency"></span>{sp}
+          <span class="{css notice}">is required.<br>Click "OK" to accept the charges.{/msg}</span>
+          <div class="{css dummy}">
+            <div class="{css dialog-text-button} {css ok}" data-action="ok">{msg desc="button label ok"}OK{/msg}</div>
+            <div class="{css dialog-text-button} {css cancel}" data-action="cancel">{msg desc="button label cancel"}Cancel{/msg}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{/template}
+
+
+/** The strings used in the app that should be translatable */
+{template .mobiletvstrings}
+  {msg desc="message when payment was canceled"}The payment was canceled.{/msg}|
+  {msg desc="message when we do not understand reply from server"}Temporary inaccessability on the server, please try again{/msg}|
+  {msg desc="message when start time is past curent time"}The show has already started{/msg}|
+  {msg desc="message when show with the same start time is already in the queue"}Show with the same start time is already in the queue{/msg}|
+  {msg desc="successfully added to epg schedule"}Item successfully added to schedule{/msg}|
+  {msg desc="msg when scheduled switch occurs"}Channel started on schedule{/msg}
+{/template}
+

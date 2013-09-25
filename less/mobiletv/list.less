@@ -1,0 +1,104 @@
+@import "colors";
+// for the panelsize
+@import "containers";
+@import "nsview";
+
+/** List specifics - the list of items on the left hand side */
+.list {
+  box-shadow: 2px 0 15px @listShadow inset;
+}
+
+.stream-item, .playable-list-item {
+  width: 100%;
+  height: 150px;
+  border-top: 1px solid #D0D0D0;
+  border-bottom: 1px solid #BFBFBF;
+  background-color: @list-item;
+  padding-right: 5px;
+  position: relative;
+  outline: none;
+}
+
+.playable-list-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.stream-item-hover {
+  background-color: @list-item-hover;
+}
+
+.stream-item-active {
+  background-color: darken(@list-item-hover, 10%);;
+}
+
+.stream-item-disabled {
+  display: none;
+}
+
+.type {
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-bottom-right-radius: 10px;
+	background-color: @list-label;
+	color: @list-label-text;
+	padding-left: 5px;
+	padding-right: 10px;
+}
+
+.image {
+  width: 145px;
+}
+
+.poster {
+	float: left;
+  width: 100%;
+//	height: 150px;
+	padding: 5px;
+}
+
+.title {
+  width: 100%;
+  height: 44px;
+  line-height: 44px;
+  padding-left: 10px;
+  font-weight: bold;
+}
+
+.description {
+	overflow: hidden;
+	font-size: 13px;
+	max-height: 78px;
+  min-height: 78px;
+	line-height: 19px;
+}
+
+.price {
+	color: @list-price;
+	font-weight: bold;
+}
+
+.epg-guide {
+  background-color: #838383;
+  padding: 4px 6px;
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0 8px 8px 0;
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px black;
+  border: 2px solid white;
+  cursor: pointer;
+}
+
+.epg-guide-hover {
+  background-color: @list-label;
+}
+
+.epg-guide-active {
+  bottom: -2px;
+}

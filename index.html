@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Mobile TV</title>
+    <meta content="width=device-width, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="build/mobiletv.css">
+    <!--REMOVE IN PRODUCTION-->
+    <!--<link rel="stylesheet/less" type="text/css" href="less/mobiletv.less">-->
+    <!--<script>-->
+    <!--  less = {-->
+    <!--    env: "development",-->
+    <!--    poll: 1000-->
+    <!--  };-->
+    <!--</script>-->
+    <!--<script src="libs/less.js" type="text/javascript"></script>-->
+    <!--end REMOVE IN PRODUCTION -->
+    <script>
+      DATASTREAM = 'remote';
+      FLASH_PLAYER_URL = 'http://longa.com/mtvapp/assets/player.swf';
+      ADAPTIV_PROVIDER = 'http://longa.com/mtvapp/assets/adaptiveProvider.swf';
+      // Configure the application.
+      SYSMASTER = {
+        APPS: {
+          MOBILETV: {
+            USE_EPG: (window.location.href.indexOf('epg') != -1),
+            USE_NATIVE_SCROLL: (window.location.href.indexOf('nsview') != -1),
+            RUN_NAME: 'mtvcont',
+            DATA_URL: 'http://longa.com/cgi-bin/if.cgi',
+            PLATFORM: 'ios',
+            DEFAULT_THUMBNAIL: 'assets/default-thumbnail.svg',
+            DEFAULT_FOLDER_THUMBNAIL: 'assets/default-folder-thumbnail.png',
+            LOGIN_URL: '/cgi-bin/if.cgi?run=mtvlog',
+            PAYMENT_URL: '',
+            STATEMENT_URL: ''
+          }
+        }
+      };
+    </script>
+    <!-- Keep this style for the loader -->
+    <style>
+      .loader {
+        top: 0;
+        left: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        font-size: 33px;
+        color: black;
+        padding: 20px;
+        z-index: 10000;
+        background-color: #EBEBEB;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loader">
+      Loading...
+    </div>
+
+    <!--<script src="http://longa.com/mapp/assets/jwplayer.min.js"></script>-->
+
+    <script src="build/mobiletv-cssmap.js"></script>
+    <script src="../../library/closure/goog/base.js"></script>
+    <script src="../pstj/deps.js"></script>
+    <script src="../smjslib/deps.js"></script>
+    <script src="build/deps.js"></script>
+    <script>goog.require('mobiletv');</script>
+
+    <!--<script src="build/mobiletv.build.js"></script>-->
+
+  </body>
+</html>

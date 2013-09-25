@@ -1,0 +1,80 @@
+@import "../common/fill";
+/* Overlay iframe to prevent the video tag stealing events. */
+.smstb-iframe-overlay {
+	.fill();
+  opacity: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  border: 0;
+}
+
+.overlay {
+	.fill();
+  display: none;
+  background-color: #424242;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  &.active {
+    display: block;
+  }
+}
+
+.centerer {
+  .fill();
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-pack: center;
+  -moz-box-align: center;
+  display: box;
+  box-orient: horizontal;
+  box-pack: center;
+  box-align: center;
+}
+
+.dialog {
+  width: 80%;
+  // height: 70%;
+  background-color: white;
+  box-shadow: 0 0 15px #424242 inset;
+  margin: 0 auto;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.close {
+  width: 30px;
+  height: 30px;
+  float: right;
+  z-index: 100;
+  background-image: data-uri('../assets/close.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.dialog-text-button {
+  .pstj-button(@panel);
+  margin: 5px;
+  font-size: 30px;
+}
+
+.dummy {
+  text-align: center;
+}
+
+.confirm-panel {
+  text-align: center;
+}
+
+.warning-sign {
+  background: data-uri('../assets/warning.png');
+  width: 50px;
+  height: 45px;
+  margin: 10px auto;
+}
