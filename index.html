@@ -3,7 +3,8 @@
   <head>
     <title>Mobile TV</title>
     <meta content="width=device-width, maximum-scale=1.0, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="build/mobiletv.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="build/app.css">
     <!--REMOVE IN PRODUCTION-->
     <!--<link rel="stylesheet/less" type="text/css" href="less/mobiletv.less">-->
     <!--<script>-->
@@ -25,10 +26,10 @@
             USE_EPG: (window.location.href.indexOf('epg') != -1),
             USE_NATIVE_SCROLL: (window.location.href.indexOf('nsview') != -1),
             RUN_NAME: 'mtvcont',
-            DATA_URL: 'http://longa.com/cgi-bin/if.cgi',
+            DATA_URL: 'http://192.168.0.11/cgi-bin/if.cgi',
             PLATFORM: 'ios',
             DEFAULT_THUMBNAIL: 'assets/default-thumbnail.svg',
-            DEFAULT_FOLDER_THUMBNAIL: 'assets/default-folder-thumbnail.png',
+            DEFAULT_FOLDER_THUMBNAIL: 'assets/default-folder-thumbnail.svg',
             LOGIN_URL: '/cgi-bin/if.cgi?run=mtvlog',
             PAYMENT_URL: '',
             STATEMENT_URL: ''
@@ -38,6 +39,11 @@
     </script>
     <!-- Keep this style for the loader -->
     <style>
+      body {
+        font-family: 'Lato', sans-serif;
+        font-weight: 300;
+      }
+
       .loader {
         top: 0;
         left: 0;
@@ -62,9 +68,9 @@
     <script src="build/mobiletv-cssmap.js"></script>
     <script src="../../library/closure/goog/base.js"></script>
     <script src="../pstj/deps.js"></script>
-    <script src="../smjslib/deps.js"></script>
+    <script src="../smjs/deps.js"></script>
     <script src="build/deps.js"></script>
-    <script>goog.require('mobiletv');</script>
+    <script>goog.require('app');</script>
 
     <!--<script src="build/mobiletv.build.js"></script>-->
 
