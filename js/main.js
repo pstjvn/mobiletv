@@ -204,12 +204,6 @@ mobiletv.Main.prototype.start = function() {
         } else {
           this.attemptPlayback();
         }
-
-        //if (this.useEpg_) {
-        //  this.epg.setModel(item.getModel());
-        //} else {
-        //  this.attemptPlayback();
-        //}
       }, undefined, this);
 
   this.searchPanel.decorate(goog.dom.getElementByClass(
