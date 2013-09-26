@@ -6,13 +6,13 @@ goog.provide('mobiletv.EpgItemRenderer');
 goog.require('goog.events');
 goog.require('goog.ui.Component.EventType');
 goog.require('goog.ui.Control');
+goog.require('mobiletv.template');
 goog.require('pstj.configure');
 goog.require('pstj.date.utils');
 goog.require('pstj.ui.Button');
 goog.require('pstj.ui.ControlRenderer');
 goog.require('pstj.ui.EmbededButtonRenderer');
 goog.require('smstb.ds.Epg.Property');
-goog.require('mobiletv.template');
 
 
 

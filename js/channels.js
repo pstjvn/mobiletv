@@ -1,9 +1,9 @@
 goog.provide('mobiletv.Channels');
 goog.provide('mobiletv.Channels.EventType');
 
-goog.require('mobiletv.loader');
 goog.require('goog.events');
 goog.require('goog.events.EventTarget');
+goog.require('mobiletv.loader');
 goog.require('pstj.ds.List');
 goog.require('pstj.error.ErrorHandler');
 goog.require('pstj.error.ErrorHandler.Error');

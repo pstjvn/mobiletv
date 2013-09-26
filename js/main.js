@@ -5,12 +5,6 @@
 
 goog.provide('mobiletv.Main');
 
-goog.require('mobiletv.Channels');
-goog.require('mobiletv.EpgList');
-goog.require('mobiletv.EpgQueue');
-goog.require('mobiletv.ErrorHandler');
-goog.require('mobiletv.Player');
-goog.require('mobiletv.strings');
 goog.require('goog.array');
 goog.require('goog.asserts');
 goog.require('goog.dom');
@@ -21,6 +15,12 @@ goog.require('goog.result.Result');
 goog.require('goog.result.SimpleResult');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.Component.EventType');
+goog.require('mobiletv.Channels');
+goog.require('mobiletv.EpgList');
+goog.require('mobiletv.EpgQueue');
+goog.require('mobiletv.ErrorHandler');
+goog.require('mobiletv.Player');
+goog.require('mobiletv.strings');
 goog.require('pstj.configure');
 goog.require('pstj.ds.List');
 goog.require('pstj.ds.ListItem');
