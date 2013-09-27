@@ -94,8 +94,7 @@ endef
 define JSFILES
 -f --js=build/deps.js \
 -f --js=$(PSTJ)/deps.js \
--f --js=$(SMJS)/deps.js \
--f --js=build/cssmap-build.js
+-f --js=$(SMJS)/deps.js
 endef
 
 
@@ -274,6 +273,7 @@ compile: cssbuild tpl deps
 	-n $(NS) \
 	${SOURCES} \
 	${JSFILES} \
+	-f --js=build/cssmap-build.js
 	-f --flagfile=options/compile.ini \
 	-o compiled \
 	-f --define='goog.LOCALE="$(LOCALE)"' \
@@ -294,6 +294,7 @@ debug: cssbuild tpl deps
 	-n $(NS) \
 	${SOURCES} \
 	${JSFILES} \
+	-f --js=build/cssmap-build.js \
 	-f --flagfile=options/compile.ini \
 	-o compiled \
 	-f --define='goog.LOCALE="$(LOCALE)"' \
@@ -327,7 +328,7 @@ initproject:
 #
 # To use it with application code replace the first root include to js/
 check:
-	echo python2.7 $(CLOSURE_BUILDER) \
+	python2.7 $(CLOSURE_BUILDER) \
 	-n $(NS) \
 	${SOURCES} \
 	${JSFILES} \
