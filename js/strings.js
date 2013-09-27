@@ -7,8 +7,8 @@
 
 goog.provide('mobiletv.strings');
 
-goog.require('pstj.ui.Strings');
 goog.require('mobiletv.template');
+goog.require('pstj.ui.Strings');
 
 
 /**

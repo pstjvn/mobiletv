@@ -8,15 +8,15 @@
 
 goog.provide('mobiletv.EpgList');
 
-goog.require('mobiletv.EpgItem');
-goog.require('mobiletv.EpgItem.EventType');
-goog.require('mobiletv.EpgQueue');
-goog.require('mobiletv.loader');
 goog.require('goog.array');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.Component.EventType');
 goog.require('goog.ui.Control');
 goog.require('goog.ui.ControlRenderer');
+goog.require('mobiletv.EpgItem');
+goog.require('mobiletv.EpgItem.EventType');
+goog.require('mobiletv.EpgQueue');
+goog.require('mobiletv.loader');
 goog.require('pstj.error.ErrorHandler.Error');
 goog.require('pstj.error.throwError');
 goog.require('pstj.ui.Button');
