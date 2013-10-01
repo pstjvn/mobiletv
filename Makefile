@@ -273,7 +273,7 @@ compile: cssbuild tpl deps
 	-n $(NS) \
 	${SOURCES} \
 	${JSFILES} \
-	-f --js=build/cssmap-build.js
+	-f --js=build/cssmap-build.js \
 	-f --flagfile=options/compile.ini \
 	-o compiled \
 	-f --define='goog.LOCALE="$(LOCALE)"' \
