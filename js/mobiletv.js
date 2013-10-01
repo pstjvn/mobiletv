@@ -1,5 +1,6 @@
 goog.provide('app');
 goog.require('mobiletv.Main');
+goog.require('mobiletv.loader');
 goog.require('mobiletv.template');
 
 
@@ -9,7 +10,7 @@ goog.require('mobiletv.template');
 (function() {
   // Preload some fake data for our tests
   // if (goog.DEBUG) {
-  //   app.mobiletv.loader.loadFakeData(goog.global['MOBILETV']);
+    mobiletv.loader.loadFakeData(goog.global['MOBILETV']);
   // }
   // load the UI invisibly
   document.body.appendChild(goog.dom.htmlToDocumentFragment(
