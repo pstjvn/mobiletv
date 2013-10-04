@@ -16,7 +16,6 @@
 }
 
 .epg-list-item {
-  background-color: @epg-item-bg;
   border: 2px solid transparent;
   position: relative;
   outline: none;
@@ -24,7 +23,6 @@
 }
 
 .epg-list-item-hover {
-  background-color: @epg-item-bg-hover;
   .epg-item-start-time {
     border-color: @epg-item-bg;
   }
@@ -38,21 +36,22 @@
 
 .epg-item-start-time {
 	width: 110px;
-  height: @epg-item-height;
-	border-right: 2px solid transparent;
-	font-size: 1.4em;
-	line-height: @epg-item-height;
-	text-align: center;
-  display: inline-block;
+  height: 45px;
+  font-size: 1.4em;
+  line-height: 45px;
+  text-align: center;
 }
 
 .epg-item-name {
-	font-size: 1.4em;
-	line-height: @epg-item-height;
-  display: inline-block;
+  font-size: 1.4em;
+  line-height: 45px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-left: 110px;
 }
 
 .epg-item-date {
@@ -71,7 +70,7 @@
 .epg-item-desc {
   position: relative;
   padding: 5px 10px;
-  border-top: 2px solid @epg-item-bg;
+  border-top: 1px solid lighten(@base, 15%);
 }
 
 .epg-more {
@@ -121,14 +120,14 @@
 }
 
 .epg-add-button {
-  .pstj-button(#838383, white, 1px solid white, 5px 8px, absolute);
+  .pstj-button(@panel, white, 1px solid white, 5px 8px, absolute);
   right: 0;
   margin-right: 10px;
   margin-top: 5px;
 }
 
 .epg-add-button-hover {
-  background-color: @list-label;
+  background-color: lighten(@panel, 20%);
 }
 
 .epg-add-button-active {

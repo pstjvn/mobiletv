@@ -1,13 +1,18 @@
 @import "../../../pstj/less/translation";
 @import "../../../pstj/less/button";
+@import "colors";
 
 @panelsize: 50px;
+
+body {
+  background-color: @base;
+	color: @textcolor;
+}
 
 /** The main container, we just need it to be as big as the screen */
 .container {
   width: 100%;
   height: 100%;
-  background-color: @base;
 }
 
 /** This is the top panel with the controlling icons */
@@ -46,7 +51,6 @@
 .up {
   width: 100%;
   min-height: 100%;
-  background-color: #EBEBEB;
 }
 
 .left, .right {
@@ -59,10 +63,10 @@
 }
 
 .right {
-	background-color: @base;
   position: fixed;
   left: 0;
   top: 0;
+  background-color: @base;
   padding: @panelsize 10px 0 10px;
   border-left: 1px solid @shadow;
   height: 100%;
@@ -118,13 +122,16 @@
 @media screen and (orientation:portrait) and (max-width:320px) {
 	// hide the video panel
 	.right {
-		width: 20px;
-		height: 20px;
+		width: 100px;
+		height: 100px;
 		overflow: hidden;
-		opacity: 0;
+		opacity: 1;
 		position: absolute;
 		top: 0;
 		left: 0;
+	}
+	.item-title, .description, .branding, .backbutton  {
+	  display: none;
 	}
 	.left {
 		width: 100%;
@@ -140,6 +147,7 @@
 		position: absolute;
 		top: 0;
 		left: 0;
+		padding: 0;
 	}
 	.left {
 		width: 100%;
