@@ -10,7 +10,7 @@ MOBILETV = {
         "isLocked": false,
         "isBookmarked": false,
         "currency": "USD",
-        "cost": 0.00,
+        "cost": 5.00,
         "time": 0,
         "personalRecordingOptions": {
             "canRecord": true,
@@ -19,7 +19,7 @@ MOBILETV = {
             "timeShift": false
         },
         "rating": "G",
-        "description": "",
+        "description": "wq 2erko3 4tl23 l gj2orft j23klqjhc gelkgekl fhwekl;l fncvl wkli fnklifu nwo;twea;iltu nwl;tu gc3;oit vugwil;tuh ngvo;tij gn;we5li wq 2erko3 4tl23 l gj2orft j23klqjhc gelkgekl fhwekl;l fncvl wkli fnklifu nwo;twea;iltu nwl;tu gc3;oit vugwil;tuh ngvo;tij gn",
         "genre": "News",
         "artists": "",
         "year": "",
