@@ -115,11 +115,14 @@ goog.addSingletonGetter(mobiletv.Main);
  * @param {string} text The search text entered in the input.
  * @param {string} language The selected language if any.
  * @param {string} type The selected video type.
+ * @param {string} category The category selected in the UI. One of the
+ * predefined category can be selected and it should be compared to the one of
+ * the item, if none is selected an empty string will be passed.
  * @param {pstj.ds.ListItem} item The item to check if matches filter.
  * @return {boolean}
  * @protected
  */
-mobiletv.Main.filterFn = function(text, language, type, item) {
+mobiletv.Main.filterFn = function(text, language, type, category, item) {
   var name = item.getProp(smstb.ds.Record.Property.NAME);
   if (name.indexOf(text) == -1) return true;
   if (language != '') {
@@ -129,6 +132,9 @@ mobiletv.Main.filterFn = function(text, language, type, item) {
   }
   if (type != '') {
     if (item.getProp(smstb.ds.Record.Property.TYPE) != type) return true;
+  }
+  if (category != '') {
+    if (item.getProp(smstb.ds.Record.Property.GENRE) != type) return true;
   }
   return false;
 };
@@ -298,7 +304,7 @@ mobiletv.Main.prototype.filter_ = function() {
   this.data.setFilter(
       /** @type {function(pstj.ds.ListItem): boolean} */ (
       goog.partial(mobiletv.Main.filterFn, pattern[0], pattern[1],
-      pattern[2])));
+      pattern[2], pattern[3])));
 };
 
 

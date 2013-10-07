@@ -61,9 +61,15 @@
       <div class="{css search-button} {css search-clear}"></div>
       <div class="{css search-button} {css hide-button}"></div>
     </div>
+    <div class="{css search-row-4} {css padded-search-row} {css type-selection}">
+      <div class="{css inline-select} {css smstb-radio-button}" data-action="">{msg desc="type option radio"}ALL{/msg}</div>
+      <div class="{css inline-select} {css smstb-radio-button}" data-action="iptv">{msg desc="type option radio"}IPTV{/msg}</div>
+      <div class="{css inline-select} {css smstb-radio-button}" data-action="vod">{msg desc="type option radio"}VOD{/msg}</div>
+      <div class="{css inline-select} {css smstb-radio-button}" data-action="ppv">{msg desc="type option radio"}PPV{/msg}</div>
+    </div>
     <div class="{css search-row} {css padded-search-row}">
       <select class="{css inline-select} {css language-selection}">
-        <option value="">{msg desc="language option"}No language filter{/msg}</option>
+        <option value="">{msg desc="language option"}Language{/msg}</option>
         <option value="Afrikaans">{msg desc="language option"}Afrikaans{/msg}</option>
         <option value="Albanian">{msg desc="language option"}Albanian{/msg}</option>
         <option value="Arabic">{msg desc="language option"}Arabic{/msg}</option>
@@ -131,13 +137,18 @@
       <div class="{css search-button} {css language-clear}"></div>
     </div>
     <div class="{css search-row} {css padded-search-row}">
-      <select class="{css inline-select} {css type-selection}">
-        <option value="">{msg desc="type option"}No type filter{/msg}</option>
-        <option value="iptv">{msg desc="type option"}IPTV{/msg}</option>
-        <option value="vod">{msg desc="type option"}VOD{/msg}</option>
-        <option value="ppv">{msg desc="type option"}PPV{/msg}</option>
+      <select class="{css inline-select} {css category-selection}">
+        <option value="">{msg desc="type option"}Category{/msg}</option>
+        <option value="action">{msg desc="type option"}Action{/msg}</option>
+        <option value="adult">{msg desc="type option"}Adult{/msg}</option>
+        <option value="comedy">{msg desc="type option"}Comedy{/msg}</option>
+        <option value="documentary">{msg desc="type option"}Documentary{/msg}</option>
+        <option value="drama">{msg desc="type option"}Drama{/msg}</option>
+        <option value="entertainment">{msg desc="type option"}Entertainment{/msg}</option>
+        <option value="family">{msg desc="type option"}Family{/msg}</option>
+        <option value="general interest">{msg desc="type option"}General Interest{/msg}</option>
       </select>
-      <div class="{css search-button} {css type-clear}"></div>
+      <div class="{css search-button} {css category-clear}"></div>
     </div>
   </div>
 {/template}
