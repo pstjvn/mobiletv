@@ -1,4 +1,7 @@
 @import "../../../pstj/less/fill";
+@import "colors";
+
+
 /* Overlay iframe to prevent the video tag stealing events. */
 .smstb-iframe-overlay {
 	.fill();
@@ -12,11 +15,11 @@
 .overlay {
 	.fill();
   display: none;
-  background-color: #424242;
+  background-color: @base;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 200;
+  z-index: 1200;
   &.active {
     display: block;
   }
@@ -24,18 +27,31 @@
 
 .centerer {
   .fill();
+  // Old style
+  // OLD - iOS 6-, Safari 3.1-6
   display: -webkit-box;
   -webkit-box-orient: horizontal;
   -webkit-box-pack: center;
   -webkit-box-align: center;
+
+  // OLD - Firefox 19- (buggy but mostly works)
   display: -moz-box;
   -moz-box-orient: horizontal;
   -moz-box-pack: center;
   -moz-box-align: center;
-  display: box;
+
+  // TWEENER - IE 10
+  display: -ms-flexbox;
+
+  // NEW - Chrome
+  display: -webkit-flex;
+
+
+  display: flex;
   box-orient: horizontal;
   box-pack: center;
   box-align: center;
+
 }
 
 .dialog {
@@ -46,6 +62,7 @@
   margin: 0 auto;
   overflow: hidden;
   overflow-y: scroll;
+  align-self: center;
 }
 
 .close {
