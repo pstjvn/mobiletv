@@ -134,7 +134,7 @@ mobiletv.Main.filterFn = function(text, language, type, category, item) {
     if (item.getProp(smstb.ds.Record.Property.TYPE) != type) return true;
   }
   if (category != '') {
-    if (item.getProp(smstb.ds.Record.Property.GENRE) != type) return true;
+    if (item.getProp(smstb.ds.Record.Property.GENRE) != category) return true;
   }
   return false;
 };
