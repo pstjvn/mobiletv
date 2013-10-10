@@ -23,35 +23,29 @@ goog.require('pstj.ui.Button');
 goog.require('pstj.ui.CustomButtonRenderer');
 goog.require('smstb.ds.Epg.Cache');
 goog.require('smstb.ds.Record');
+goog.require('smstb.widget.MultiViewWrapper');
 
 
 
 /**
  * Provides the simple epg list (as opposed to NSView based implementation).
  * @constructor
- * @extends {goog.ui.Component}
+ * @extends {smstb.widget.MultiViewWrapper}
  */
 mobiletv.EpgList = function() {
   goog.base(this);
   this.cache_ = smstb.ds.Epg.Cache.getInstance();
   this.epgList = new goog.ui.Component();
-  this.backButton = new pstj.ui.Button(
-      /** @type {pstj.ui.CustomButtonRenderer} */(
-      goog.ui.ControlRenderer.getCustomRenderer(pstj.ui.CustomButtonRenderer,
-      goog.getCssName('epg-button'))));
   this.titleLabel = new goog.ui.Component();
-  this.addChild(this.backButton);
   this.addChild(this.titleLabel);
   this.addChild(this.epgList);
 };
-goog.inherits(mobiletv.EpgList, goog.ui.Component);
+goog.inherits(mobiletv.EpgList, smstb.widget.MultiViewWrapper);
 
 
 /** @inheritDoc */
 mobiletv.EpgList.prototype.decorateInternal = function(el) {
   goog.base(this, 'decorateInternal', el);
-  this.backButton.decorate(this.getElementByClass(goog.getCssName(
-      'epg-button')));
   this.titleLabel.decorate(this.getElementByClass(goog.getCssName(
       'epg-title')));
   this.epgList.decorate(this.getElementByClass(goog.getCssName('epg-list')));
@@ -61,8 +55,6 @@ mobiletv.EpgList.prototype.decorateInternal = function(el) {
 /** @inheritDoc */
 mobiletv.EpgList.prototype.enterDocument = function() {
   goog.base(this, 'enterDocument');
-  this.getHandler().listen(this.backButton,
-      goog.ui.Component.EventType.ACTION, this.handleBackButton);
   this.getHandler().listen(this, mobiletv.EpgItem.EventType.ADD,
       this.handleEpgAdd);
 };
@@ -80,17 +72,6 @@ mobiletv.EpgList.prototype.handleEpgAdd = function(e) {
 
 
 /**
- * Handles the back button activation
- * @param {goog.events.Event} e The component's ACTION event.
- * @protected
- */
-mobiletv.EpgList.prototype.handleBackButton = function(e) {
-  e.stopPropagation();
-  this.setVisible(false);
-};
-
-
-/**
  * Sets the title of the EPG (the program name).
  * @param {string} title THe program name.
  */
@@ -103,10 +84,9 @@ mobiletv.EpgList.prototype.setTitle = function(title) {
 mobiletv.EpgList.prototype.setModel = function(model) {
   // should accept the record item as model and load the epg for it.
   goog.asserts.assertInstanceof(model, pstj.ds.ListItem,
-      'The model should be LIst instance');
+      'The model should be List instance');
   goog.base(this, 'setModel', model);
   this.onModelChange();
-  //this.updateList();
 };
 
 
@@ -204,16 +184,4 @@ mobiletv.EpgList.prototype.clearContent = function() {
   goog.array.forEach(this.epgList.removeChildren(true), function(item) {
     goog.dispose(item);
   });
-};
-
-
-/**
- * Shows/hides the widget.
- * @param {boolean} visible If true - show the widget.
- */
-mobiletv.EpgList.prototype.setVisible = function(visible) {
-  goog.dom.classlist.enable(this.getElement(), goog.getCssName('mtv-hidden'),
-      !visible);
-  this.dispatchEvent(visible ? goog.ui.Component.EventType.SHOW :
-      goog.ui.Component.EventType.HIDE);
 };

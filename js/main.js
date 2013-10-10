@@ -18,8 +18,11 @@ goog.require('goog.ui.Component.EventType');
 goog.require('mobiletv.Channels');
 goog.require('mobiletv.EpgList');
 goog.require('mobiletv.EpgQueue');
+goog.require('mobiletv.EpgScheduleList');
 goog.require('mobiletv.ErrorHandler');
 goog.require('mobiletv.Player');
+goog.require('mobiletv.RecordList');
+goog.require('mobiletv.TopPanel');
 goog.require('mobiletv.strings');
 goog.require('pstj.configure');
 goog.require('pstj.ds.List');
@@ -30,10 +33,10 @@ goog.require('pstj.ui.Button');
 goog.require('pstj.ui.Strings');
 goog.require('pstj.ui.TouchAgent');
 goog.require('smstb.ds.Record');
-goog.require('smstb.widget.ButtonPanel');
 goog.require('smstb.widget.ListItem');
 goog.require('smstb.widget.ListItem.Action');
 goog.require('smstb.widget.MobilePopup');
+goog.require('smstb.widget.MultiView');
 goog.require('smstb.widget.NSRecordView');
 goog.require('smstb.widget.Notification');
 goog.require('smstb.widget.SearchPanel');
@@ -81,10 +84,21 @@ mobiletv.Main = function() {
    * @protected
    */
   this.epg = new mobiletv.EpgList();
+  /**
+   * Ference to the schdule view to be used.
+   * @type {mobiletv.EpgScheduleList}
+   * @protected
+   */
+  this.schedule = new mobiletv.EpgScheduleList();
 
   this.searchPanel = new smstb.widget.SearchPanel();
-  this.buttonPanel = new smstb.widget.ButtonPanel();
+  this.buttonPanel = new mobiletv.TopPanel();
   this.popup = new smstb.widget.MobilePopup();
+
+  /**
+   * Reference to the multi view used in the
+   */
+  this.multiView = new smstb.widget.MultiView();
 
   /**
    * Flag if we should use the native scroll for the lists or rely on
@@ -154,7 +168,7 @@ mobiletv.Main.GET_CURRENT_PRICE = '&t=30';
  */
 mobiletv.Main.prototype.start = function() {
 
-  // Disable scrolling past the view on iOS
+  // Disable native scroll when using nsview scrolling.
   if (!this.useNativeScroll_) {
     goog.events.listen(document.body, goog.events.EventType.TOUCHSTART,
         function(e) {
@@ -163,28 +177,28 @@ mobiletv.Main.prototype.start = function() {
         });
   }
 
+  // Handle channel load ready event. When this happen we are ready to render
+  // the record view.
   goog.events.listenOnce(mobiletv.Channels.getInstance(),
       mobiletv.Channels.EventType.LOAD, this.handleDataLoad, undefined,
       this);
-  // Start loading data.
-  // mobiletv.loader.getList(goog.bind(this.handleDataLoad, this));
 
-  // Setup default error handler
+  // Setup default error handler. Our implementation is used to notify the
+  // users visually as well.
   mobiletv.ErrorHandler.getInstance().setElement(goog.dom.getElementByClass(
       goog.getCssName('notifications')));
 
-  // setup the epg queue
+  // setup the epg queue from the stored local data.
   mobiletv.EpgQueue.getInstance();
-
 
   // Construct instances of components. Differentiate between native and NSView
   if (this.useNativeScroll_) {
-    this.listElement = new goog.ui.Component();
-    // Epg should change internally to be interchangeable.
-    goog.events.listen(this.epg, [
-      goog.ui.Component.EventType.SHOW,
-      goog.ui.Component.EventType.HIDE],
-    this.handleEpgVisibility, undefined, this);
+    this.listElement = new mobiletv.RecordList();
+    // // Epg should change internally to be interchangeable.
+    // goog.events.listen(this.epg, [
+    //   goog.ui.Component.EventType.SHOW,
+    //   goog.ui.Component.EventType.HIDE],
+    // this.handleEpgVisibility, undefined, this);
   } else {
     this.listElement = new smstb.widget.NSRecordView();
     // window size monitor bind and resize.
@@ -197,11 +211,23 @@ mobiletv.Main.prototype.start = function() {
         }, undefined, this);
   }
 
-  // Handle activation for items.
+  // Attach items to the multi view.
+  this.multiView.addChild(this.listElement);
+  this.multiView.addChild(this.epg);
+
+  this.schedule.decorate(goog.dom.getElementByClass(goog.getCssName(
+      'epg-schedule-list')));
+  this.schedule.setModel(mobiletv.EpgQueue.getInstance().list);
+
+
+
+  // Handle activation for items. Here we want to decide if we are to
+  // play the item or show its EPG details.
   goog.events.listen(this.listElement, goog.ui.Component.EventType.ACTION,
       function(ev) {
         var item = /** @type {smstb.widget.ListItem} */ (ev.target);
         this.data.setCurrent(item.getModel());
+
         if (item.getActionType() == smstb.widget.ListItem.Action.EPG) {
           this.epg.setModel(this.data.getCurrent());
         } else if (item.getModel().getProp(smstb.ds.Record.Property.ISDIR)) {
@@ -212,6 +238,7 @@ mobiletv.Main.prototype.start = function() {
         }
       }, undefined, this);
 
+  // Start decoration.
   this.searchPanel.decorate(goog.dom.getElementByClass(
       goog.getCssName('search-panel')));
 
@@ -241,7 +268,25 @@ mobiletv.Main.prototype.start = function() {
   } else {
     this.epg.decorate(goog.dom.getElementByClass(goog.getCssName(
         'epg-container')));
+    this.epg.setVisible(false, true);
   }
+
+
+  this.multiView.decorate(goog.dom.getElementByClass(goog.getCssName('left')));
+
+  // Handle the multiView events to control the back button and visibility
+  goog.events.listen(this.multiView, goog.ui.Component.EventType.SHOW,
+      function(e) {
+        // check which is the component. it is is diffrent than the main one
+        // show the back button.
+        if (this.multiView.getVisibleChild() != this.listElement) {
+          this.buttonPanel.setBackButtonVisibility(true);
+        } else {
+          this.buttonPanel.setBackButtonVisibility(false);
+        }
+      }, undefined, this);
+
+  this.buttonPanel.setBackButtonVisibility(false);
 };
 
 
@@ -268,6 +313,9 @@ mobiletv.Main.prototype.handleEpgVisibility = function(e) {
 mobiletv.Main.prototype.checkButtonAction_ = function(e) {
   var action = this.buttonPanel.getActionName();
   switch (action) {
+    case 'back':
+      this.listElement.setVisible(true);
+      break;
     case 'search':
       this.searchPanel.enable(true);
       break;
