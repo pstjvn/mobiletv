@@ -6,7 +6,7 @@
 
 goog.provide('mobiletv.RecordList');
 
-goog.require('smstb.widget.MultiViewWrapper');
+goog.require('pstj.widget.MultiViewWrapper');
 
 
 
@@ -14,16 +14,9 @@ goog.require('smstb.widget.MultiViewWrapper');
  * Wrap the record list to be a multi view component.
  *
  * @constructor
- * @extends {smstb.widget.MultiViewWrapper}
+ * @extends {pstj.widget.MultiViewWrapper}
  */
 mobiletv.RecordList = function() {
   goog.base(this);
 };
-goog.inherits(mobiletv.RecordList, smstb.widget.MultiViewWrapper);
-
-goog.scope(function() {
-
-var _ = mobiletv.RecordList.prototype;
-
-
-});  // goog.scope
+goog.inherits(mobiletv.RecordList, pstj.widget.MultiViewWrapper);

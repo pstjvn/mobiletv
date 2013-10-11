@@ -17,7 +17,7 @@ goog.require('pstj.ds.List');
 goog.require('pstj.ui.Button');
 goog.require('pstj.ui.Template');
 goog.require('pstj.ui.Templated');
-goog.require('smstb.widget.MultiViewWrapper');
+goog.require('pstj.widget.MultiViewWrapper');
 
 
 
@@ -40,7 +40,8 @@ mobiletv.EpgScheduleItemTemplate.prototype.getTemplate = function(model) {
 
 
 /** @inheritDoc */
-mobiletv.EpgScheduleItemTemplate.prototype.generateTemplateData = function(comp) {
+mobiletv.EpgScheduleItemTemplate.prototype.generateTemplateData = function(
+    comp) {
   return comp.getModel().getRawData();
 };
 
@@ -64,17 +65,16 @@ goog.inherits(mobiletv.EpgScheduleItem, pstj.ui.Templated);
 /**
  * Provides the component used as EPG schedule listing.
  * @constructor
- * @extends {smstb.widget.MultiViewWrapper}
+ * @extends {pstj.widget.MultiViewWrapper}
  */
 mobiletv.EpgScheduleList = function() {
   goog.base(this);
 };
-goog.inherits(mobiletv.EpgScheduleList, smstb.widget.MultiViewWrapper);
+goog.inherits(mobiletv.EpgScheduleList, pstj.widget.MultiViewWrapper);
 
 
 goog.scope(function() {
 
-var item = mobiletv.EpgScheduleItem.prototype;
 var list = mobiletv.EpgScheduleList.prototype;
 
 

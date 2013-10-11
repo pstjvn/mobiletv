@@ -23,14 +23,14 @@ goog.require('pstj.ui.Button');
 goog.require('pstj.ui.CustomButtonRenderer');
 goog.require('smstb.ds.Epg.Cache');
 goog.require('smstb.ds.Record');
-goog.require('smstb.widget.MultiViewWrapper');
+goog.require('pstj.widget.MultiViewWrapper');
 
 
 
 /**
  * Provides the simple epg list (as opposed to NSView based implementation).
  * @constructor
- * @extends {smstb.widget.MultiViewWrapper}
+ * @extends {pstj.widget.MultiViewWrapper}
  */
 mobiletv.EpgList = function() {
   goog.base(this);
@@ -40,7 +40,7 @@ mobiletv.EpgList = function() {
   this.addChild(this.titleLabel);
   this.addChild(this.epgList);
 };
-goog.inherits(mobiletv.EpgList, smstb.widget.MultiViewWrapper);
+goog.inherits(mobiletv.EpgList, pstj.widget.MultiViewWrapper);
 
 
 /** @inheritDoc */

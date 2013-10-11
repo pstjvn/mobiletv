@@ -9,6 +9,7 @@
 @item-inner-height: (@item-height - 1);
 @item-image-width: 149px;
 @item-image-height: 113px;
+@item-image-border: 2px;
 
 
 // Rules for the record list view.
@@ -41,7 +42,7 @@
 
 .playable-list-item-image {
   background-color: @panel;
-  padding: 2px;
+  padding: @item-image-border;
   position: absolute;
   top: 0;
   left: 0;
@@ -74,6 +75,11 @@
 
 .stream-item-disabled {
   display: none;
+}
+
+.poster {
+  width: (@item-image-width - (@item-image-border * 2));
+  height: (@item-image-height - (@item-image-border * 2));
 }
 
 .type {

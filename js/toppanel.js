@@ -44,12 +44,14 @@ goog.scope(function() {
 var _ = mobiletv.TopPanel.prototype;
 
 
+/** @inheritDoc */
 _.enterDocument = function() {
   goog.base(this, 'enterDocument');
   this.backButton_ = goog.asserts.assertInstanceof(
       this.getElement().querySelectorAll('[data-action]').item(
           this.backButtonIndex_), Element, 'Casts Node to Element');
-}
+};
+
 
 /**
  * Controls the back button in the panel.
