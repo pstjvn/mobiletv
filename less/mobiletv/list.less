@@ -94,6 +94,13 @@
 }
 
 
+// Fixes price displacing the guide button on iphone5
+@media screen and (orientation:portrait) and (max-width:320px) {
+  .playable-list-item-price {
+    font-size: 12px;
+  }
+}
+
 // The EPG huide button in the list item.
 .epg-guide {
   background-color: @panel;

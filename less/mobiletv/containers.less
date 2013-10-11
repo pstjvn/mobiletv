@@ -55,11 +55,15 @@ body {
   }
 }
 
+// The main container (holds only left hand list).
 .up {
   width: 100%;
   min-height: 100%;
 }
 
+
+// By default we assume browser: left and right should be 50%, right
+// displayced 50% to the right
 .left, .right {
   width: 50%;
   background-color: @base;
@@ -81,6 +85,24 @@ body {
   width: 50%;
 }
 
+// iPhone5 portrait
+@media screen and (orientation:portrait) and (max-width:320px) {
+  // both right and up must be 100%
+  .right {
+    width: 100%;
+    .translation(100%);
+    .transitiontranslate(300ms);
+  }
+  .right-active {
+    .translation(0);
+  }
+  .left {
+    width: 100%;
+  }
+}
+
+
+// Should is irrelevant
 .backbutton {
   .pstj-button(@panel);
   line-height: 20px;
@@ -94,14 +116,15 @@ body {
   .pstj-button-active();
 }
 
-/** We need to be clever here: on PC and tablet that support inlined player
-	we want to use the player as it is (flash or ipad native)
-	When we are in landscape mode the player should be using the bellow style.
-	When in portrait mode we should use the style that hides and shows the player
-	When we are on android (i.e. no inline playback) we should NOT trigger the
-	player visibility and always hide it.
-	When we are in phone we should always trigger player without show
-*/
+// We need to be clever here: on PC and tablet that support inlined player
+// we want to use the player as it is (flash or ipad native)
+// When we are in landscape mode the player should be using the bellow style.
+// When in portrait mode we should use the style that hides and shows the player
+// When we are on android (i.e. no inline playback) we should NOT trigger the
+// player visibility and always hide it.
+// When we are in phone we should always trigger player without show
+
+
 @media screen and (orientation:landscape) and (min-width:481px) {
 	.right {
 		width: 50%;
@@ -129,21 +152,21 @@ body {
 
 @media screen and (orientation:portrait) and (max-width:320px) {
 	// hide the video panel
-	.right {
-		width: 100px;
-		height: 100px;
-		overflow: hidden;
-		opacity: 1;
-		position: absolute;
-		top: 0;
-		left: 0;
-	}
-	.item-title, .description, .branding, .backbutton  {
-	  display: none;
-	}
-	.left {
-		width: 100%;
-	}
+// 	.right {
+// 		width: 100px;
+// 		height: 100px;
+// 		overflow: hidden;
+// 		opacity: 1;
+// 		position: absolute;
+// 		top: 0;
+// 		left: 0;
+// 	}
+// 	.item-title, .description, .branding, .backbutton  {
+// 	  display: none;
+// 	}
+// 	.left {
+// 		width: 100%;
+// 	}
 }
 
 @media screen and (orientation:landscape) and (max-width:480px) {
