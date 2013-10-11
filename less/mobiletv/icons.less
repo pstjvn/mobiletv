@@ -1,9 +1,10 @@
 @import "../../../pstj/less/boxing-model";
 @import "animations";
+@import "containers";
 
 .icons {
 	width: 100%;
-	height: 100%;
+	height: @panelsize;
 	text-align: center;
 	margin: auto;
 	vertical-align: middle;
@@ -18,10 +19,11 @@
 	/* @alternative */
 	background-size: 45px, 0px;
 
+  float:right;
   display: inline-block;
 	background-position: center center;
 	background-repeat: no-repeat,no-repeat;
-	width: 22%;
+	width: 80px;
 	height: 50px;
 	border-radius: 15px;
 
@@ -49,15 +51,25 @@
 }
 
 /** Specific icons */
-.search {
+.icon-back {
+  background-image: url('../assets/back.svg');
+  float: left;
+}
+.icon-check {
+  background-image: url('../assets/check.svg');
+}
+.icon-search {
   background-image: url('../assets/search.svg'), url('../assets/focus.svg');
 }
-.cart {
+.icon-cart {
   background-image: url('../assets/cart.svg'), url('../assets/focus.svg');
 }
-.private {
+.icon-private {
   background-image: url('../assets/private.svg'), url('../assets/focus.svg');
 }
-.home {
+.icon-list {
   background-image: url('../assets/list.svg'), url('../assets/focus.svg');
+}
+.icon-gear {
+  background-image: url('../assets/gear.svg'), url('../assets/focus.svg');
 }

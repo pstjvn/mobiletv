@@ -61,4 +61,12 @@ _.setBackButtonVisibility = function(visible) {
   }
 };
 
+
+/**
+ * Toggles the visibility of the drawer panel.
+ */
+_.toggleDrawer = function() {
+  goog.dom.classlist.toggle(this.getElement(), goog.getCssName('drawed'));
+};
+
 });  // goog.scope

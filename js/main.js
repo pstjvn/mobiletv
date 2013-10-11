@@ -319,7 +319,7 @@ mobiletv.Main.prototype.checkButtonAction_ = function(e) {
     case 'search':
       this.searchPanel.enable(true);
       break;
-    case 'private':
+    case 'logout':
       window.location.href = goog.asserts.assertString(
           pstj.configure.getRuntimeValue('LOGIN_URL',
           '/cgi-bin/if.cgi?run=mlog', 'SYSMASTER.APPS.MOBILETV'));
@@ -333,6 +333,9 @@ mobiletv.Main.prototype.checkButtonAction_ = function(e) {
       window.location.href = goog.asserts.assertString(
           pstj.configure.getRuntimeValue('STATEMENT_URL',
               '/cgi-bin/if.cgi?run=mlog', 'SYSMASTER.APPS.MOBILETV'));
+      break;
+    case 'menu':
+      this.buttonPanel.toggleDrawer();
       break;
   }
 };

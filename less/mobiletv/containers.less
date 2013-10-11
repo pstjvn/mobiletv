@@ -1,5 +1,6 @@
 @import "../../../pstj/less/translation";
 @import "../../../pstj/less/button";
+@import "../../../pstj/less/transitions";
 @import "colors";
 
 @panelsize: 50px;
@@ -23,11 +24,17 @@ body {
   position: fixed;
   top: 0;
   left: 0;
+  overflow-y: hidden;
 }
 
 .panel {
 	z-index: 1000;
 	background-color: @panel;
+}
+
+.panel.drawed {
+  .transition(height 200ms);
+  height: (@panelsize * 2);
 }
 
 .search-panel {
