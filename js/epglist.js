@@ -21,9 +21,9 @@ goog.require('pstj.error.ErrorHandler.Error');
 goog.require('pstj.error.throwError');
 goog.require('pstj.ui.Button');
 goog.require('pstj.ui.CustomButtonRenderer');
+goog.require('pstj.widget.MultiViewWrapper');
 goog.require('smstb.ds.Epg.Cache');
 goog.require('smstb.ds.Record');
-goog.require('pstj.widget.MultiViewWrapper');
 
 
 
