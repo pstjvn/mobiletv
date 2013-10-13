@@ -42,6 +42,7 @@ mobiletv.EpgQueue = function() {
   this.boundPlaybackStart_ = goog.bind(this.playbackStart, this);
   this.cleanForOldEntries();
   this.setupPlaybackQueue();
+  this.storage.set(this.list);
   goog.events.listen(this.list, pstj.ds.List.EventType.DELETE,
       this.handleListDelete, undefined, this);
   goog.events.listen(this.list, pstj.ds.List.EventType.ADD,
@@ -103,6 +104,8 @@ _.setupPlaybackQueue = function() {
  * @param {goog.events.Event} e The DELETE event from the list.
  */
 _.handleListDelete = function(e) {
+  this.setupPlaybackQueue();
+  this.storage.set(this.list);
 };
 
 

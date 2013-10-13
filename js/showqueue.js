@@ -16,7 +16,7 @@ goog.require('pstj.ds.List');
 
 /**
  * Provides indexed list implementation that always keep the items in order,
- * order is kept based on the ID value.
+ * Order is kept based on the ID value.
  *
  * @constructor
  * @extends {pstj.ds.List}

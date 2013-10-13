@@ -62,7 +62,7 @@ var _ = mobiletv.EpgItemRenderer.prototype;
 
 /** @inheritDoc */
 _.getTemplate = function(control) {
-  return mobiletv.template.epgitem(this.generateTemplateData(control));
+  return mobiletv.template.epgItem(this.generateTemplateData(control));
 };
 
 
@@ -102,11 +102,23 @@ _.generateTemplateData = function(control) {
 mobiletv.EpgItem = function(opt_renderer, opt_button_renderer) {
   goog.base(this, '', opt_renderer ||
       mobiletv.EpgItemRenderer.getInstance());
+
+  /**
+   * Flag for the scheduled state. We use it to set the button value
+   * in the view.
+   * @type {boolean}
+   * @private
+   */
+  this.isScheduled_ = false;
+  /**
+   * @type {pstj.ui.Button}
+   * @protected
+   */
   this.button = new pstj.ui.Button(opt_button_renderer ||
       /** @type {pstj.ui.CustomButtonRenderer} */(
       goog.ui.ControlRenderer.getCustomRenderer(
           pstj.ui.EmbededButtonRenderer,
-          goog.getCssName('epg-add-button'))));
+          goog.getCssName('epg-list-item-button'))));
   this.addChild(this.button);
 };
 goog.inherits(mobiletv.EpgItem, goog.ui.Control);
@@ -116,7 +128,8 @@ goog.inherits(mobiletv.EpgItem, goog.ui.Control);
  * @enum {string}
  */
 mobiletv.EpgItem.EventType = {
-  ADD: goog.events.getUniqueId('add')
+  ADD: goog.events.getUniqueId('add'),
+  REMOVE: goog.events.getUniqueId('remove')
 };
 
 
@@ -128,10 +141,12 @@ var _ = mobiletv.EpgItem.prototype;
 /** @inheritDoc */
 _.enterDocument = function() {
   goog.base(this, 'enterDocument');
-  this.button.decorate(this.getElementByClass(
-      this.button.getRenderer().getCssClass()));
+  this.button.decorate(this.getElementByClass(this.button.getRenderer()
+      .getCssClass()));
+  this.button.setValue(this.isScheduled_ ? '-' : '+');
   this.getHandler().listen(this.button, goog.ui.Component.EventType.ACTION,
       this.handleButtonAction);
+
 };
 
 
@@ -140,10 +155,24 @@ _.enterDocument = function() {
  * event so that we know when to add something to the EPG queue and when to
  * simply open the item.
  * @param {goog.events.Event} e The ACTION event from the button.
+ * @protected
  * */
 _.handleButtonAction = function(e) {
   e.stopPropagation();
-  this.dispatchEvent(mobiletv.EpgItem.EventType.ADD);
+  this.dispatchEvent(this.isScheduled_ ? mobiletv.EpgItem.EventType.REMOVE :
+      mobiletv.EpgItem.EventType.ADD);
+};
+
+
+/**
+ * Sets the scheduled state of the item.
+ * @param {boolean} scheduled True if the item is a scheduled item.
+ */
+_.setScheduledState = function(scheduled) {
+  if (this.isScheduled_ != scheduled && this.isInDocument()) {
+    this.button.setValue(scheduled ? '-' : '+');
+  }
+  this.isScheduled_ = scheduled;
 };
 
 });  // goog.scope

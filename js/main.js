@@ -287,20 +287,6 @@ mobiletv.Main.prototype.start = function() {
 
 
 /**
- * Handles the visibility state change from the epg UI.
- * @param {goog.events.Event} e The component SHOW/HIDE event.
- * @protected
- */
-mobiletv.Main.prototype.handleEpgVisibility = function(e) {
-  if (e.type == goog.ui.Component.EventType.SHOW) {
-    this.listElement.getElement().style.display = 'none';
-  } else {
-    this.listElement.getElement().style.display = 'block';
-  }
-};
-
-
-/**
  * Checks the action of the top panel and trigger corresponding reaction.
  *
  * @param {goog.events.Event} e The ACTION UI event from the component.
@@ -332,6 +318,10 @@ mobiletv.Main.prototype.checkButtonAction_ = function(e) {
       break;
     case 'menu':
       this.buttonPanel.toggleDrawer();
+      break;
+    case 'schedule':
+      this.buttonPanel.toggleDrawer();
+      this.schedule.setVisible(true);
       break;
   }
 };

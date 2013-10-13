@@ -67,7 +67,7 @@ mobiletv.EpgList.prototype.enterDocument = function() {
  */
 mobiletv.EpgList.prototype.handleEpgAdd = function(e) {
   e.stopPropagation();
-  mobiletv.EpgQueue.getInstance().add(e.target.getModel());
+  mobiletv.EpgQueue.getInstance().add(e.target.getModel().clone());
 };
 
 

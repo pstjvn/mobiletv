@@ -54,6 +54,7 @@
         <div class="{css icon} {css icon-cart}" data-action="cart"></div>
         <div class="{css icon} {css icon-private}" data-action="logout"></div>
         <div class="{css icon} {css icon-list}" data-action="statement"></div>
+        <div class="{css icon} {css icon-list}" data-action="schedule"></div>
       {/if}
     </div>
   </div>
@@ -176,24 +177,25 @@
  * @param title The name of the program.
  * @param description The program description.
  * @param delimiter The day it is starting, formatted appropriately or an ampty string.
+ * @isscheduled True if we want to render scheduled
  */
-{template .epgitem}
+{template .epgItem}
   <div class="{css epg-list-item}
     {if $delimiter != ''}
       {sp}{css epg-delimiter}
     {/if}
     ">
-    <div class="{css epg-item-start-time}">{$start}</div>
-    <div class="{css epg-item-name}">{$title}</div>
-    {if $delimiter != ''}
-      <div class="{css epg-item-date}">{$delimiter}</div>
-    {/if}
-    <div class="{css epg-more}">
-      <div class="{css epg-item-desc}">
-        <strong>{$title}</strong>:{sp}{$description}
-        <div class="{css epg-add-button}">{msg desc="Epg add label on button"}Add to queue{/msg}</div>
+    <div class="{css inner-epg-list-item}">
+      <div class="{css epg-list-item-container}">
+        {if $delimiter != ''}
+          <div class="{css epg-list-item-time}">{$delimiter}<br>{$start}</div>
+        {else}
+          <div class="{css epg-list-item-time}">{$start}</div>
+        {/if}
+        <div class="{css epg-list-item-title}">{$title}</div>
+        <div class="{css epg-list-item-description}">{$description}</div>
+        <div class="{css epg-list-item-button}"></div>
       </div>
-
     </div>
   </div>
 {/template}

@@ -1,92 +1,84 @@
 @import "../../../pstj/less/button";
 @import "list";
+@import "colors";
 
-@epg-item-height: 60px;
+@epg-item-height: 47px;
+@inner-epg-item-height: (@epg-item-height - 1);
+@epg-list-item-time-width: 90px;
+
 @epg-item-bg: #ebebeb;
 @epg-item-bg-hover: #ccc;
 @epg-item-delimiter-bg: @list-label;
 @epg-item-delimiter-color: @list-label-text;
+
+
 
 .epg-list {
   padding-top: 35px;
 }
 
 .epg-list-item {
-  border: 2px solid transparent;
+  width: 100%;
+  height: @epg-item-height;
+  background-color: @panel;
   position: relative;
   outline: none;
   overflow: hidden;
 }
 
-.epg-list-item-hover {
-  .epg-item-start-time {
-    border-color: @epg-item-bg;
+.epg-delimiter {
+  .epg-list-item-time {
+    font-size: 14px;
+    line-height: 23px;
   }
 }
 
-
-// The ones marked as deleimiter need to be marked visually.
-.epg-list-item.epg-delimiter {
-  border-top: 2px solid @epg-item-delimiter-bg;
+.inner-epg-list-item {
+  width: 100%;
+  height: @inner-epg-item-height;
+  background-color: @base;
 }
 
-.epg-item-start-time {
-	width: 110px;
-  height: 45px;
-  font-size: 1.4em;
-  line-height: 45px;
-  text-align: center;
+.epg-list-item-container {
+  width: 100%;
+  padding-left: @epg-list-item-time-width;
+  padding-right: @inner-epg-item-height;
 }
 
-.epg-item-name {
-  font-size: 1.4em;
-  line-height: 45px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.epg-list-item-time {
   position: absolute;
   top: 0;
   left: 0;
-  padding-left: 110px;
+	width: @epg-list-item-time-width;
+  height: @inner-epg-item-height;
+  font-size: 14px;
+  line-height: @inner-epg-item-height;
+  text-align: center;
 }
 
-.epg-item-date {
-  background-color: @epg-item-delimiter-bg;
-  color: @epg-item-delimiter-color;
-	height: 20px;
-	position: absolute;
-	top: 0;
-	right: 0;
-	text-align: right;
-  padding-right: 5px;
-  padding-left: 10px;
-  border-bottom-left-radius: 5px;
+.epg-list-item-button {
+  .pstj-button(@panel, white, none, 0, absolute);
+  line-height: @inner-epg-item-height;
+  font-size: @inner-epg-item-height;
+  top: 0;
+  right: 0;
+  width: @inner-epg-item-height;
+  text-align: center;
 }
 
-.epg-item-desc {
-  position: relative;
-  padding: 5px 10px;
-  border-top: 1px solid lighten(@base, 15%);
-}
-
-.epg-more {
-  max-height: 0px;
-  transition: max-height 500ms, padding-bottom 500ms;
-  padding-bottom: 0;
-}
-
-.epg-list-item.epg-list-item-focused .epg-more {
-  max-height: 120px;
-  transition: max-height 500ms, padding-bottom 500ms;
-  padding-bottom: 18px;
-}
-
-.epg-title {
+.epg-list-item-title {
+  font-size: 16px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 25px;
-  padding-left: 10px;
+}
+
+.epg-list-item-description {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: 26px;
+  font-size: 10px;
 }
 
 .epg-header {
@@ -103,34 +95,4 @@
   .epg-header {
     width: 100%;
   }
-}
-
-.epg-button {
-  .pstj-button(@panel);
-  line-height: 20px;
-  font-size: 20px;
-  float: left;
-}
-
-.epg-button-hover, .epg-add-button-hover {
-  .pstj-button-hover(lighten(@panel, 10%));
-}
-
-.epg-button-active, .epg-add-button-active {
-  .pstj-button-active();
-}
-
-.epg-add-button {
-  .pstj-button(@panel, white, 1px solid white, 5px 8px, absolute);
-  right: 0;
-  margin-right: 10px;
-  margin-top: 5px;
-}
-
-.epg-add-button-hover {
-  background-color: lighten(@panel, 20%);
-}
-
-.epg-add-button-active {
-  top: 5px;
 }
