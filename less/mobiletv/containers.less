@@ -76,7 +76,7 @@ body {
 
 .right {
   position: fixed;
-  left: 0;
+  left: 50%;
   top: 0;
   background-color: @base;
   padding: @panelsize 10px 0 10px;
@@ -85,28 +85,12 @@ body {
   width: 50%;
 }
 
-// iPhone5 portrait
-@media screen and (orientation:portrait) and (max-width:320px) {
-  // both right and up must be 100%
-  .right {
-    width: 100%;
-    .translation(100%);
-    .transitiontranslate(300ms);
-  }
-  .right-active {
-    .translation(0);
-  }
-  .left {
-    width: 100%;
-  }
-}
-
-
-// Should is irrelevant
 .backbutton {
   .pstj-button(@panel);
   line-height: 20px;
   font-size: 20px;
+  /* @alternate */
+  display: none;
 }
 .backbutton-hover {
   .pstj-button-hover(lighten(@panel, 10%));
@@ -116,73 +100,32 @@ body {
   .pstj-button-active();
 }
 
-// We need to be clever here: on PC and tablet that support inlined player
-// we want to use the player as it is (flash or ipad native)
-// When we are in landscape mode the player should be using the bellow style.
-// When in portrait mode we should use the style that hides and shows the player
-// When we are on android (i.e. no inline playback) we should NOT trigger the
-// player visibility and always hide it.
-// When we are in phone we should always trigger player without show
-
-
-@media screen and (orientation:landscape) and (min-width:481px) {
-	.right {
-		width: 50%;
-		.translation(100%);
-    .transitiontranslate(none);
-	}
-	.backbutton {
-		display: none;
-	}
-}
-
-@media screen and (orientation:portrait) and (min-width:321px) {
-	.right {
-		width: 100%;
-		.translation(100%);
+// Smartphones (landscape and portrait)
+// Ipad - portrait
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px),
+only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : portrait)
+{
+  // both right and up must be 100%
+  .right {
+    width: 100%;
+    left: 0;
+    .translation(100%);
     .transitiontranslate(300ms);
-	}
-  .right-active {
-    .translation(0, 0);
   }
-	.left {
-		width: 100%;
-	}
-}
-
-@media screen and (orientation:portrait) and (max-width:320px) {
-	// hide the video panel
-// 	.right {
-// 		width: 100px;
-// 		height: 100px;
-// 		overflow: hidden;
-// 		opacity: 1;
-// 		position: absolute;
-// 		top: 0;
-// 		left: 0;
-// 	}
-// 	.item-title, .description, .branding, .backbutton  {
-// 	  display: none;
-// 	}
-// 	.left {
-// 		width: 100%;
-// 	}
-}
-
-@media screen and (orientation:landscape) and (max-width:480px) {
-	.right {
-		width: 20px;
-		height: 20px;
-		overflow: hidden;
-		opacity: 0;
-		position: absolute;
-		top: 0;
-		left: 0;
-		padding: 0;
-	}
-	.left {
-		width: 100%;
-	}
+  .right-active {
+    .translation(0);
+  }
+  .left {
+    width: 100%;
+  }
+  .backbutton {
+    display: inline-block;
+  }
 }
 
 html.android {
@@ -193,16 +136,3 @@ html.android {
     width: 100%;
   }
 }
-
-/** Iphone */
-/*@media screen and (max-width:767px) {*/
-/*  .right {*/
-/*    width: 5px;*/
-/*    height: 5px;*/
-/*    opacity: 0;*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*  }*/
-/*  .left { width: 100%; }*/
-/*}*/
