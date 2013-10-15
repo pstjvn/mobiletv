@@ -188,9 +188,9 @@ mobiletv.Main.prototype.start = function() {
 
   // Hack away the auto start problem in IOS
   goog.events.listenOnce(document.body, goog.events.EventType.TOUCHSTART,
-    function(e) {
-      document.querySelector('video').play();
-    });
+      function(e) {
+        document.querySelector('video').play();
+      });
 
   // Setup default error handler. Our implementation is used to notify the
   // users visually as well.
