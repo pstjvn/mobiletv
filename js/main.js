@@ -22,7 +22,9 @@ goog.require('mobiletv.EpgScheduleList');
 goog.require('mobiletv.ErrorHandler');
 goog.require('mobiletv.Player');
 goog.require('mobiletv.RecordList');
+goog.require('mobiletv.SearchPanel');
 goog.require('mobiletv.TopPanel');
+goog.require('mobiletv.pubsub');
 goog.require('mobiletv.strings');
 goog.require('pstj.configure');
 goog.require('pstj.ds.List');
@@ -39,7 +41,6 @@ goog.require('smstb.widget.ListItem.Action');
 goog.require('smstb.widget.MobilePopup');
 goog.require('smstb.widget.NSRecordView');
 goog.require('smstb.widget.Notification');
-goog.require('smstb.widget.SearchPanel');
 
 
 
@@ -91,7 +92,7 @@ mobiletv.Main = function() {
    */
   this.schedule = new mobiletv.EpgScheduleList();
 
-  this.searchPanel = new smstb.widget.SearchPanel();
+  this.searchPanel = new mobiletv.SearchPanel();
   this.buttonPanel = new mobiletv.TopPanel();
   this.popup = new smstb.widget.MobilePopup();
 
@@ -110,14 +111,16 @@ mobiletv.Main = function() {
   this.useNativeScroll_ = !(goog.asserts.assertBoolean(
       pstj.configure.getRuntimeValue('USE_NATIVE_SCROLL',
       false, 'SYSMASTER.APPS.MOBILETV')));
-  // /**
-  //  * Flag if we should show the EPG.
-  //  * @type {boolean}
-  //  * @private
-  //  */
-  // this.useEpg_ = goog.asserts.assertBoolean(
-  //     pstj.configure.getRuntimeValue('USE_EPG', false,
-  //     'SYSMASTER.APPS.MOBILETV'));
+
+  if (pstj.configure.getRuntimeValue('PLATFORM', 'pc',
+      'SYSMASTER.APPS.MOBILETV') == 'ios') {
+    mobiletv.pubsub.channel.subscribe(mobiletv.pubsub.topic.OVERLAY,
+        function(overlayed) {
+          document.querySelector('video').style.display = (overlayed) ?
+              'none' : 'block';
+        });
+
+  }
 };
 goog.addSingletonGetter(mobiletv.Main);
 
@@ -486,6 +489,7 @@ mobiletv.Main.prototype.askConfirmation_ = function(price) {
         smstb.ds.Record.Property.CURRENCY)
   }));
   this.popup.enable(true, goog.bind(function(start) {
+    mobiletv.pubsub.channel.publish(mobiletv.pubsub.topic.OVERLAY, false);
     if (start) {
       this.startPlayback();
     } else {
@@ -495,6 +499,7 @@ mobiletv.Main.prototype.askConfirmation_ = function(price) {
       //this.notifications.setModel(this.strings_.get(0));
     }
   }, this));
+  mobiletv.pubsub.channel.publish(mobiletv.pubsub.topic.OVERLAY, true);
 };
 
 
