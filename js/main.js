@@ -140,8 +140,8 @@ goog.addSingletonGetter(mobiletv.Main);
  * @protected
  */
 mobiletv.Main.filterFn = function(text, language, type, category, item) {
-  var name = item.getProp(smstb.ds.Record.Property.NAME);
-  if (name.indexOf(text) == -1) return true;
+  var name = item.getProp(smstb.ds.Record.Property.NAME).toLowerCase();
+  if (name.indexOf(text.toLowerCase()) == -1) return true;
   if (language != '') {
     if (item.getProp(smstb.ds.Record.Property.LANGUAGE) != language) {
       return true;
