@@ -28,8 +28,9 @@
 
 .epg-delimiter {
   .epg-list-item-time {
-    font-size: 14px;
+    font-size: 12px;
     line-height: 23px;
+    background-color: @panel;
   }
 }
 
@@ -73,6 +74,10 @@
   text-overflow: ellipsis;
 }
 
+.epg-list-item-title-large {
+  line-height: @inner-epg-item-height;
+}
+
 .epg-list-item-description {
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -82,7 +87,7 @@
 }
 
 .epg-header {
-  background-color: @base;
+  background-color: darken(@base, 5%);
   width: 50%;
   border-bottom: 1px solid @panel;
   position: fixed;
@@ -91,7 +96,13 @@
   z-index: 2;
 }
 
-@media screen and (orientation:portrait) and (max-width:320px) {
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px),
+only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : portrait) {
   .epg-header {
     width: 100%;
   }
