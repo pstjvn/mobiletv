@@ -395,7 +395,7 @@ mobiletv.Main.prototype.handleFilterReady_ = function(e) {
     if (to_hide.length == this.data.getCount()) {
       // all items are hidden
       pstj.error.throwError(pstj.error.ErrorHandler.Error.RUNTIME, -1,
-        mobiletv.strings.get(mobiletv.strings.Symbol.FILTER_NO_MATCHES));
+          mobiletv.strings.get(mobiletv.strings.Symbol.FILTER_NO_MATCHES));
     }
   } else {
     var data = new pstj.ds.List();
