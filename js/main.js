@@ -40,7 +40,6 @@ goog.require('smstb.widget.ListItem');
 goog.require('smstb.widget.ListItem.Action');
 goog.require('smstb.widget.MobilePopup');
 goog.require('smstb.widget.NSRecordView');
-goog.require('smstb.widget.Notification');
 
 
 
@@ -112,8 +111,9 @@ mobiletv.Main = function() {
       pstj.configure.getRuntimeValue('USE_NATIVE_SCROLL',
       false, 'SYSMASTER.APPS.MOBILETV')));
 
-  if (pstj.configure.getRuntimeValue('PLATFORM', 'pc',
-      'SYSMASTER.APPS.MOBILETV') == 'ios') {
+  var platform = pstj.configure.getRuntimeValue('PLATFORM', 'pc',
+      'SYSMASTER.APPS.MOBILETV');
+  if (platform == 'ios') {
     mobiletv.pubsub.channel.subscribe(mobiletv.pubsub.topic.OVERLAY,
         function(overlayed) {
           document.querySelector('video').style.display = (overlayed) ?
@@ -121,6 +121,7 @@ mobiletv.Main = function() {
         });
 
   }
+  this.isAdnroid_ = (platform == 'android');
 };
 goog.addSingletonGetter(mobiletv.Main);
 
@@ -555,4 +556,8 @@ mobiletv.Main.prototype.attemptPlayback = function() {
  */
 mobiletv.Main.prototype.startPlayback = function() {
   mobiletv.Player.getInstance().setModel(this.data.getCurrent());
+  if (this.isAdnroid_) {
+    pstj.error.throwError(pstj.error.ErrorHandler.Error.RUNTIME, 10000,
+        mobiletv.strings.get(mobiletv.strings.Symbol.ANDROID_PLAYER));
+  }
 };

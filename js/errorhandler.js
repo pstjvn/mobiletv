@@ -1,7 +1,7 @@
 goog.provide('mobiletv.ErrorHandler');
 
+goog.require('mobiletv.Notification');
 goog.require('pstj.error.ErrorHandler');
-goog.require('smstb.widget.Notification');
 
 
 
@@ -12,7 +12,7 @@ goog.require('smstb.widget.Notification');
  */
 mobiletv.ErrorHandler = function() {
   goog.base(this);
-  this.notification = new smstb.widget.Notification();
+  this.notification = new mobiletv.Notification();
 };
 goog.inherits(mobiletv.ErrorHandler, pstj.error.ErrorHandler);
 goog.addSingletonGetter(mobiletv.ErrorHandler);
@@ -44,7 +44,8 @@ _.handleError = function(error_index, opt_status_id, opt_message) {
     msg += opt_message;
   }
   if (msg != '') {
-    this.notification.setModel(msg);
+    this.notification.setModel(msg,
+        (opt_status_id != -1) ? opt_status_id : undefined);
   }
 };
 
