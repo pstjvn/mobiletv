@@ -125,6 +125,17 @@ _.processEpg_ = function(data) {
   goog.array.forEach(data, _.adjustForTimeZone_);
   // set separators in the raw data objects so we know when a new date
   // starts in the list.
+  var now = goog.now();
+  var startIndex = -1;
+  for (var i = 0, len = data.length; i < len; i++) {
+    if (data[i]['id'] > now) {
+      startIndex = i - 1;
+      break;
+    }
+  }
+  if (startIndex > 0) {
+    data.splice(0, startIndex);
+  }
   _.findDateSeparators_(data);
   return null;
 };
