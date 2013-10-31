@@ -133,8 +133,13 @@ _.processEpg_ = function(data) {
       break;
     }
   }
-  if (startIndex > 0) {
-    data.splice(0, startIndex);
+
+  if (i >= len) {
+    data.length = 0;
+  } else {
+    if (startIndex > 0) {
+      data.splice(0, startIndex);
+    }
   }
   _.findDateSeparators_(data);
   return null;
