@@ -1,6 +1,32 @@
+@import "colors";
+
  /**
   * The focus anumations
   */
+
+@keyframes bookmark {
+  from {
+    background-color: @base;
+  }
+  50% {
+    background-color: @bookmarkhighlight;
+  }
+  to {
+    background-color: @base;
+  }
+}
+
+@-webkit-keyframes bookmark {
+  from {
+    background-color: @base;
+  }
+  50% {
+    background-color: @bookmarkhighlight;
+  }
+  to {
+    background-color: @base;
+  }
+}
 
  @keyframes focus {
  100% {

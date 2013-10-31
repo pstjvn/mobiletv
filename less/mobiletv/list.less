@@ -2,6 +2,7 @@
 // for the panelsize
 @import "containers";
 @import "nsview";
+@import "animations";
 
 
 // Local variables
@@ -32,6 +33,7 @@
   left: 0;
 }
 
+
 .playable-list-item-active {
   opacity: 0.75;
 }
@@ -40,6 +42,15 @@
   width: 100%;
   height: @item-inner-height;
   background-color: @base;
+}
+
+.bookmarked .inner-playable-list-item {
+  -webkit-animation-duration: 1s;
+  /* @alternate */
+  animation-duration: 1s;
+  -webkit-animation-name: bookmark;
+  /* @alternate */
+  animation-name: bookmark;
 }
 
 .playable-list-item-container {
