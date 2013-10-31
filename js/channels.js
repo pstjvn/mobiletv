@@ -3,6 +3,7 @@ goog.provide('mobiletv.Channels.EventType');
 
 goog.require('goog.events');
 goog.require('goog.events.EventTarget');
+goog.require('mobiletv.Bookmarks');
 goog.require('mobiletv.loader');
 goog.require('pstj.ds.List');
 goog.require('pstj.error.ErrorHandler');
@@ -64,6 +65,7 @@ _.handleDataLoad = function(err, data) {
         err.message);
   } else {
     if (goog.isArray(data)) {
+      this.handleFavorites(data);
       this.data = new pstj.ds.List(data);
     } else {
       pstj.error.throwError(pstj.error.ErrorHandler.Error.NO_DATA, undefined,
@@ -71,6 +73,21 @@ _.handleDataLoad = function(err, data) {
     }
   }
   this.dispatchEvent(mobiletv.Channels.EventType.LOAD);
+};
+
+
+/**
+ * Handles the data loaded from server as s pure array and augment it with the
+ * favorites from local storage.
+ * The data is operated 'in place' so the function does not return anything.
+ * @param {Array} list The list of IDs that are bookmarked.
+ * @protected
+ */
+_.handleFavorites = function(list) {
+  var cache = mobiletv.Bookmarks.getInstance().get();
+  for (var i = 0, len = list.length; i < len; i++) {
+    list[i]['isBookmarked'] = goog.array.contains(cache, list[i]['id']);
+  }
 };
 
 

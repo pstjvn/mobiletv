@@ -25,7 +25,6 @@ goog.inherits(mobiletv.SearchPanel, smstb.widget.SearchPanel);
 
 /** @inheritDoc */
 mobiletv.SearchPanel.prototype.enable = function(enable) {
-  console.log('1');
   goog.base(this, 'enable', enable);
   mobiletv.pubsub.channel.publish(mobiletv.pubsub.topic.OVERLAY, enable);
 };

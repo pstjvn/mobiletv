@@ -15,6 +15,7 @@ goog.require('goog.result.Result');
 goog.require('goog.result.SimpleResult');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.Component.EventType');
+goog.require('mobiletv.Bookmarks');
 goog.require('mobiletv.Channels');
 goog.require('mobiletv.EpgList');
 goog.require('mobiletv.EpgQueue');
@@ -34,6 +35,7 @@ goog.require('pstj.error.throwError');
 goog.require('pstj.ui.Button');
 goog.require('pstj.ui.Strings');
 goog.require('pstj.ui.TouchAgent');
+goog.require('pstj.ui.Touchable.EventType');
 goog.require('pstj.widget.MultiView');
 goog.require('smstb.ds.Record');
 goog.require('smstb.widget.ListItem');
@@ -76,6 +78,17 @@ mobiletv.Main = function() {
    * @private
    */
   this.jsonpKey_ = null;
+  /**
+   * @type {?function(Error): boolean}
+   * @private
+   */
+  this.globalErrorHandler_ = function(err) {
+    var el = document.querySelector('.loader');
+    el.innerHTML = el.innerHTML + '<br>' + err.message;
+    return true;
+  };
+  goog.events.listen(window, goog.events.EventType.ERROR,
+      this.globalErrorHandler_);
   /**
    * The epg component. Note that it is very simple by default and needs lot of
    * manual work to work properly.
@@ -122,6 +135,7 @@ mobiletv.Main = function() {
 
   }
   this.isAdnroid_ = (platform == 'android');
+
 };
 goog.addSingletonGetter(mobiletv.Main);
 
@@ -149,7 +163,13 @@ mobiletv.Main.filterFn = function(text, language, type, category, item) {
     }
   }
   if (type != '') {
-    if (item.getProp(smstb.ds.Record.Property.TYPE) != type) return true;
+    if (type == 'fav') {
+      if (!item.getProp(smstb.ds.Record.Property.BOOKMARKED)) {
+        return true;
+      }
+    } else {
+      if (item.getProp(smstb.ds.Record.Property.TYPE) != type) return true;
+    }
   }
   if (category != '') {
     if (item.getProp(smstb.ds.Record.Property.GENRE) != category) return true;
@@ -237,6 +257,26 @@ mobiletv.Main.prototype.start = function() {
           this.attemptPlayback();
         }
       }, undefined, this);
+
+  goog.events.listen(this.listElement, pstj.ui.Touchable.EventType.LONG_PRESS,
+      function(e) {
+        var item = /** @type {smstb.widget.ListItem} */ (e.target);
+        var model = item.getModel();
+        if (!goog.isNull(model)) {
+          var isbookmarked = model.getProp(smstb.ds.Record.Property.BOOKMARKED);
+          model.mutate(smstb.ds.Record.Property.BOOKMARKED, !isbookmarked);
+          if (isbookmarked) {
+            mobiletv.Bookmarks.getInstance().remove(model.getId());
+          } else {
+            mobiletv.Bookmarks.getInstance().add(model.getId());
+          }
+          pstj.error.throwError(pstj.error.ErrorHandler.Error.RUNTIME, -1,
+              ((isbookmarked) ?
+              mobiletv.strings.get(mobiletv.strings.Symbol.BOOKMARK_REMOVED) :
+              mobiletv.strings.get(mobiletv.strings.Symbol.BOOKMARK_ADDED)));
+        }
+      });
+
 
   // Start decoration.
   this.searchPanel.decorate(goog.dom.getElementByClass(
@@ -451,8 +491,11 @@ mobiletv.Main.prototype.showUI = function() {
 
     goog.dom.classlist.add(document.querySelector('html'),
         goog.getCssName('android'));
-
   }
+  // Remove global handler, we now have app error handler.
+  goog.events.unlisten(window, goog.events.EventType.ERROR,
+      this.globalErrorHandler_);
+  this.globalErrorHandler_ = null;
   goog.dom.removeNode(document.querySelector('.loader'));
 };
 
