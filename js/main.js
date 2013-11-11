@@ -20,6 +20,7 @@ goog.require('mobiletv.Channels');
 goog.require('mobiletv.EpgList');
 goog.require('mobiletv.EpgQueue');
 goog.require('mobiletv.EpgScheduleList');
+goog.require('mobiletv.EpgStruct');
 goog.require('mobiletv.ErrorHandler');
 goog.require('mobiletv.Player');
 goog.require('mobiletv.RecordList');
@@ -456,6 +457,11 @@ mobiletv.Main.prototype.handleFilterReady_ = function(e) {
  * @protected
  */
 mobiletv.Main.prototype.onDataLoad = function() {
+  this.data.forEach(function(item) {
+    if (item.getProp(smstb.ds.Record.Property.TYPE) == 'iptv') {
+      mobiletv.EpgStruct.getInstance().add(item);
+    }
+  });
   if (this.useNativeScroll_) {
     this.data.forEach(function(item) {
       var listitem = new smstb.widget.ListItem();

@@ -16,7 +16,7 @@ goog.require('goog.ui.ControlRenderer');
 goog.require('mobiletv.EpgItem');
 goog.require('mobiletv.EpgItem.EventType');
 goog.require('mobiletv.EpgQueue');
-goog.require('mobiletv.loader');
+goog.require('mobiletv.EpgStruct');
 goog.require('pstj.error.ErrorHandler.Error');
 goog.require('pstj.error.throwError');
 goog.require('pstj.ui.Button');
@@ -34,7 +34,7 @@ goog.require('smstb.ds.Record');
  */
 mobiletv.EpgList = function() {
   goog.base(this);
-  this.cache_ = smstb.ds.Epg.Cache.getInstance();
+  this.cache_ = mobiletv.EpgStruct.getInstance();
   this.epgList = new goog.ui.Component();
   this.titleLabel = new goog.ui.Component();
   this.addChild(this.titleLabel);
@@ -104,15 +104,23 @@ mobiletv.EpgList.prototype.onModelChange = function() {
           smstb.ds.Record.Property.NAME)));
 
       this.clearContent();
-      if (this.cache_.has(this.getModel().getId().toString())) {
-        this.displayEpg();
+      var data = this.cache_.get(this.getModel().getId().toString());
+      if (goog.isNull(data)) {
+        pstj.error.throwError(pstj.error.ErrorHandler.Error.SERVER, undefined,
+            'No records found for this channel');
+        this.displayInlineMessage('');
       } else {
-        this.displayInlineMessage('Loading...');
-        mobiletv.loader.getEpg(goog.asserts.assertString(this.getModel()
-            .getProp(smstb.ds.Record.Property.PLAYURL)), goog.bind(
-            this.handleEpgLoad, this, this.getModel())
-        );
+        this.displayEpg();
       }
+      // if (this.cache_.has(this.getModel().getId().toString())) {
+      //   this.displayEpg();
+      // } else {
+      //   this.displayInlineMessage('Loading...');
+      //   mobiletv.loader.getEpg(goog.asserts.assertString(this.getModel()
+      //       .getProp(smstb.ds.Record.Property.PLAYURL)), goog.bind(
+      //       this.handleEpgLoad, this, this.getModel())
+      //   );
+      // }
       this.setVisible(true);
     }
   } else {
@@ -129,28 +137,6 @@ mobiletv.EpgList.prototype.onModelChange = function() {
  */
 mobiletv.EpgList.prototype.displayInlineMessage = function(msg) {
   this.epgList.getElement().innerHTML = msg;
-};
-
-
-/**
- * Handles the loading of a new epg list for a particular record.
- * @param {pstj.ds.ListItem} record The record for which the epg is.
- * @param {?Error} err The error if one occured.
- * @param {Array.<Object>} epg The epg listing as an Array.
- * @protected
- */
-mobiletv.EpgList.prototype.handleEpgLoad = function(record, err, epg) {
-  if (err) {
-    pstj.error.throwError(pstj.error.ErrorHandler.Error.SERVER, undefined,
-        err.message);
-    this.displayInlineMessage('');
-  } else {
-    var list = new pstj.ds.List(epg);
-    this.cache_.set(record.getId().toString(), list);
-    if (this.getModel() == record) {
-      this.displayEpg();
-    }
-  }
 };
 
 
