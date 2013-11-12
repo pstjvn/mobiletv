@@ -17,10 +17,10 @@ goog.require('goog.ui.Component');
 goog.require('goog.ui.Component.EventType');
 goog.require('mobiletv.Bookmarks');
 goog.require('mobiletv.Channels');
+goog.require('mobiletv.Epg');
 goog.require('mobiletv.EpgList');
 goog.require('mobiletv.EpgQueue');
 goog.require('mobiletv.EpgScheduleList');
-goog.require('mobiletv.EpgStruct');
 goog.require('mobiletv.ErrorHandler');
 goog.require('mobiletv.Player');
 goog.require('mobiletv.RecordList');
@@ -207,6 +207,10 @@ mobiletv.Main.prototype.start = function() {
   goog.events.listenOnce(mobiletv.Channels.getInstance(),
       mobiletv.Channels.EventType.LOAD, this.handleDataLoad, undefined,
       this);
+
+  // start loading the epg
+  mobiletv.Epg.getInstance().load();
+
 
   // Hack away the auto start problem in IOS
   goog.events.listenOnce(document.body, goog.events.EventType.TOUCHSTART,
@@ -457,11 +461,6 @@ mobiletv.Main.prototype.handleFilterReady_ = function(e) {
  * @protected
  */
 mobiletv.Main.prototype.onDataLoad = function() {
-  this.data.forEach(function(item) {
-    if (item.getProp(smstb.ds.Record.Property.TYPE) == 'iptv') {
-      mobiletv.EpgStruct.getInstance().add(item);
-    }
-  });
   if (this.useNativeScroll_) {
     this.data.forEach(function(item) {
       var listitem = new smstb.widget.ListItem();

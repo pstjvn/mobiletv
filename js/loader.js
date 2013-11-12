@@ -60,12 +60,28 @@ _.loadFakeData = function(data) {
  *
  * @param {string} playUrl The URL of the record, used to generate the URL of
  * the EPG records.
- * @param {function(Error, ?): undefined} callback Handler got the data
+ * @param {function(?Error, ?): undefined} callback Handler got the data
  * received.
  */
 _.getEpg = function(playUrl, callback) {
   var url = playUrl + _.generateEpgType();
   var handler = goog.partial(_.epgHandler_, callback);
+  (new goog.net.Jsonp(url)).send(null, handler, handler);
+};
+
+
+/**
+ * Getter for ALL EPG records. The epg records are guaranteed to be
+ * sorted by the channel ID number.
+ *
+ * @param {function(?Error, ?): undefined} callback Handler for the data which
+ * is an array of objects in our use case.
+ */
+_.getEpgBulk = function(callback) {
+  var url = goog.asserts.assertString(pstj.configure.getRuntimeValue(
+      'DATA_URL', '/cgi-bin/if.cgi', 'SYSMASTER.APPS.MOBILETV'));
+  url = url + '?run=hlsurl&obj_id=0' + _.generateEpgType();
+  var handler = goog.bind(_.handleBulkLoad, null, callback);
   (new goog.net.Jsonp(url)).send(null, handler, handler);
 };
 
@@ -79,6 +95,46 @@ _.getEpg = function(playUrl, callback) {
  */
 _.generateEpgType = function() {
   return '&t=52';
+};
+
+
+/**
+ * Handler for the loading of the buld epg data.
+ * @param {function(?Error, ?Object): undefined} callback The callback is the
+ * function to handle the data (object with keys being the ID of the channel
+ * and the value the epg).
+ * @param {?} data The data received from the server.
+ */
+_.handleBulkLoad = function(callback, data) {
+  if (goog.isNull(data)) {
+    callback(new Error('Server timeout while loading EPG'), null);
+  } else {
+    if (goog.isArray(data)) {
+      // Here the data comes mixed in for all channels, first we need to
+      // separate it into object.
+      var result = {};
+      var last = '0';
+      for (var i = 0, len = data.length; i < len; i++) {
+        var key = data[i]['channelid'].toString();
+        if (key != last) {
+          last = key;
+          result[key] = [];
+        }
+        result[key].push(data[i]);
+      }
+      var err = null;
+      for (var key in result) {
+        err = _.processEpg_(result[key]);
+        if (!goog.isNull(err)) {
+          callback(err, null);
+          break;
+        }
+      }
+      callback(null, result);
+    } else {
+      callback(new Error('Invalid server response'), null);
+    }
+  }
 };
 
 

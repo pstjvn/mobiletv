@@ -9,14 +9,16 @@
 goog.provide('mobiletv.EpgList');
 
 goog.require('goog.array');
+goog.require('goog.async.nextTick');
+goog.require('goog.style');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.Component.EventType');
 goog.require('goog.ui.Control');
 goog.require('goog.ui.ControlRenderer');
+goog.require('mobiletv.Epg');
 goog.require('mobiletv.EpgItem');
 goog.require('mobiletv.EpgItem.EventType');
 goog.require('mobiletv.EpgQueue');
-goog.require('mobiletv.EpgStruct');
 goog.require('pstj.error.ErrorHandler.Error');
 goog.require('pstj.error.throwError');
 goog.require('pstj.ui.Button');
@@ -34,7 +36,15 @@ goog.require('smstb.ds.Record');
  */
 mobiletv.EpgList = function() {
   goog.base(this);
-  this.cache_ = mobiletv.EpgStruct.getInstance();
+  /**
+   * Cache for the visual size of the epg record item in the view.
+   * It is used to calculate the scroll offset when displaying epg for a
+   * channel.
+   * @type {number}
+   * @private
+   */
+  this.listItemHeight_ = -1;
+  this.cache_ = mobiletv.Epg.getInstance();
   this.epgList = new goog.ui.Component();
   this.titleLabel = new goog.ui.Component();
   this.addChild(this.titleLabel);
@@ -157,6 +167,14 @@ mobiletv.EpgList.prototype.displayEpg = function() {
       var item = new mobiletv.EpgItem();
       item.setModel(listitem);
       this.epgList.addChild(item, true);
+    }, this);
+    var idx = list.getCurrentIndex();
+    goog.async.nextTick(function() {
+      if (this.listItemHeight_ == -1) {
+        this.listItemHeight_ = goog.style.getSize(
+            this.epgList.getChildAt(0).getElement()).height;
+      }
+      window['scrollTo'](0, this.listItemHeight_ * idx);
     }, this);
   }
 };
