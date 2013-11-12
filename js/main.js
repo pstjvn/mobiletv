@@ -83,11 +83,12 @@ mobiletv.Main = function() {
    * @type {?function(Error): boolean}
    * @private
    */
-  this.globalErrorHandler_ = function(err) {
+  this.globalErrorHandler_ = (function(err) {
     var el = document.querySelector('.loader');
     el.innerHTML = el.innerHTML + '<br>' + err.message;
     return true;
-  };
+  });
+
   goog.events.listen(window, goog.events.EventType.ERROR,
       this.globalErrorHandler_);
   /**
