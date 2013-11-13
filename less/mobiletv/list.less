@@ -11,6 +11,10 @@
 @item-image-width: 149px;
 @item-image-height: 113px;
 @item-image-border: 2px;
+@item-description-height: 64px;
+
+@item-epg-widget-height: (@item-description-height / 2);
+
 
 
 .playable-list {
@@ -80,9 +84,58 @@
 .playable-list-item-description {
   overflow: hidden;
   font-size: 12px;
-  height: 64px;
+  height: @item-description-height;
   line-height: 16px;
   padding-right: 4px;
+}
+
+.playable-list-item-epg-widget {
+  overflow: hidden;
+  height: @item-description-height;
+  padding-right: 4px;
+  .transition(none);
+}
+
+.playable-list-item-epg-widget.translate {
+  -webkit-transition: -webkit-transform 1s;
+  /* @alternate */
+  -moz-transition: -moz-transform 1s;
+  /* @alternate */
+  -ms-transition: -ms-transform 1s;
+  /* @alternate */
+  transition: transform 1s;
+  .translation(0, -@item-epg-widget-height);
+}
+
+.epg-widget-item {
+  position: relative;
+  height: @item-epg-widget-height;
+}
+
+.epg-widget-item-wrapper {
+  width: 100%;
+  padding-left: 60px;
+}
+
+.epg-widget-item-name,
+.epg-widget-item-start-time  {
+  font-size: 16px;
+  line-height: @item-epg-widget-height;
+}
+
+.epg-widget-item-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.epg-widget-item-start-time {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: @item-epg-widget-height;
+  text-align: center;
 }
 
 .playable-list-item-price {

@@ -7,6 +7,8 @@ goog.provide('mobiletv.Main');
 
 goog.require('goog.array');
 goog.require('goog.asserts');
+goog.require('goog.async.Deferred');
+goog.require('goog.async.DeferredList');
 goog.require('goog.dom');
 goog.require('goog.dom.ViewportSizeMonitor');
 goog.require('goog.dom.classlist');
@@ -23,6 +25,7 @@ goog.require('mobiletv.EpgQueue');
 goog.require('mobiletv.EpgScheduleList');
 goog.require('mobiletv.ErrorHandler');
 goog.require('mobiletv.Player');
+goog.require('mobiletv.Record');
 goog.require('mobiletv.RecordList');
 goog.require('mobiletv.SearchPanel');
 goog.require('mobiletv.TopPanel');
@@ -203,14 +206,20 @@ mobiletv.Main.prototype.start = function() {
         });
   }
 
+  var channels = new goog.async.Deferred();
+
+  (goog.async.DeferredList.gatherResults(
+      [channels, mobiletv.Epg.getInstance().load()])).addCallback(
+      this.handleDataLoad, this);
+
+
   // Handle channel load ready event. When this happen we are ready to render
   // the record view.
   goog.events.listenOnce(mobiletv.Channels.getInstance(),
-      mobiletv.Channels.EventType.LOAD, this.handleDataLoad, undefined,
-      this);
+      mobiletv.Channels.EventType.LOAD, function() {
+        channels.callback();
+      }, undefined, this);
 
-  // start loading the epg
-  mobiletv.Epg.getInstance().load();
 
 
   // Hack away the auto start problem in IOS
@@ -464,7 +473,8 @@ mobiletv.Main.prototype.handleFilterReady_ = function(e) {
 mobiletv.Main.prototype.onDataLoad = function() {
   if (this.useNativeScroll_) {
     this.data.forEach(function(item) {
-      var listitem = new smstb.widget.ListItem();
+      // var listitem = new smstb.widget.ListItem();
+      var listitem = new mobiletv.Record();
       listitem.setModel(item);
       this.listElement.addChild(listitem, true);
       pstj.ui.TouchAgent.getInstance().attach(listitem);

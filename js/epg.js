@@ -1,7 +1,9 @@
 goog.provide('mobiletv.Epg');
 
 goog.require('goog.asserts');
+goog.require('goog.async.Deferred');
 goog.require('goog.async.Delay');
+goog.require('goog.async.nextTick');
 goog.require('mobiletv.loader');
 goog.require('pstj.ds.Cache');
 goog.require('pstj.ds.List');
@@ -43,6 +45,12 @@ mobiletv.Epg = function() {
    * @private
    */
   this.epgUpdateDelay_ = new goog.async.Delay(this.epgUpdate, 60000, this);
+  /**
+   * Provides the deferred to be used to monitor the load progress.
+   * @type {goog.async.Deferred}
+   * @private
+   */
+  this.loadPromise_ = new goog.async.Deferred();
 };
 goog.addSingletonGetter(mobiletv.Epg);
 
@@ -103,11 +111,17 @@ _.isDataExpired = function() {
 
 /**
  * Starts loading the data from the server (if needed).
+ * @return {goog.async.Deferred} The deferred object for the load process.
  */
 _.load = function() {
   if (this.isDataExpired()) {
     mobiletv.loader.getEpgBulk(goog.bind(this.handleLoad, this));
+  } else {
+    goog.async.nextTick(function() {
+      this.loadPromise_.callback();
+    }, this);
   }
+  return this.loadPromise_;
 };
 
 
@@ -158,6 +172,7 @@ _.handleLoad = function(err, epg) {
     }
     this.setupTasks();
   }
+  this.loadPromise_.callback();
   // currently we ignore the error as there is nothing we can do that makes
   // sense.
 };
