@@ -339,7 +339,7 @@ check:
 
 size: compile
 	gzip -9  $(BUILDDIR)/$(NS).build.js
-	echo 'Comiler size gzipped: ' `ls -al $(BUILDDIR)/$(NS).build.js.gz`
+	echo '>>>>Comiler size gzipped: ' `ls -al $(BUILDDIR)/$(NS).build.js.gz`
 	rm $(BUILDDIR)/$(NS).build.js.gz
 	python $(LIBRARY_PATH)/closure/bin/build/closurebuilder.py \
 	-n $(NS) \
@@ -351,9 +351,9 @@ size: compile
 	-f --define='goog.DEBUG=$(DEBUG)' \
 	-c $(COMPILER_JAR) \
 	--output_file=$(BUILDDIR)/$(NS).build.js
-	echo 'Original size: ' `ls -al $(BUILDDIR)/$(NS).build.js`
+	echo '>>>>Original size: ' `ls -al $(BUILDDIR)/$(NS).build.js`
 	gzip -9  $(BUILDDIR)/$(NS).build.js
-	echo 'Original size gzipped: ' `ls -al $(BUILDDIR)/$(NS).build.js.gz`
+	echo '>>>>Original size gzipped: ' `ls -al $(BUILDDIR)/$(NS).build.js.gz`
 	rm $(BUILDDIR)/$(NS).build.js.gz
 
 #### Calls specific to library development (i.e. no application code) #####
