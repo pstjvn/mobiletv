@@ -240,14 +240,14 @@ mobiletv.Main.prototype.start = function() {
   if (this.useNativeScroll_) {
     this.listElement = new mobiletv.RecordList();
   } else {
-    this.listElement = new smstb.widget.NSRecordView();
+    this.listElement = new mobiletv.ScrollView();
     // window size monitor bind and resize.
     goog.events.listen(goog.dom.ViewportSizeMonitor.getInstanceForWindow(),
         goog.events.EventType.RESIZE,
         function(e) {
           this.listElement.getElement().style.height = (
               window.innerHeight - this.panelSize_) + 'px';
-          this.listElement.recalculateSizes();
+          //this.listElement.recalculateSizes();
         }, undefined, this);
   }
 
