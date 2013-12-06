@@ -17,6 +17,7 @@ goog.require('smstb.widget.RecordRenderer');
  */
 mobiletv.ScrollView = function(opt_renderer, opt_domHelper) {
   goog.base(this, opt_renderer, opt_domHelper);
+  this.setCellHeight(117);
 };
 goog.inherits(mobiletv.ScrollView, pstj.ui.ScrollView);
 
