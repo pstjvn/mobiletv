@@ -27,6 +27,7 @@ goog.require('mobiletv.ErrorHandler');
 goog.require('mobiletv.Player');
 goog.require('mobiletv.Record');
 goog.require('mobiletv.RecordList');
+goog.require('mobiletv.ScrollView');
 goog.require('mobiletv.SearchPanel');
 goog.require('mobiletv.TopPanel');
 goog.require('mobiletv.pubsub');
@@ -45,7 +46,7 @@ goog.require('smstb.ds.Record');
 goog.require('smstb.widget.ListItem');
 goog.require('smstb.widget.ListItem.Action');
 goog.require('smstb.widget.MobilePopup');
-goog.require('smstb.widget.NSRecordView');
+//goog.require('smstb.widget.NSRecordView');
 
 
 
@@ -83,17 +84,22 @@ mobiletv.Main = function() {
    */
   this.jsonpKey_ = null;
   /**
-   * @type {?function(Error): boolean}
+   * @type {?function(?): boolean}
    * @private
    */
-  this.globalErrorHandler_ = (function(err) {
+  this.globalErrorHandler_ = (function() {
     var el = document.querySelector('.loader');
-    el.innerHTML = el.innerHTML + '<br>' + err.message;
+    el.innerHTML = el.innerHTML + '<br>' + arguments[0];
     return true;
   });
 
   goog.events.listen(window, goog.events.EventType.ERROR,
       this.globalErrorHandler_);
+  // window.onerror = function(err) {
+  //   var el = document.querySelector('.loader');
+  //   el.innerHTML = el.innerHTML + '<br>' + ('MSG: ' + err);
+  //   return true;
+  // };
   /**
    * The epg component. Note that it is very simple by default and needs lot of
    * manual work to work properly.
@@ -240,15 +246,20 @@ mobiletv.Main.prototype.start = function() {
   if (this.useNativeScroll_) {
     this.listElement = new mobiletv.RecordList();
   } else {
+    // Make the container overflow hidden
+    goog.dom.classlist.add(
+      goog.dom.getElementByClass(goog.getCssName('scrollview-container')),
+      goog.getCssName('contain'));
+
     this.listElement = new mobiletv.ScrollView();
     // window size monitor bind and resize.
-    goog.events.listen(goog.dom.ViewportSizeMonitor.getInstanceForWindow(),
-        goog.events.EventType.RESIZE,
-        function(e) {
-          this.listElement.getElement().style.height = (
-              window.innerHeight - this.panelSize_) + 'px';
-          //this.listElement.recalculateSizes();
-        }, undefined, this);
+    // goog.events.listen(goog.dom.ViewportSizeMonitor.getInstanceForWindow(),
+    //     goog.events.EventType.RESIZE,
+    //     function(e) {
+    //       this.listElement.getElement().style.height = (
+    //           window.innerHeight - this.panelSize_) + 'px';
+    //       //this.listElement.recalculateSizes();
+    //     }, undefined, this);
   }
 
   // Attach items to the multi view.
@@ -318,9 +329,9 @@ mobiletv.Main.prototype.start = function() {
   this.listElement.decorate(goog.dom.getElementByClass(
       goog.getCssName('list')));
 
-  if (!this.useNativeScroll_) {
-    this.listElement.generateRows();
-  }
+  // if (!this.useNativeScroll_) {
+  //   this.listElement.generateRows();
+  // }
 
   // Decorate and hide the EPG and SCHEDULE views
   this.epg.decorate(goog.dom.getElementByClass(goog.getCssName(
