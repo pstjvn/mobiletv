@@ -89,17 +89,21 @@ mobiletv.Main = function() {
    */
   this.globalErrorHandler_ = (function() {
     var el = document.querySelector('.loader');
-    el.innerHTML = el.innerHTML + '<br>' + arguments[0];
+    el.innerHTML = el.innerHTML + '<br>' + 'Critical error occured';
     return true;
-  });
 
-  goog.events.listen(window, goog.events.EventType.ERROR,
-      this.globalErrorHandler_);
-  // window.onerror = function(err) {
-  //   var el = document.querySelector('.loader');
-  //   el.innerHTML = el.innerHTML + '<br>' + ('MSG: ' + err);
-  //   return true;
-  // };
+  });
+  // To debug local storage error in webview put this on top of the compile
+  if (goog.DEBUG) {
+    window.onerror = function(msg, file, line) {
+      var el = document.querySelector('.loader');
+      el.innerHTML = el.innerHTML + '<br>' + msg + '<br>' + line;
+      return true;
+    };
+  } else {
+    goog.events.listen(window, goog.events.EventType.ERROR,
+        this.globalErrorHandler_);
+  }
   /**
    * The epg component. Note that it is very simple by default and needs lot of
    * manual work to work properly.
