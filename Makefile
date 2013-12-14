@@ -268,6 +268,20 @@ cssbuild: lessc
   less/$(NS).css
 	rm less/$(NS).css
 
+simple: cssbuild tpl deps
+	python2.7 $(LIBRARY_PATH)/closure/bin/build/closurebuilder.py \
+	-n $(NS) \
+	${SOURCES} \
+	${JSFILES} \
+	-f --js=build/cssmap-build.js \
+	-f --flagfile=options/compile.ini \
+	-f --compilation_level=WHITESPACE_ONLY \
+	-o script \
+	-f --define='goog.LOCALE="$(LOCALE)"' \
+	-f --define='goog.DEBUG=$(DEBUG)' \
+	-c $(COMPILER_JAR) \
+	--output_file=$(BUILDDIR)/$(NS).build.js
+
 compile: cssbuild tpl deps
 	python2.7 $(LIBRARY_PATH)/closure/bin/build/closurebuilder.py \
 	-n $(NS) \
