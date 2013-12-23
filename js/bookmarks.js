@@ -1,5 +1,6 @@
 goog.provide('mobiletv.Bookmarks');
 
+goog.require('goog.async.nextTick');
 goog.require('smstb.persistence.TypedList');
 
 
