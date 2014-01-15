@@ -18,7 +18,7 @@ body {
 }
 
 /** This is the top panel with the controlling icons */
-.panel, .search-panel {
+.panel, .search-panel, div {
   width: 100%;
   height: @panelsize;
   position: fixed;
@@ -57,6 +57,17 @@ body {
   .notice {
     font-size: 30px;
   }
+}
+
+// Make the long touch-able panels not selectable and not
+// zoomable (zoom glass in IOS)
+.up, .right {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 
 // The main container (holds only left hand list).
