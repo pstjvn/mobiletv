@@ -58,6 +58,7 @@ TEMPLATES_SOURCE_DIR=templates/
 #libs
 PSTJ=../pstj/
 SMJS=../smjs/
+GCW=../gcw/
 
 # if the build should use goog debug
 DEBUG=true
@@ -87,14 +88,17 @@ define SOURCES
 --root=$(TEMPLATE_TMP_DIR)/$(LOCALE)/ \
 --root=$(PSTJ) \
 --root=$(SMJS) \
+--root=$(GCW) \
 --root=$(TEMPLATES_PATH) \
 --root=$(LIBRARY_PATH)
 endef
 
 define JSFILES
 -f --js=build/deps.js \
+-f --js=$(TEMPLATES_PATH)/deps.js \
 -f --js=$(PSTJ)/deps.js \
--f --js=$(SMJS)/deps.js
+-f --js=$(SMJS)/deps.js \
+-f --js=$(GCW)/deps.js
 endef
 
 
@@ -110,6 +114,7 @@ define INDEXFILE
 
 		<script src="build/$(NS)-cssmap.js"></script>
 		<script src="../../library/closure/goog/base.js"></script>
+		<script src="../../templates/deps.js"></script>
 		<script src="../pstj/deps.js"></script>
 		<script src="build/deps.js"></script>
 		<script>goog.require('$(NS)');</script>
@@ -215,7 +220,8 @@ all: css tpl deps
 FILE?=-r js/
 
 lint:
-	gjslint  --jslint_error=all --strict --max_line_length 80 $(FILE)
+	gjslint  --jslint_error=all --strict --max_line_length 80 \
+	-e "vendor,tpl" $(FILE)
 
 ################ Application level setups #####################
 # write dep file in js/build/
@@ -223,7 +229,6 @@ lint:
 # have all the provides needed for the dependencies.
 deps:
 	python $(DEPSWRITER_BIN) \
-	--root_with_prefix="$(TEMPLATES_PATH) ../$(TEMPLATES_PATH)" \
 	--root_with_prefix="js ../../../$(APPS_PATH)$(APPDIR)/js" \
 	--root_with_prefix="$(TEMPLATE_TMP_DIR)/$(LOCALE) ../../../$(APPS_PATH)/$(APPDIR)/$(TEMPLATE_TMP_DIR)/$(LOCALE)/" \
 	--output_file="$(BUILDDIR)/deps.js"
