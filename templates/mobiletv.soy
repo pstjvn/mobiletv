@@ -180,7 +180,7 @@
  * @param title The name of the program.
  * @param description The program description.
  * @param delimiter The day it is starting, formatted appropriately or an ampty string.
- * @isscheduled True if we want to render scheduled
+ * @param nols If true - hide the button for adding the epg to queue.
  */
 {template .epgItem}
   <div class="{css epg-list-item}
@@ -201,7 +201,9 @@
           <div class="{css epg-list-item-title}">{$title}</div>
         {/if}
         <div class="{css epg-list-item-description}">{$description}</div>
-        <div class="{css epg-list-item-button}"></div>
+        {if $nols != true}
+          <div class="{css epg-list-item-button}"></div>
+        {/if}
       </div>
     </div>
   </div>

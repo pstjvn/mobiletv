@@ -21,6 +21,7 @@ goog.require('mobiletv.EpgItem.EventType');
 goog.require('mobiletv.EpgQueue');
 goog.require('pstj.error.ErrorHandler.Error');
 goog.require('pstj.error.throwError');
+goog.require('pstj.configure');
 goog.require('pstj.ui.Button');
 goog.require('pstj.ui.CustomButtonRenderer');
 goog.require('pstj.widget.MultiViewWrapper');
@@ -65,8 +66,12 @@ mobiletv.EpgList.prototype.decorateInternal = function(el) {
 /** @inheritDoc */
 mobiletv.EpgList.prototype.enterDocument = function() {
   goog.base(this, 'enterDocument');
-  this.getHandler().listen(this, mobiletv.EpgItem.EventType.ADD,
-      this.handleEpgAdd);
+  if (!goog.asserts.assertBoolean(pstj.configure.getRuntimeValue(
+      'NO_LOCAL_STORAGE', false, 'SYSMASTER.APPS.MOBILETV'))) {
+
+    this.getHandler().listen(this, mobiletv.EpgItem.EventType.ADD,
+        this.handleEpgAdd);
+  }
 };
 
 

@@ -112,12 +112,16 @@ mobiletv.Main = function() {
    * @protected
    */
   this.epg = new mobiletv.EpgList();
+
   /**
    * Ference to the schdule view to be used.
    * @type {mobiletv.EpgScheduleList}
    * @protected
    */
-  this.schedule = new mobiletv.EpgScheduleList();
+  if (!goog.asserts.assertBoolean(pstj.configure.getRuntimeValue(
+      'NO_LOCAL_STORAGE', false, 'SYSMASTER.APPS.MOBILETV'))) {
+    this.schedule = new mobiletv.EpgScheduleList();
+  }
 
   this.searchPanel = new mobiletv.SearchPanel();
   this.buttonPanel = new mobiletv.TopPanel();
@@ -244,7 +248,10 @@ mobiletv.Main.prototype.start = function() {
       goog.getCssName('notifications')));
 
   // setup the epg queue from the stored local data.
-  mobiletv.EpgQueue.getInstance();
+  if (!goog.asserts.assertBoolean(pstj.configure.getRuntimeValue(
+      'NO_LOCAL_STORAGE', false, 'SYSMASTER.APPS.MOBILETV'))) {
+    mobiletv.EpgQueue.getInstance();
+  }
 
   // Construct instances of components. Differentiate between native and NSView
   if (this.useNativeScroll_) {
@@ -269,7 +276,10 @@ mobiletv.Main.prototype.start = function() {
   // Attach items to the multi view.
   this.multiView.addChild(this.listElement);
   this.multiView.addChild(this.epg);
-  this.multiView.addChild(this.schedule);
+  if (!goog.asserts.assertBoolean(pstj.configure.getRuntimeValue(
+      'NO_LOCAL_STORAGE', false, 'SYSMASTER.APPS.MOBILETV'))) {
+    this.multiView.addChild(this.schedule);
+  }
 
   // Handle activation for items. Here we want to decide if we are to
   // play the item or show its EPG details.
@@ -341,10 +351,13 @@ mobiletv.Main.prototype.start = function() {
   this.epg.decorate(goog.dom.getElementByClass(goog.getCssName(
       'epg-container')));
   this.epg.setVisible(false, true);
-  this.schedule.decorate(goog.dom.getElementByClass(goog.getCssName(
-      'epg-schedule-list')));
-  this.schedule.setModel(mobiletv.EpgQueue.getInstance().list);
-  this.schedule.setVisible(false, true);
+  if (!goog.asserts.assertBoolean(pstj.configure.getRuntimeValue(
+      'NO_LOCAL_STORAGE', false, 'SYSMASTER.APPS.MOBILETV'))) {
+    this.schedule.decorate(goog.dom.getElementByClass(goog.getCssName(
+        'epg-schedule-list')));
+    this.schedule.setModel(mobiletv.EpgQueue.getInstance().list);
+    this.schedule.setVisible(false, true);
+  }
 
 
   // Finally - decorate the multiview
@@ -400,8 +413,11 @@ mobiletv.Main.prototype.checkButtonAction_ = function(e) {
       this.buttonPanel.toggleDrawer();
       break;
     case 'schedule':
-      this.buttonPanel.toggleDrawer();
-      this.schedule.setVisible(true);
+      if (!goog.asserts.assertBoolean(pstj.configure.getRuntimeValue(
+          'NO_LOCAL_STORAGE', false, 'SYSMASTER.APPS.MOBILETV'))) {
+        this.buttonPanel.toggleDrawer();
+        this.schedule.setVisible(true);
+      }
       break;
   }
 };

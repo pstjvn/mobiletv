@@ -83,7 +83,9 @@ _.generateTemplateData = function(control) {
         smstb.ds.Epg.Property.START_TIME), this.timeFormat),
     delimiter: (model.getProp(smstb.ds.Epg.Property.IS_DATE_DELIMITER)) ?
         pstj.date.utils.renderTimeSafe(model.getProp(
-        smstb.ds.Epg.Property.START_TIME), this.dateBorderFormat) : ''
+        smstb.ds.Epg.Property.START_TIME), this.dateBorderFormat) : '',
+    nols: goog.asserts.assertBoolean(pstj.configure.getRuntimeValue(
+      'NO_LOCAL_STORAGE', false, 'SYSMASTER.APPS.MOBILETV'))
   };
 };
 
@@ -114,12 +116,15 @@ mobiletv.EpgItem = function(opt_renderer, opt_button_renderer) {
    * @type {pstj.ui.Button}
    * @protected
    */
-  this.button = new pstj.ui.Button(opt_button_renderer ||
-      /** @type {pstj.ui.CustomButtonRenderer} */(
-      goog.ui.ControlRenderer.getCustomRenderer(
-          pstj.ui.EmbededButtonRenderer,
-          goog.getCssName('epg-list-item-button'))));
-  this.addChild(this.button);
+  if (!goog.asserts.assertBoolean(pstj.configure.getRuntimeValue(
+      'NO_LOCAL_STORAGE', false, 'SYSMASTER.APPS.MOBILETV'))) {
+    this.button = new pstj.ui.Button(opt_button_renderer ||
+        /** @type {pstj.ui.CustomButtonRenderer} */(
+        goog.ui.ControlRenderer.getCustomRenderer(
+            pstj.ui.EmbededButtonRenderer,
+            goog.getCssName('epg-list-item-button'))));
+    this.addChild(this.button);
+  }
 };
 goog.inherits(mobiletv.EpgItem, goog.ui.Control);
 
@@ -141,11 +146,14 @@ var _ = mobiletv.EpgItem.prototype;
 /** @inheritDoc */
 _.enterDocument = function() {
   goog.base(this, 'enterDocument');
-  this.button.decorate(this.getElementByClass(this.button.getRenderer()
-      .getCssClass()));
-  this.button.setValue(this.isScheduled_ ? '-' : '+');
-  this.getHandler().listen(this.button, goog.ui.Component.EventType.ACTION,
-      this.handleButtonAction);
+  if (!goog.asserts.assertBoolean(pstj.configure.getRuntimeValue(
+      'NO_LOCAL_STORAGE', false, 'SYSMASTER.APPS.MOBILETV'))) {
+    this.button.decorate(this.getElementByClass(this.button.getRenderer()
+        .getCssClass()));
+    this.button.setValue(this.isScheduled_ ? '-' : '+');
+    this.getHandler().listen(this.button, goog.ui.Component.EventType.ACTION,
+        this.handleButtonAction);
+  }
 
 };
 
@@ -170,7 +178,10 @@ _.handleButtonAction = function(e) {
  */
 _.setScheduledState = function(scheduled) {
   if (this.isScheduled_ != scheduled && this.isInDocument()) {
-    this.button.setValue(scheduled ? '-' : '+');
+    if (!goog.asserts.assertBoolean(pstj.configure.getRuntimeValue(
+        'NO_LOCAL_STORAGE', false, 'SYSMASTER.APPS.MOBILETV'))) {
+      this.button.setValue(scheduled ? '-' : '+');
+    }
   }
   this.isScheduled_ = scheduled;
 };
