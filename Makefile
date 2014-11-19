@@ -55,12 +55,12 @@ TEMPLATE_TMP_DIR=tpl/
 # The sources of the templates.
 TEMPLATES_SOURCE_DIR=templates/
 
-#libs
+# common library paths
 PSTJ=../pstj/
 SMJS=../smjs/
 GCW=../gcw/
 
-# if the build should use goog debug
+# if the build should use goog debug, bu default we want to use debug
 DEBUG=true
 
 ########################################
@@ -70,30 +70,72 @@ LIBRARY_PATH=../../library/
 DEPSWRITER_BIN=$(LIBRARY_PATH)closure/bin/build/depswriter.py
 TEMPLATES_PATH=../../templates/
 APPS_PATH=apps/
+
+# The jar execs
 COMPILER_JAR=../../compiler/compiler.jar
-EXTERNS_PATH=../../externs/
-STYLES_COMPILER_JAR=../../stylesheets/closure-stylesheets.jar
 SOY_COMPILER_JAR=../../templates/SoyToJsSrcCompiler.jar
 MESSAGE_EXTRACTOR_JAR=../../templates/SoyMsgExtractor.jar
-CLOSURE_BUILDER ?= ../../library/closure/bin/build/closurebuilder.py
+STYLES_COMPILER_JAR=../../stylesheets/closure-stylesheets.jar
 
-define newline
+EXTERNS_PATH=../../externs/
+CLOSURE_BUILDER=$(LIBRARY_PATH)closure/bin/build/closurebuilder.py
 
 
+# Inlude for all javascript sources we know of. Note that the compiler will
+# reorder them and will only use the files that are actually required. Make sure
+# to exclude any *_test.js* files and include only javascript files. By default
+# the files that do not use require/provide will be excluded from the compilation.
+define JSSOURCES
+--js="js/**.js" \
+--js="tpl/$(LOCALE)/**.js" \
+--js="../pstj/animation/**.js" \
+--js="../pstj/color/**.js" \
+--js="../pstj/config/**.js" \
+--js="../pstj/control/**.js" \
+--js="../pstj/date/**.js" \
+--js="../pstj/debug/**.js" \
+--js="../pstj/ds/**.js" \
+--js="../pstj/error/**.js" \
+--js="../pstj/fx/**.js" \
+--js="../pstj/graphics/**.js" \
+--js="../pstj/material/**.js" \
+--js="../pstj/math/**.js" \
+--js="../pstj/mvc/**.js" \
+--js="../pstj/ng/**.js" \
+--js="../pstj/object/**.js" \
+--js="../pstj/resource/**.js" \
+--js="../pstj/storage/**.js" \
+--js="../pstj/style/**.js" \
+--js="../pstj/themes/**.js" \
+--js="../pstj/ui/**.js" \
+--js="../smjs/ds/**.js" \
+--js="../smjs/persistence/**.js" \
+--js="../smjs/player/**.js" \
+--js="../smjs/remotecontrol/**.js" \
+--js="../smjs/templates/**.js" \
+--js="../smjs/transport/**.js" \
+--js="../smjs/tv/**.js" \
+--js="../smjs/widgets/**.js" \
+--js="../../templates/soyutils_usegoog.js" \
+--js="../../library/closure/goog/**.js" \
+--js="!**_test.js" \
+--js="../../library/third_party/closure/goog/mochikit/async/deferred.js" \
+--js="../../library/third_party/closure/goog/mochikit/async/deferredlist.js"
 endef
 
-
-define SOURCES
+# Following definitions are used only by the closure builder script.
+# We use it instead of the closure compiler to produce filelist for the
+# compiler to build from as the former works much faster.
+define JSROOTS
 --root=js/ \
 --root=$(TEMPLATE_TMP_DIR)/$(LOCALE)/ \
 --root=$(PSTJ) \
 --root=$(SMJS) \
---root=$(GCW) \
 --root=$(TEMPLATES_PATH) \
 --root=$(LIBRARY_PATH)
 endef
 
-define JSFILES
+define JSDEPS
 -f --js=build/deps.js \
 -f --js=$(TEMPLATES_PATH)/deps.js \
 -f --js=$(PSTJ)/deps.js \
@@ -101,141 +143,119 @@ define JSFILES
 -f --js=$(GCW)/deps.js
 endef
 
+# Define all templates possible to be used.
+TERMPLATES_SOURCES = templates/*.soy ../pstj/templates/*.soy ../smjs/templates/*.soy
 
-define INDEXFILE
-<!doctype html>
-<html>
-	<head>
-		<title></title>
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<link rel="stylesheet" href="build/$(NS).css" type="text/css">
-	</head>
-	<body>
-
-		<script src="build/$(NS)-cssmap.js"></script>
-		<script src="../../library/closure/goog/base.js"></script>
-		<script src="../../templates/deps.js"></script>
-		<script src="../pstj/deps.js"></script>
-		<script src="build/deps.js"></script>
-		<script>goog.require('$(NS)');</script>
-
-		<!--
-
-		<script src="build/$(NS).build.js"></script>
-
-		-->
-	</body>
-</html>
-endef
-
-define APPFILE
-goog.provide('$(NS)');
-$(NS) = function() {};
-endef
-
-# Make sure we use all warnings for the lib files.
-define BUILDOPTIONSFILE
---compilation_level=ADVANCED_OPTIMIZATIONS
+# Default compiler call. Tweak this in the compilation steps.
+define COMPILER
+java -jar $(COMPILER_JAR) \
+--charset=UTF-8 \
+--closure_entry_point=$(NS) \
+--define='goog.LOCALE="$(LOCALE)"' \
+--define='goog.DEBUG=$(DEBUG)' \
+--flagfile=options/compile.ini \
+--manage_closure_dependencies \
+--process_closure_primitives \
+--use_types_for_optimization \
 --warning_level=VERBOSE
---js=../../library/closure/goog/deps.js
---charset UTF-8
---use_types_for_optimization
---jscomp_warning accessControls
---jscomp_warning ambiguousFunctionDecl
---jscomp_warning checkEventfulObjectDisposal
---jscomp_warning checkRegExp
---jscomp_warning checkStructDictInheritance
---jscomp_warning checkTypes
---jscomp_warning checkVars
---jscomp_warning const
---jscomp_warning constantProperty
---jscomp_warning deprecated
---jscomp_warning duplicateMessage
---jscomp_warning es5Strict
---jscomp_warning externsValidation
---jscomp_warning fileoverviewTags
---jscomp_warning globalThis
---jscomp_warning internetExplorerChecks
---jscomp_warning invalidCasts
---jscomp_warning misplacedTypeAnnotation
---jscomp_warning missingProperties
---jscomp_warning missingProvide
---jscomp_warning missingRequire
---jscomp_warning missingReturn
---jscomp_warning nonStandardJsDocs
---jscomp_warning suspiciousCode
---jscomp_warning strictModuleDepCheck
---jscomp_warning typeInvalidation
---jscomp_warning undefinedNames
---jscomp_warning undefinedVars
---jscomp_warning unknownDefines
---jscomp_warning uselessCode
---jscomp_warning visibility
---externs=../../externs/webkit_console.js
 endef
 
-define CSSINI
---allowed-non-standard-function color-stop
---allowed-non-standard-function blur
---allowed-unrecognized-property -webkit-filter
---allowed-unrecognized-property -webkit-flex
---allowed-unrecognized-property -moz-flex
---allowed-unrecognized-property flex
---allowed-unrecognized-property -moz-flex-direction
---allowed-unrecognized-property flex-direction
---allowed-unrecognized-property -webkit-align-items
---allowed-unrecognized-property -moz-align-items
---allowed-unrecognized-property align-items
---output-renaming-map-format CLOSURE_UNCOMPILED
---rename NONE
---pretty-print
-endef
-
-define CSSBUILDINI
---allowed-non-standard-function color-stop
---allowed-non-standard-function blur
---allowed-unrecognized-property -webkit-filter
---allowed-unrecognized-property -webkit-flex
---allowed-unrecognized-property -moz-flex
---allowed-unrecognized-property flex
---allowed-unrecognized-property -moz-flex-direction
---allowed-unrecognized-property flex-direction
---allowed-unrecognized-property -webkit-align-items
---allowed-unrecognized-property -moz-align-items
---allowed-unrecognized-property align-items
---output-renaming-map-format CLOSURE_COMPILED
---rename CLOSURE
+# Same as the compiler but exclude all files that are not to be used and
+# force it to read all files.
+define FILELISTER
+$(COMPILER) \
+--only_closure_dependencies \
+$(JSSOURCES)
 endef
 
 define GITIGNOREFILE
-build/
-$(TEMPLATE_TMP_DIR)
-help/
-*sublime-*
+build/ $(TEMPLATE_TMP_DIR) help/ *sublime-*
 endef
 
-# Default build to execute on 'make'.
-all: css tpl deps
+# The file list for actual compilation. Note that because the compiler now
+# manages its dependencies alone if we want a clean compile we need to either
+# provide it with the files to include or use --only_closure_deps, but the later
+# excudes the css map file from the compile which results in a mismatch
+# between the css names in the templates and the css names in the js. Thus we
+# first generate a list of files to include (with only closire deps) and then we
+# use that file list plus the css map
+FL=`cat $(BUILDDIR)/filelist.txt | tr '\n' ' '`
 
-FILE?=-r js/
 
-lint:
-	gjslint  --jslint_error=all --strict --max_line_length 80 \
-	-e "vendor,tpl" $(FILE)
 
-################ Application level setups #####################
-# write dep file in js/build/
-# This should happen AFTER building the templates as to assure the templates
-# have all the provides needed for the dependencies.
-deps:
-	python $(DEPSWRITER_BIN) \
-	--root_with_prefix="js ../../../$(APPS_PATH)$(APPDIR)/js" \
-	--root_with_prefix="$(TEMPLATE_TMP_DIR)/$(LOCALE) ../../../$(APPS_PATH)/$(APPDIR)/$(TEMPLATE_TMP_DIR)/$(LOCALE)/" \
-	--output_file="$(BUILDDIR)/deps.js"
+################################################################################
+###   TARGETED RULES
+################################################################################
 
-# Compile template soy files from js/templates/ and put them in tpl/$(LOCALE)/
-tpl:
-	java -jar $(SOY_COMPILER_JAR) \
+# Default build to execute on 'make'. Includes the css the templates and the
+# deps file
+# all: $(BUILDDIR)/$(NS).css $(TEMPLATE_TMP_DIR)/$(LOCALE)/*.soy.js $(BUILDDIR)/deps.js
+
+
+################################################################################
+# THE DEFAULT BUILD TARGET
+
+# For basic run we require the css map, the css itself (intermediate requirement
+# from the css map) and the depencency file. The templates also require to be
+# built but those are also transeient requirement by the deps.
+all: $(BUILDDIR)/$(NS)-cssmap.js $(BUILDDIR)/deps.js .pstjdeps .smjsdeps
+	@echo 'All done'
+
+################################################################################
+# CHECK JS VALIDITY
+
+gitignore:
+	echo '$(GITIGNOREFILE)' | tr ' ' '\n' > .gitignore
+
+# same as above but also build deps in local project
+commit: $(BUILDDIR)/deps.js check
+
+# Linting all source files in the current project. Note that we monitor for
+# changes in those file and linter is always run when a single file changes.
+LINTFLAGS?=-r
+lintdeps = js/**.js
+.linted: $(lintdeps)
+	@echo -n 'Linting...'
+	@gjslint \
+	--jslint_error=all \
+	--strict \
+	--disable 0251 \
+	--max_line_length 80 \
+	-e "vendor,tpl" \
+	$(LINTFLAGS) \
+	js/
+	@touch .linted
+
+.pstjlint: ../pstj/*/**.js
+	@gjslint \
+	--jslint_error=all \
+	--strict \
+	--disable 0251 \
+	--max_line_length 80 \
+	-e "vendor,tpl,nodejs" \
+	$(LINTFLAGS) \
+	../pstj/
+	touch .pstjlint
+
+.smjslint: ../smjs/*/**.js
+	@gjslint \
+	--jslint_error=all \
+	--strict \
+	--disable 0251 \
+	--max_line_length 80 \
+	-e "vendor,tpl" \
+	$(LINTFLAGS) \
+	../smjs/
+	touch .smjslint
+
+# Build the template files for the project only.
+# Because we use translation file by default we also depend on the translation and
+# the translation file itself depends on changed of all soy files so basically
+# we stll depend on all soy files being considered.
+tplbuilddeps = $(I18NDIR)/translations_$(LOCALE).xlf
+$(TEMPLATE_TMP_DIR)/$(LOCALE)/$(NS).soy.js: $(tplbuilddeps)
+	@echo -n 'Building  project templates...'
+	@java -jar $(SOY_COMPILER_JAR) \
 	--locales $(LOCALE) \
 	--messageFilePathFormat "$(I18NDIR)/translations_$(LOCALE).xlf" \
 	--shouldProvideRequireSoyNamespaces \
@@ -243,145 +263,182 @@ tpl:
 	--codeStyle concat \
 	--cssHandlingScheme GOOG \
 	--outputPathFormat '$(TEMPLATE_TMP_DIR)/$(LOCALE)/{INPUT_FILE_NAME_NO_EXT}.soy.js' \
-	$(TEMPLATES_SOURCE_DIR)/*.soy
+	$(TERMPLATES_SOURCES)
 
-# Extracts the translation messages from the templates in a file
+# Builds the dependency file. Note that the file depends on the templates built
+# from the soy files in the project only. See above rule for details.
+depsdeps = js/* $(TEMPLATE_TMP_DIR)/$(LOCALE)/$(NS).soy.js
+$(BUILDDIR)/deps.js: $(depsdeps)
+	@echo -n 'Constructing project dependencies..'
+	@python $(DEPSWRITER_BIN) \
+	--root_with_prefix="js ../../../$(APPS_PATH)$(APPDIR)/js" \
+	--root_with_prefix="$(TEMPLATE_TMP_DIR)/$(LOCALE) ../../../$(APPS_PATH)/$(APPDIR)/$(TEMPLATE_TMP_DIR)/$(LOCALE)/" \
+	--output_file="$(BUILDDIR)/deps.js"
+
+
+../pstj/templates/icons.soy: ../pstj/templates/icons.xml
+	@echo -n 'Code auto-generation'
+	@cd ../pstj && make codegen
+
+# Extracts the translation messages from the templates in a file.
 # Translated file should be used to compile to a different locale.
-extractmsgs:
-	java -jar $(MESSAGE_EXTRACTOR_JAR) \
+# NOTE: by default all messages from all templates are extracted. Note that
+# not all messages will be used because not all templates are actually being
+# included in the build.
+$(I18NDIR)/translations_$(LOCALE).xlf: $(TERMPLATES_SOURCES)
+	@echo -n 'Extracting translatable messages...'
+	@java -jar $(MESSAGE_EXTRACTOR_JAR) \
 	--outputFile "$(I18NDIR)/translations_$(LOCALE).xlf" \
 	--targetLocaleString $(LOCALE) \
-	$(TEMPLATES_SOURCE_DIR)/*.soy
+	$(TERMPLATES_SOURCES)
 
-lessc:
+# Compile the less definitions into a single file. Note that we monitor all
+# possible files we might use even if we not really use them (as those might not
+# be imported in the app less file.
+# List of static files that are dependencies.
+lesssourcess = less/$(NS).less less/$(NS)/ ../smjs/less/*.less ../pstj/less/*/*.less
+less/$(NS).css: $(lesssourcess)
+	@echo -n 'Building CSS from LESS...'
 	lessc --no-ie-compat less/$(NS).less > less/$(NS).css
 
-# Create CSS file for name space and put name mapping in js/build/
-css: lessc
-	java -jar $(STYLES_COMPILER_JAR) \
+# Create CSS file for name space and put name mapping in the build dir.
+# This build depends on the less files
+$(BUILDDIR)/$(NS).css: less/$(NS).css
+	@echo -n 'Building compact CSS...'
+	@java -jar $(STYLES_COMPILER_JAR) \
 	`cat options/css.ini | tr '\n' ' '` \
 	--output-file $(BUILDDIR)/$(NS).css \
 	--output-renaming-map $(BUILDDIR)/$(NS)-cssmap.js \
 	less/$(NS).css
-	rm less/$(NS).css
 
-cssbuild: lessc
-	java -jar $(STYLES_COMPILER_JAR) \
+# Dummy rile for the css map should someone require it (ALL)
+$(BUILDDIR)/$(NS)-cssmap.js: $(BUILDDIR)/$(NS).css
+
+
+### FROM HERE BELLOW THE COMPILER IS CALLED
+
+# Creates a css file that is built with the closure renaming map inside
+# of it so the compiler can find the class names.
+$(BUILDDIR)/$(NS).build.css: less/$(NS).css
+	@echo -n 'Advance compiling CSS...'
+	@java -jar $(STYLES_COMPILER_JAR) \
 	`cat options/cssbuild.ini | tr '\n' ' '` \
-	--output-file $(BUILDDIR)/$(NS).css \
+	--output-file $(BUILDDIR)/$(NS).build.css \
 	--output-renaming-map $(BUILDDIR)/cssmap-build.js \
   less/$(NS).css
-	rm less/$(NS).css
 
-simple: cssbuild tpl deps
-	python2.7 $(LIBRARY_PATH)/closure/bin/build/closurebuilder.py \
-	-n $(NS) \
-	${SOURCES} \
-	${JSFILES} \
-	-f --js=build/cssmap-build.js \
-	-f --flagfile=options/compile.ini \
-	-f --compilation_level=WHITESPACE_ONLY \
-	-o script \
-	-f --define='goog.LOCALE="$(LOCALE)"' \
-	-f --define='goog.DEBUG=$(DEBUG)' \
-	-c $(COMPILER_JAR) \
-	--output_file=$(BUILDDIR)/$(NS).build.js
+# Dummy rule to allow the requirement of the css map from the compiler
+$(BUILDDIR)/cssmap-build.js: $(BUILDDIR)/$(NS).build.css
 
-compile: cssbuild tpl deps
-	python2.7 $(LIBRARY_PATH)/closure/bin/build/closurebuilder.py \
-	-n $(NS) \
-	${SOURCES} \
-	${JSFILES} \
-	-f --js=build/cssmap-build.js \
-	-f --flagfile=options/compile.ini \
-	-o compiled \
-	-f --define='goog.LOCALE="$(LOCALE)"' \
-	-f --define='goog.DEBUG=$(DEBUG)' \
-	-c $(COMPILER_JAR) \
-	--output_file=$(BUILDDIR)/$(NS).build.js
-	rm $(BUILDDIR)/cssmap-build.js
-	echo 'Size compiled: ' `ls -al $(BUILDDIR)/$(NS).build.js`
+# We depend on all possible js files as well as the css map.
+# local project files
+# local templates
+# pstj lib files
+# pstj templates
+# simple css names map
+simpledeps = $(BUILDDIR)/$(NS)-cssmap.js js/** ../pstj/*/**.js $(BUILDDIR)/filelist.txt
+$(BUILDDIR)/$(NS).simple.js: $(simpledeps)
+	@echo 'Performing simple compilation...'
+	$(COMPILER) \
+	--compilation_level=SIMPLE \
+	--js="$(BUILDDIR)/$(NS)-cssmap.js"  \
+	--js_output_file=$(BUILDDIR)/$(NS).simple.js \
+	$(FL)
+	@wc -c $(BUILDDIR)/$(NS).simple.js
+
+# Dummy rule to perform the simple compilation
+simple: $(BUILDDIR)/$(NS).simple.js
+	@echo 'Done'
+
+# Compile javascript with advanced optimizations enabled. Use for production only
+# with DEBUG set to false.
+# Dependencies
+# css names map - compiled
+# local / project js files
+# local templates
+# pstj lib js files
+# pstj templates
+advanceddeps=$(BUILDDIR)/cssmap-build.js js/** $(TEMPLATE_TMP_DIR)/$(LOCALE)/*.js ../pstj/*/**.js
+$(BUILDDIR)/$(NS).advanced.js: $(advanceddeps) $(BUILDDIR)/filelist.txt
+	@echo 'Performing advanced compilation...'
+	$(COMPILER) \
+	--compilation_level=ADVANCED \
+	--js="$(BUILDDIR)/cssmap-build.js"  \
+	--js_output_file=$(BUILDDIR)/$(NS).advanced.js \
+	$(FL)
+	@wc -c $(BUILDDIR)/$(NS).advanced.js
+
+# Dummy call for compiling everything in advanced mode.
+# requirements:
+# same as the advanced compiled js,
+# the advance compiled css file
+advanced: $(BUILDDIR)/$(NS).build.css $(BUILDDIR)/$(NS).advanced.js options/*
+	@echo 'Done'
 
 
-deploy: compile
+$(BUILDDIR)/$(NS).debug.js: $(BUILDDIR)/$(NS)-cssmap.js $(advanced) $(BUILDDIR)/filelist.txt
+	@echo 'Building debug JS...'
+	$(COMPILER) \
+	--compilation_level=ADVANCED \
+	--debug \
+	--formatting=PRETTY_PRINT \
+	--js_output_file=$(BUILDDIR)/$(NS).debug.js \
+	$(FL)
+
+debug: $(BUILDDIR)/$(NS).debug.js
+	@echo 'Done'
+
+# Creates a file list that can be used to create the module list when compiling
+# the project with module support
+# Set target specific variables (output file name and compilation level)
+$(BUILDDIR)/filelist.txt: js/** tpl/$(LOCALE)/*.js ../pstj/*/**.js
+	@echo -n 'Compiling list of files for modules...'
+	@$(CLOSURE_BUILDER) -n $(NS) \
+	$(JSROOTS) $(JSDEPS) \
+	-o list \
+	--output_file=$(BUILDDIR)/filelist.txt
+	@echo 'Done building filelist'
+
+
+# $(FILELISTER) \
+# --only_closure_dependencies \
+# --output_manifest=$(BUILDDIR)/filelist.txt
+# @echo 'Done'
+
+compact: advanced
+	@echo -n 'Inlining resources in main html file...'
 	node ../../node/inline.js $(NS)-deploy.html
+	@echo 'Done'
 
-######################### Debugging and work flow set ups ######################
+# For the heck no need to build the file list, just use only closure and it will spill out
+# the errors.
+check: js/** ../pstj/*/**.js ../smjs/*/**.js $(BUILDDIR)/cssmap-build.js
+	$(COMPILER) \
+	--compilation_level=ADVANCED \
+	--js="$(BUILDDIR)/cssmap-build.js"  \
+	--js_output_file=/tmp/check.js \
+	--only_closure_dependencies \
+	$(JSSOURCES)
+	@echo 'Done'
 
-debug: cssbuild tpl deps
-	python2.7 $(LIBRARY_PATH)/closure/bin/build/closurebuilder.py \
-	-n $(NS) \
-	${SOURCES} \
-	${JSFILES} \
-	-f --js=build/cssmap-build.js \
-	-f --flagfile=options/compile.ini \
-	-o compiled \
-	-f --define='goog.LOCALE="$(LOCALE)"' \
-	-f --define='goog.DEBUG=$(DEBUG)' \
-	-f --formatting=PRETTY_PRINT \
-	-c $(COMPILER_JAR) \
-	-f --debug \
-	--output_file=$(BUILDDIR)/$(NS).build.js
-	rm $(BUILDDIR)/cssmap-build.js
+checkspecific:
+	$(COMPILER) \
+	--compilation_level=ADVANCED \
+	--js="$(BUILDDIR)/cssmap-build.js"  \
+	--js_output_file=/tmp/check.js \
+	--only_closure_dependencies \
+	$(JSSOURCES)
 
-# Create a structure for a new closure project.
-initproject:
-	mkdir -p gss/$(NS) js $(TEMPLATES_SOURCE_DIR) $(I18NDIR) $(BUILDDIR) \
-	assets $(TEMPLATE_TMP_DIR) options
-	touch index.html
-	touch js/$(NS).js
-	touch $(TEMPLATES_SOURCE_DIR)/$(NS).soy
-	touch gss/$(NS)/$(NS).gss
-	touch gss/base.gss
-	touch options/{css.ini,cssbuild.ini,compile.ini}
-	echo '$(subst $(newline),\n,${INDEXFILE})' > index.html
-	echo '$(subst $(newline),\n,${APPFILE})' > js/$(NS).js
-	echo '$(subst $(newline),\n,${CSSINI})' > options/css.ini
-	echo '$(subst $(newline),\n,${CSSBUILDINI})' > options/css.ini
-	echo '$(subst $(newline),\n,${BUILDOPTIONSFILE})' > options/compile.ini
-	echo '$(subst $(newline),\n,${GITIGNOREFILE})' > .gitignore
 
-# Run the compalier against a specific name space only for the checks.
-# This includes the templates (so it is compatible with applications and the
-# library as well).
-#
-# To use it with application code replace the first root include to js/
-check:
-	python2.7 $(CLOSURE_BUILDER) \
-	-n $(NS) \
-	${SOURCES} \
-	${JSFILES} \
-	-f --flagfile=options/compile.ini \
-	-o compiled \
-	-c $(COMPILER_JAR) \
-	--output_file=/dev/null
+checkall: .linted .pstjlint .smjslint check
 
-size: compile
-	gzip -9  $(BUILDDIR)/$(NS).build.js
-	echo '>>>>Comiler size gzipped: ' `ls -al $(BUILDDIR)/$(NS).build.js.gz`
-	rm $(BUILDDIR)/$(NS).build.js.gz
-	python $(LIBRARY_PATH)/closure/bin/build/closurebuilder.py \
-	-n $(NS) \
-	${SOURCES} \
-	${JSFILES} \
-	-f --flagfile=options/compile.ini \
-	-o script \
-	-f --define='goog.LOCALE="$(LOCALE)"' \
-	-f --define='goog.DEBUG=$(DEBUG)' \
-	-c $(COMPILER_JAR) \
-	--output_file=$(BUILDDIR)/$(NS).build.js
-	echo '>>>>Original size: ' `ls -al $(BUILDDIR)/$(NS).build.js`
-	gzip -9  $(BUILDDIR)/$(NS).build.js
-	echo '>>>>Original size gzipped: ' `ls -al $(BUILDDIR)/$(NS).build.js.gz`
-	rm $(BUILDDIR)/$(NS).build.js.gz
+libdeps: .pstjdeps .smjsdeps
+	@echo 'All library deps up to date'
 
-#### Calls specific to library development (i.e. no application code) #####
+.pstjdeps: ../pstj/*/**.js
+	cd ../pstj/ && make libdeps
+	touch .pstjdeps
 
-# Provides the deps file for the library, should be available to the compiler to
-# provide the types used as parameters but not really required.
-libdeps:
-	python $(DEPSWRITER_BIN) \
-	--root_with_prefix="./ ../../../$(APPS_PATH)$(APPDIR)/" \
-	--output_file="deps.js"
-
-.PHONY: tpl css cssbuild deps all compile check
+.smjsdeps: ../smjs/*/**.js
+	cd ../smjs/ && make libdeps
+	touch .smjsdeps
