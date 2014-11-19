@@ -35,8 +35,8 @@ goog.require('mobiletv.strings');
 goog.require('pstj.configure');
 goog.require('pstj.ds.List');
 goog.require('pstj.ds.ListItem');
-goog.require('pstj.error.ErrorHandler.Error');
-goog.require('pstj.error.throwError');
+goog.require('pstj.error');
+goog.require('pstj.error.ErrorHandler');
 goog.require('pstj.ui.Button');
 goog.require('pstj.ui.Strings');
 goog.require('pstj.ui.TouchAgent');
@@ -118,6 +118,8 @@ mobiletv.Main = function() {
    * @type {mobiletv.EpgScheduleList}
    * @protected
    */
+  this.schedule = null;
+
   if (!goog.asserts.assertBoolean(pstj.configure.getRuntimeValue(
       'NO_LOCAL_STORAGE', false, 'SYSMASTER.APPS.MOBILETV'))) {
     this.schedule = new mobiletv.EpgScheduleList();
@@ -259,8 +261,8 @@ mobiletv.Main.prototype.start = function() {
   } else {
     // Make the container overflow hidden
     goog.dom.classlist.add(
-      goog.dom.getElementByClass(goog.getCssName('scrollview-container')),
-      goog.getCssName('contain'));
+        goog.dom.getElementByClass(goog.getCssName('scrollview-container')),
+        goog.getCssName('contain'));
 
     this.listElement = new mobiletv.ScrollView();
     // window size monitor bind and resize.
@@ -285,7 +287,7 @@ mobiletv.Main.prototype.start = function() {
   // play the item or show its EPG details.
   goog.events.listen(this.listElement, goog.ui.Component.EventType.ACTION,
       function(ev) {
-        var item = /** @type {smstb.widget.ListItem} */ (ev.target);
+        var item = /** @type {smstb.widget.ListItem} */(ev.target);
         this.data.setCurrent(item.getModel());
 
         if (item.getActionType() == smstb.widget.ListItem.Action.EPG) {

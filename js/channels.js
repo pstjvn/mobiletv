@@ -6,9 +6,8 @@ goog.require('goog.events.EventTarget');
 goog.require('mobiletv.Bookmarks');
 goog.require('mobiletv.loader');
 goog.require('pstj.ds.List');
+goog.require('pstj.error');
 goog.require('pstj.error.ErrorHandler');
-goog.require('pstj.error.ErrorHandler.Error');
-goog.require('pstj.error.throwError');
 
 
 

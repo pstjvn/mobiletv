@@ -33,7 +33,7 @@ mobiletv.strings.Symbol = {
  * @private
  */
 mobiletv.strings.strings_ = new pstj.ui.Strings(
-    mobiletv.template.mobiletvstrings({}));
+    mobiletv.template.mobiletvstrings({}).getContent());
 
 
 /**

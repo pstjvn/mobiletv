@@ -85,7 +85,7 @@ _.generateTemplateData = function(control) {
         pstj.date.utils.renderTimeSafe(model.getProp(
         smstb.ds.Epg.Property.START_TIME), this.dateBorderFormat) : '',
     nols: goog.asserts.assertBoolean(pstj.configure.getRuntimeValue(
-      'NO_LOCAL_STORAGE', false, 'SYSMASTER.APPS.MOBILETV'))
+        'NO_LOCAL_STORAGE', false, 'SYSMASTER.APPS.MOBILETV'))
   };
 };
 
@@ -116,6 +116,8 @@ mobiletv.EpgItem = function(opt_renderer, opt_button_renderer) {
    * @type {pstj.ui.Button}
    * @protected
    */
+  this.button = null;
+
   if (!goog.asserts.assertBoolean(pstj.configure.getRuntimeValue(
       'NO_LOCAL_STORAGE', false, 'SYSMASTER.APPS.MOBILETV'))) {
     this.button = new pstj.ui.Button(opt_button_renderer ||

@@ -5,7 +5,7 @@ goog.require('pstj.ui.ScrollView');
 
 var data = [];
 for (var i = 0; i < 15; i++) {
-  data.push({id:i});
+  data.push({id: i});
 }
 
 var list = new pstj.ds.List(data);

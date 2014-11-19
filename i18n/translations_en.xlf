@@ -2,6 +2,11 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file original="SoyMsgBundle" datatype="x-soy-msg-bundle" xml:space="preserve" source-language="en" target-language="en">
     <body>
+      <trans-unit id="141344474158762153" datatype="html">
+        <source>Horror</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
+      </trans-unit>
       <trans-unit id="153799456510623899" datatype="html">
         <source>Portuguese</source>
         <target/>
@@ -21,6 +26,11 @@
         <source>Thai</source>
         <target/>
         <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="513843037780139436" datatype="html">
+        <source>Sports</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
       </trans-unit>
       <trans-unit id="535382612707798089" datatype="html">
         <source>Gujarati</source>
@@ -47,6 +57,16 @@
         <target/>
         <note priority="1" from="description">language option</note>
       </trans-unit>
+      <trans-unit id="841934696444961534" datatype="html">
+        <source>News</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
+      </trans-unit>
+      <trans-unit id="855872803871324523" datatype="html">
+        <source>Music</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
+      </trans-unit>
       <trans-unit id="861663369293303028" datatype="html">
         <source>Finnish</source>
         <target/>
@@ -62,6 +82,11 @@
         <target/>
         <note priority="1" from="description">language option</note>
       </trans-unit>
+      <trans-unit id="1111321631625476627" datatype="html">
+        <source>Karaoke</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
+      </trans-unit>
       <trans-unit id="1259591166041792435" datatype="html">
         <source>Estonian</source>
         <target/>
@@ -71,6 +96,11 @@
         <source>Page</source>
         <target/>
         <note priority="1" from="description">The word page in the page N of number of X pages</note>
+      </trans-unit>
+      <trans-unit id="1454881216200692189" datatype="html">
+        <source>General Interest</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
       </trans-unit>
       <trans-unit id="1470838756664816116" datatype="html">
         <source>Tamil</source>
@@ -82,6 +112,11 @@
         <target/>
         <note priority="1" from="description">language option</note>
       </trans-unit>
+      <trans-unit id="1806667489382256324" datatype="html">
+        <source>Category</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
+      </trans-unit>
       <trans-unit id="1858110241312746425" datatype="html">
         <source>German</source>
         <target/>
@@ -90,7 +125,7 @@
       <trans-unit id="1878553503929537171" datatype="html">
         <source>VOD</source>
         <target/>
-        <note priority="1" from="description">type option</note>
+        <note priority="1" from="description">type option radio</note>
       </trans-unit>
       <trans-unit id="1979068243359567855" datatype="html">
         <source>Galician</source>
@@ -117,6 +152,11 @@
         <target/>
         <note priority="1" from="description">msg when scheduled switch occurs</note>
       </trans-unit>
+      <trans-unit id="2696116483824409975" datatype="html">
+        <source>Comedy</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
+      </trans-unit>
       <trans-unit id="2719780722934172508" datatype="html">
         <source>Czech</source>
         <target/>
@@ -126,6 +166,16 @@
         <source>Show with the same start time is already in the queue</source>
         <target/>
         <note priority="1" from="description">message when show with the same start time is already in the queue</note>
+      </trans-unit>
+      <trans-unit id="2797180397024020098" datatype="html">
+        <source>Kids</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
+      </trans-unit>
+      <trans-unit id="2826581353496868063" datatype="html">
+        <source>Language</source>
+        <target/>
+        <note priority="1" from="description">language option</note>
       </trans-unit>
       <trans-unit id="2924289692679201020" datatype="html">
         <source>Danish</source>
@@ -162,10 +212,20 @@
         <target/>
         <note priority="1" from="description">language option</note>
       </trans-unit>
+      <trans-unit id="3475469358093477644" datatype="html">
+        <source>New Releases</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
+      </trans-unit>
       <trans-unit id="3479345138280827071" datatype="html">
         <source>Latvian</source>
         <target/>
         <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="3506054586886268495" datatype="html">
+        <source>The filter has no matches</source>
+        <target/>
+        <note priority="1" from="description">msg when filter has no matches</note>
       </trans-unit>
       <trans-unit id="3571391964903695725" datatype="html">
         <source>Repeat</source>
@@ -207,10 +267,15 @@
         <target/>
         <note priority="1" from="description">language option</note>
       </trans-unit>
-      <trans-unit id="3974209330528498872" datatype="html">
-        <source>No type filter</source>
+      <trans-unit id="4085930761302974863" datatype="html">
+        <source>Favorites</source>
         <target/>
-        <note priority="1" from="description">type option</note>
+        <note priority="1" from="description">type option radio</note>
+      </trans-unit>
+      <trans-unit id="4165656614631046778" datatype="html">
+        <source>Bookmark removed</source>
+        <target/>
+        <note priority="1" from="description">msg when bookmark removed</note>
       </trans-unit>
       <trans-unit id="4284688382567695437" datatype="html">
         <source>Add to queue</source>
@@ -226,6 +291,11 @@
         <source>Macedonian</source>
         <target/>
         <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="4539910588356049438" datatype="html">
+        <source>Family</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
       </trans-unit>
       <trans-unit id="4764935748877100361" datatype="html">
         <source>Shuffle all</source>
@@ -257,6 +327,11 @@
         <target/>
         <note priority="1" from="description">language option</note>
       </trans-unit>
+      <trans-unit id="5028353865534552514" datatype="html">
+        <source>Adult</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
+      </trans-unit>
       <trans-unit id="5190825892106392539" datatype="html">
         <source>Spanish</source>
         <target/>
@@ -277,15 +352,25 @@
         <target/>
         <note priority="1" from="description">language option</note>
       </trans-unit>
+      <trans-unit id="5427403729216950355" datatype="html">
+        <source>Bookmark added</source>
+        <target/>
+        <note priority="1" from="description">msg when bookmark added</note>
+      </trans-unit>
       <trans-unit id="5463975373819538560" datatype="html">
         <source>Latin</source>
         <target/>
         <note priority="1" from="description">language option</note>
       </trans-unit>
+      <trans-unit id="5525898512288782168" datatype="html">
+        <source>Entertainment</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
+      </trans-unit>
       <trans-unit id="5591181815290819560" datatype="html">
         <source>PPV</source>
         <target/>
-        <note priority="1" from="description">type option</note>
+        <note priority="1" from="description">type option radio</note>
       </trans-unit>
       <trans-unit id="5682359291233237791" datatype="html">
         <source>Turkish</source>
@@ -317,6 +402,11 @@
         <target/>
         <note priority="1" from="description">language option</note>
       </trans-unit>
+      <trans-unit id="6144899097378059355" datatype="html">
+        <source>Studio Movie Titles</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
+      </trans-unit>
       <trans-unit id="6145439649200570157" datatype="html">
         <source>Korean</source>
         <target/>
@@ -342,6 +432,11 @@
         <target/>
         <note priority="1" from="description">language option</note>
       </trans-unit>
+      <trans-unit id="7040288612202036661" datatype="html">
+        <source>Others</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
+      </trans-unit>
       <trans-unit id="7067741492320440272" datatype="html">
         <source>Greek</source>
         <target/>
@@ -362,6 +457,11 @@
         <target/>
         <note priority="1" from="description">language option</note>
       </trans-unit>
+      <trans-unit id="7440546540850433002" datatype="html">
+        <source>ALL</source>
+        <target/>
+        <note priority="1" from="description">type option radio</note>
+      </trans-unit>
       <trans-unit id="7483720943997095446" datatype="html">
         <source>Lithuanian</source>
         <target/>
@@ -377,6 +477,11 @@
         <target/>
         <note priority="1" from="description">language option</note>
       </trans-unit>
+      <trans-unit id="7545104110348041963" datatype="html">
+        <source>Drama</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
+      </trans-unit>
       <trans-unit id="7558413604919060916" datatype="html">
         <source>Select item</source>
         <target/>
@@ -387,10 +492,20 @@
         <target/>
         <note priority="1" from="description">language option</note>
       </trans-unit>
+      <trans-unit id="7707176955005055131" datatype="html">
+        <source>Series</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
+      </trans-unit>
       <trans-unit id="7833044528021545549" datatype="html">
         <source>Configure playback</source>
         <target/>
         <note priority="1" from="description">label</note>
+      </trans-unit>
+      <trans-unit id="7851716456127301171" datatype="html">
+        <source>If player does not start press here.</source>
+        <target/>
+        <note priority="1" from="description">msg when playing on android</note>
       </trans-unit>
       <trans-unit id="7891809788881004730" datatype="html">
         <source>Hungarian</source>
@@ -405,7 +520,7 @@
       <trans-unit id="7993786604152625481" datatype="html">
         <source>IPTV</source>
         <target/>
-        <note priority="1" from="description">type option</note>
+        <note priority="1" from="description">type option radio</note>
       </trans-unit>
       <trans-unit id="8069284467804715623" datatype="html">
         <source>Norwegian</source>
@@ -424,11 +539,6 @@
       </trans-unit>
       <trans-unit id="8312065814232621608" datatype="html">
         <source>Indonesian</source>
-        <target/>
-        <note priority="1" from="description">language option</note>
-      </trans-unit>
-      <trans-unit id="8473114430329730227" datatype="html">
-        <source>No language filter</source>
         <target/>
         <note priority="1" from="description">language option</note>
       </trans-unit>
@@ -465,12 +575,22 @@
       <trans-unit id="8998179362936748717" datatype="html">
         <source>OK</source>
         <target/>
-        <note priority="1" from="description">label</note>
+        <note priority="1" from="description">button label ok</note>
       </trans-unit>
       <trans-unit id="9102963095355753902" datatype="html">
         <source>Slovak</source>
         <target/>
         <note priority="1" from="description">language option</note>
+      </trans-unit>
+      <trans-unit id="9157126139997558652" datatype="html">
+        <source>Documentary</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
+      </trans-unit>
+      <trans-unit id="9216117865911519658" datatype="html">
+        <source>Action</source>
+        <target/>
+        <note priority="1" from="description">type option</note>
       </trans-unit>
     </body>
   </file>
