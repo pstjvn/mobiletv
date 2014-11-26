@@ -28,7 +28,7 @@
             RUN_NAME: 'mtvcont',
             DATA_URL: 'http://www.longa.com/cgi-bin/if.cgi',
             // DATA_URL: 'http://192.168.0.11/cgi-bin/if.cgi',
-            PLATFORM: 'ios',
+            PLATFORM: 'pc',
             DEFAULT_THUMBNAIL: 'assets/default-thumbnail.svg',
             DEFAULT_FOLDER_THUMBNAIL: 'assets/default-folder-thumbnail.svg',
             LOGIN_URL: '/cgi-bin/if.cgi?run=mtvlog',
@@ -73,7 +73,8 @@
     </div>
 
     <script src="http://longa.com/mapp/assets/jwplayer.min.js"></script>
-
+    <!-- include the cast sender code -->
+    <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
     <script src="build/app-cssmap.js"></script>
     <script src="../../library/closure/goog/base.js"></script>
     <script src="../../templates/deps.js"></script>

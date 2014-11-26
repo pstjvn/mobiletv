@@ -89,6 +89,7 @@ define JSSOURCES
 --js="js/**.js" \
 --js="tpl/$(LOCALE)/**.js" \
 --js="../pstj/animation/**.js" \
+--js="../pstj/cast/**.js" \
 --js="../pstj/color/**.js" \
 --js="../pstj/config/**.js" \
 --js="../pstj/control/**.js" \
@@ -296,7 +297,7 @@ $(I18NDIR)/translations_$(LOCALE).xlf: $(TERMPLATES_SOURCES)
 # possible files we might use even if we not really use them (as those might not
 # be imported in the app less file.
 # List of static files that are dependencies.
-lesssourcess = less/$(NS).less less/$(NS)/ ../smjs/less/*.less ../pstj/less/*/*.less
+lesssourcess = less/$(NS).less less/$(NS)/* ../smjs/less/*.less ../pstj/less/*/*.less
 less/$(NS).css: $(lesssourcess)
 	@echo -n 'Building CSS from LESS...'
 	lessc --no-ie-compat less/$(NS).less > less/$(NS).css

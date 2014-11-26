@@ -15,8 +15,10 @@ goog.require('goog.dom.classlist');
 goog.require('goog.events');
 goog.require('goog.result.Result');
 goog.require('goog.result.SimpleResult');
+goog.require('goog.style');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.Component.EventType');
+goog.require('goog.userAgent.product');
 goog.require('mobiletv.Bookmarks');
 goog.require('mobiletv.Channels');
 goog.require('mobiletv.Epg');
@@ -32,11 +34,14 @@ goog.require('mobiletv.SearchPanel');
 goog.require('mobiletv.TopPanel');
 goog.require('mobiletv.pubsub');
 goog.require('mobiletv.strings');
+goog.require('pstj.cast.Cast');
 goog.require('pstj.configure');
 goog.require('pstj.ds.List');
 goog.require('pstj.ds.ListItem');
 goog.require('pstj.error');
 goog.require('pstj.error.ErrorHandler');
+goog.require('pstj.material.IconContainer');
+goog.require('pstj.material.icon');
 goog.require('pstj.ui.Button');
 goog.require('pstj.ui.Strings');
 goog.require('pstj.ui.TouchAgent');
@@ -46,7 +51,6 @@ goog.require('smstb.ds.Record');
 goog.require('smstb.widget.ListItem');
 goog.require('smstb.widget.ListItem.Action');
 goog.require('smstb.widget.MobilePopup');
-//goog.require('smstb.widget.NSRecordView');
 
 
 
@@ -93,12 +97,15 @@ mobiletv.Main = function() {
     return true;
 
   });
+
+
   // To debug local storage error in webview put this on top of the compile
   if (goog.DEBUG) {
     window.onerror = function(msg, file, line) {
-      var el = document.querySelector('.loader');
-      el.innerHTML = el.innerHTML + '<br>' + msg + '<br>' + line;
-      return true;
+      console.log(arguments);
+      // var el = document.querySelector('.loader');
+      // el.innerHTML = el.innerHTML + '<br>' + msg + '<br>' + line;
+      // return true;
     };
   } else {
     goog.events.listen(window, goog.events.EventType.ERROR,
@@ -127,6 +134,15 @@ mobiletv.Main = function() {
 
   this.searchPanel = new mobiletv.SearchPanel();
   this.buttonPanel = new mobiletv.TopPanel();
+
+  /**
+   * The cast icon we use to denote the cast presence to the user.
+   * @protected
+   * @type {pstj.material.IconContainer}
+   */
+  this.castIcon = new pstj.material.IconContainer();
+  this.castIcon.setIcon(pstj.material.icon.Name.CAST_READY);
+
   this.popup = new smstb.widget.MobilePopup();
 
   /**
@@ -157,6 +173,26 @@ mobiletv.Main = function() {
   }
   this.isAdnroid_ = (platform == 'android');
 
+  /**
+   * Flag, if we should try to use cast at all.
+   * @type {boolean}
+   * @private
+   */
+  this.useCast_ = false;
+  // Only if we actually have chance for casting...
+  if (platform == 'android' || (
+      platform == 'pc' && goog.userAgent.product.CHROME)) {
+    if (goog.DEBUG) {
+      console.log('Enable cast on app');
+    }
+    this.useCast_ = true;
+  }
+  /**
+   * Flag, signifies if the app is currently expected to cast the video.
+   * @type {boolean}
+   * @private
+   */
+  this.casting_ = false;
 };
 goog.addSingletonGetter(mobiletv.Main);
 
@@ -206,6 +242,16 @@ mobiletv.Main.filterFn = function(text, language, type, category, item) {
  * @final
  */
 mobiletv.Main.GET_CURRENT_PRICE = '&t=30';
+
+
+/**
+ * Togles the player casting state.
+ * @protected
+ */
+mobiletv.Main.prototype.toggleCasting = function() {
+  this.casting_ = !this.casting_;
+  mobiletv.Player.getInstance().enableCasting(this.casting_);
+};
 
 
 /**
@@ -330,6 +376,37 @@ mobiletv.Main.prototype.start = function() {
   this.buttonPanel.decorate(goog.dom.getElementByClass(
       goog.getCssName('panel')));
 
+
+  // Setup CAST
+  console.log('cast setup');
+
+  if (this.useCast_) {
+    this.castIcon.render(
+        goog.dom.getElementByClass(goog.getCssName('iconcontainer')));
+    goog.events.listen(
+        pstj.cast.Cast.getInstance(),
+        pstj.cast.Cast.EventType.AVAILABILITY_CHANGE,
+        function() {
+          console.log('Availability change detected');
+          this.setCastIconVisibility(
+              pstj.cast.Cast.getInstance().isAvailable());
+        }, undefined, this);
+    if (pstj.cast.Cast.getInstance().isAvailable()) {
+      this.setCastIconVisibility(true);
+    }
+    goog.events.listen(
+        pstj.cast.Cast.getInstance(),
+        [pstj.cast.Cast.EventType.READY, pstj.cast.Cast.EventType.DISCONNECT],
+        function() {
+          // device is sessioned, change icon.
+          this.castIcon.setIcon(
+              pstj.cast.Cast.getInstance().hasActiveSession() ?
+              pstj.material.icon.Name.CAST_ACTIVE :
+              pstj.material.icon.Name.CAST_READY);
+        }, undefined, this);
+  }
+
+
   this.panelSize_ = goog.style.getSize(this.buttonPanel.getElement()).height;
 
   goog.events.listen(this.buttonPanel, goog.ui.Component.EventType.ACTION,
@@ -382,6 +459,16 @@ mobiletv.Main.prototype.start = function() {
 
 
 /**
+ * Sets the visibility of the cast icon in the top panel.
+ * @param {boolean} visible
+ */
+mobiletv.Main.prototype.setCastIconVisibility = function(visible) {
+  goog.style.setElementShown(goog.dom.getElementByClass('iconcontainer'),
+      visible);
+};
+
+
+/**
  * Checks the action of the top panel and trigger corresponding reaction.
  *
  * @param {goog.events.Event} e The ACTION UI event from the component.
@@ -420,6 +507,9 @@ mobiletv.Main.prototype.checkButtonAction_ = function(e) {
         this.buttonPanel.toggleDrawer();
         this.schedule.setVisible(true);
       }
+      break;
+    case 'cast':
+      this.toggleCasting();
       break;
   }
 };

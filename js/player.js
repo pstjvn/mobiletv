@@ -9,14 +9,23 @@ goog.provide('mobiletv.Player');
 
 goog.require('smstb.widget.TVPlayer');
 
+goog.scope(function() {
 
 
 /**
- * @constructor
- * @extends {smstb.widget.TVPlayer}
+ * Implements the mobileTV customized player. Supports casting.
  */
-mobiletv.Player = function() {
-  goog.base(this);
-};
-goog.inherits(mobiletv.Player, smstb.widget.TVPlayer);
+mobiletv.Player = goog.defineClass(smstb.widget.TVPlayer, {
+  /**
+   * @constructor
+   * @extends {smstb.widget.TVPlayer}
+   * @suppress {checkStructDictInheritance}
+   */
+  constructor: function() {
+    goog.base(this);
+  }
+
+});
 goog.addSingletonGetter(mobiletv.Player);
+
+});  // goog.scope

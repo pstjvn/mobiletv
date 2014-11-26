@@ -10,7 +10,7 @@ MOBILETV = {
         "isLocked": false,
         "isBookmarked": false,
         "currency": "USD",
-        "cost": 5.00,
+        "cost": 0,
         "time": 0,
         "personalRecordingOptions": {
             "canRecord": true,
@@ -23,7 +23,7 @@ MOBILETV = {
         "genre": "News",
         "artists": "",
         "year": "",
-        "playURI": "http://212.5.49.2/cgi-bin/if.cgi?run=hlsurl&obj_id=123&x1=4F4F53565A554B5B4857485944A7",
+        "playURI": "http://192.168.0.11/cgi-bin/if.cgi?run=hlsurl&obj_id=42&x1=4F5554524B634D5E4E5B475949628C",
         "isDir": false,
         "language": "Turkish"
   }
