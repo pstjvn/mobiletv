@@ -1,34 +1,3 @@
-#This makefile assumes you have your tools in a parent directory as follow
-# __someparentfoler__
-# 	compiler/
-# 		compiler.jar
-# 	library/
-# 		svn checkout of the latest closure library
-# 	stylesheets/
-# 		cs.jar
-# 	templates/
-# 		SoyToJsCompiler.jar
-# 		soyutils.js
-# 		soyutils_usegoog.js
-# 	apps/
-# 		@yourproject
-# 	jsdoc/
-# 		plugins/removegoog.js
-#
-#
-# 	Project structure:
-# 	/ - list of html files to load. $(NS).html format is preferred.
-# 	assets/ - all images and static assets (fonts etc).
-# 	build/ - the build files will be put in there.
-# 	gss/ - gss source files in this directory will be always included.
-# 		common/ - gss source files in this directory will also be always included, but are considered imported from elsewhere (i.e. not project specific)
-# 		$(NS)/ - gss sources that are specific to the name space that is being build.
-# 	js/ - tree of JavaScript files that will be available to the project (project specific). Could include a sub-module with another project if needed.
-# 		templates/ - flat list of soy files to compile.
-# 	tpl/ - list of locales that have been built
-# 		$(LOCALE)/ - locale specific build of the templates.
-
-
 
 # This should match most projects.
 APPDIR=$(shell basename `pwd`)
@@ -169,9 +138,6 @@ $(COMPILER) \
 $(JSSOURCES)
 endef
 
-define GITIGNOREFILE
-build/ $(TEMPLATE_TMP_DIR) help/ *sublime-*
-endef
 
 # The file list for actual compilation. Note that because the compiler now
 # manages its dependencies alone if we want a clean compile we need to either
@@ -324,6 +290,7 @@ $(BUILDDIR)/$(NS).build.css: less/$(NS).css
 	@echo -n 'Advance compiling CSS...'
 	@java -jar $(STYLES_COMPILER_JAR) \
 	`cat options/cssbuild.ini | tr '\n' ' '` \
+	--pretty-print \
 	--output-file $(BUILDDIR)/$(NS).build.css \
 	--output-renaming-map $(BUILDDIR)/cssmap-build.js \
   less/$(NS).css

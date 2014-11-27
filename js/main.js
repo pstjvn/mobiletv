@@ -102,10 +102,9 @@ mobiletv.Main = function() {
   // To debug local storage error in webview put this on top of the compile
   if (goog.DEBUG) {
     window.onerror = function(msg, file, line) {
-      console.log(arguments);
-      // var el = document.querySelector('.loader');
-      // el.innerHTML = el.innerHTML + '<br>' + msg + '<br>' + line;
-      // return true;
+      var el = document.querySelector('.loader');
+      el.innerHTML = el.innerHTML + '<br>' + msg + '<br>' + line;
+      return true;
     };
   } else {
     goog.events.listen(window, goog.events.EventType.ERROR,
