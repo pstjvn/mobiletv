@@ -290,7 +290,6 @@ $(BUILDDIR)/$(NS).build.css: less/$(NS).css
 	@echo -n 'Advance compiling CSS...'
 	@java -jar $(STYLES_COMPILER_JAR) \
 	`cat options/cssbuild.ini | tr '\n' ' '` \
-	--pretty-print \
 	--output-file $(BUILDDIR)/$(NS).build.css \
 	--output-renaming-map $(BUILDDIR)/cssmap-build.js \
   less/$(NS).css
