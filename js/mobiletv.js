@@ -18,5 +18,11 @@ goog.require('mobiletv.template');
       (new goog.Uri(window.location.href)).getParameterValue('embed') == 1);
   document.body.appendChild(goog.dom.htmlToDocumentFragment(
       mobiletv.template.mobiletv({embed: embed}).toString()));
-  mobiletv.Main.getInstance().start();
+  if (!!goog.global['CORDOVA']) {
+    window.addEventListener('deviceready', function() {
+      mobiletv.Main.getInstance().start();
+    });
+  } else {
+    mobiletv.Main.getInstance().start();
+  }
 }());
