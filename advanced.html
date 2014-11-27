@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Mobile TV</title>
+    <meta content="width=device-width, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="build/app.build.css">
+    <script>
+      DATASTREAM = 'remote';
+      FLASH_PLAYER_URL = 'http://longa.com/mtvapp/assets/player.swf';
+      ADAPTIV_PROVIDER = 'http://longa.com/mtvapp/assets/adaptiveProvider.swf';
+      // Configure the application.
+      SYSMASTER = {
+        APPS: {
+          MOBILETV: {
+            USE_EPG: (window.location.href.indexOf('epg') != -1),
+            USE_NATIVE_SCROLL: (window.location.href.indexOf('nsview') != -1),
+            RUN_NAME: 'mtvcont',
+            // DATA_URL: 'http://www.longa.com/cgi-bin/if.cgi',
+            DATA_URL: 'http://192.168.0.11/cgi-bin/if.cgi',
+            PLATFORM: 'pc',
+            DEFAULT_THUMBNAIL: 'assets/default-thumbnail.svg',
+            DEFAULT_FOLDER_THUMBNAIL: 'assets/default-folder-thumbnail.svg',
+            LOGIN_URL: '/cgi-bin/if.cgi?run=mtvlog',
+            PAYMENT_URL: '',
+            STATEMENT_URL: '',
+            NO_LOCAL_STORAGE: false,
+            EMBED: 0
+          }
+        }
+      };
+      PSTJ = {
+        NGAGENT: {
+          USE_NEXT_TICK: false
+        }
+      };
+    </script>
+    <!-- Keep this style for the loader -->
+    <style>
+      body {
+        font-family: 'Lato', sans-serif;
+        font-weight: normal;
+      }
+
+      .loader {
+        top: 0;
+        left: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        font-size: 33px;
+        color: white;
+        padding: 20px;
+        z-index: 10000;
+        background-color: #0D3144;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loader">
+      Loading...
+    </div>
+    <script src="http://longa.com/mapp/assets/jwplayer.min.js"></script>
+    <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
+    <script src="build/app.advanced.js"></script>
+  </body>
+</html>
