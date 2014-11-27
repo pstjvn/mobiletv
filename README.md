@@ -13,8 +13,8 @@ source code).
 
     make advanced DEBUG=false
 
-Issue the command in the root of the project. Assumes working installtions of the closure library, the pstj library, the smjs library, closure compiler,
-soy template compiler, less compiler, google stylesheets compiler. For more details please refere to [this README](https://github.com/pstjvn/closure-seed-project/blob/master/README.md)
+Issue the command in the root of the project. Assumes working installtions of the [closure library][cll], the [pstj library][pstjl], the [smjs library][smjsl], [closure compiler][cc],
+[soy template compiler][stc], [less compiler][lessc], [google stylesheets compiler][gssc]. For more details please refere to [this README][readme]
 
 The following two files are designed for deplyoment:
 
@@ -28,3 +28,12 @@ for the casting to Chromecast to work.
 __Note that this is NOT Free Software!__
 
 **Copyright © 2001 - 2013 SysMaster Corp. All rights reserved.**
+
+[readme]: https://github.com/pstjvn/closure-seed-project/blob/master/README.md
+[cll]: https://github.com/google/closure-library/
+[pstjl]: https://github.com/pstjvn/pstj-closure
+[smjsl]: https://github.com/pstjvn/smjslib
+[cc]: https://github.com/google/closure-compiler
+[stc]: https://github.com/google/closure-templates
+[lessc]: https://www.npmjs.org/package/less
+[gssc]: https://github.com/google/closure-stylesheets
