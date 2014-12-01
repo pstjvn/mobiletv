@@ -16,7 +16,7 @@
     <!--<script src="libs/less.js" type="text/javascript"></script>-->
     <!--end REMOVE IN PRODUCTION -->
     <script>
-      DATASTREAM = 'local';
+      DATASTREAM = 'remote';
       FLASH_PLAYER_URL = 'http://longa.com/mtvapp/assets/player.swf';
       ADAPTIV_PROVIDER = 'http://longa.com/mtvapp/assets/adaptiveProvider.swf';
       // Configure the application.
@@ -26,7 +26,7 @@
             USE_EPG: (window.location.href.indexOf('epg') != -1),
             USE_NATIVE_SCROLL: (window.location.href.indexOf('nsview') != -1),
             RUN_NAME: 'mtvcont',
-            DATA_URL: 'http://www.longa.com/cgi-bin/if.cgi',
+            DATA_URL: 'http://192.168.0.11/cgi-bin/if.cgi',
             // DATA_URL: 'http://192.168.0.11/cgi-bin/if.cgi',
             PLATFORM: 'pc',
             DEFAULT_THUMBNAIL: 'assets/default-thumbnail.svg',
@@ -34,7 +34,7 @@
             LOGIN_URL: '/cgi-bin/if.cgi?run=mtvlog',
             PAYMENT_URL: '',
             STATEMENT_URL: '',
-            NO_LOCAL_STORAGE: true,
+            NO_LOCAL_STORAGE: false,
             EMBED: 1
           }
         }
@@ -45,7 +45,7 @@
         }
       };
     </script>
-    <script src="assets/testdata.js"></script>
+    <!--<script src="assets/testdata.js"></script>-->
     <!-- Keep this style for the loader -->
     <style>
       body {
