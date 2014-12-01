@@ -1,13 +1,15 @@
-goog.provide('mobiletv.loader');
-
-goog.require('pstj.configure');
-goog.require('pstj.resource');
-
 /**
  * @fileoverview Provides the resource loader speciafically designed for this
  * app.
  * @author <regardingscot@gmail.com> (PeterStJ)
  */
+
+goog.provide('mobiletv.loader');
+
+goog.require('pstj.configure');
+goog.require('pstj.error');
+goog.require('pstj.resource');
+
 
 goog.scope(function() {
 var _ = mobiletv.loader;
@@ -103,36 +105,42 @@ _.generateEpgType = function() {
  * @param {function(?Error, ?Object): undefined} callback The callback is the
  * function to handle the data (object with keys being the ID of the channel
  * and the value the epg).
- * @param {?} data The data received from the server.
+ * @param {{ status: string, msg: string, result: Array<Object<string, *>>}=}
+ * opt_data The opt_data received from the server.
  */
-_.handleBulkLoad = function(callback, data) {
-  if (goog.isNull(data)) {
+_.handleBulkLoad = function(callback, opt_data) {
+  if (goog.isNull(opt_data)) {
     callback(new Error('Server timeout while loading EPG'), null);
   } else {
-    if (goog.isArray(data)) {
-      // Here the data comes mixed in for all channels, first we need to
-      // separate it into object.
-      var result = {};
-      var last = '0';
-      for (var i = 0, len = data.length; i < len; i++) {
-        var key = data[i]['channelid'].toString();
-        if (key != last) {
-          last = key;
-          result[key] = [];
-        }
-        result[key].push(data[i]);
-      }
-      var err = null;
-      for (var key in result) {
-        err = _.processEpg_(result[key]);
-        if (!goog.isNull(err)) {
-          callback(err, null);
-          break;
-        }
-      }
-      callback(null, result);
+    if (opt_data['status'] != 'OK') {
+      pstj.error.throwError(pstj.error.ErrorHandler.Error.SERVER, 401,
+          opt_data['msg']);
     } else {
-      callback(new Error('Invalid server response'), null);
+      if (goog.isArray(opt_data['result'])) {
+        // Here the data comes mixed in for all channels, first we need to
+        // separate it into object.
+        var result = {};
+        var last = '0';
+        for (var i = 0, len = opt_data['result'].length; i < len; i++) {
+          var key = opt_data['result'][i]['channelid'].toString();
+          if (key != last) {
+            last = key;
+            result[key] = [];
+          }
+          result[key].push(opt_data['result'][i]);
+        }
+        var err = null;
+        for (var key in result) {
+          err = _.processEpg_(result[key]);
+          if (!goog.isNull(err)) {
+            callback(err, null);
+            break;
+          }
+        }
+        callback(null, result);
+      } else {
+        callback(new Error('Invalid server response'), null);
+      }
     }
   }
 };

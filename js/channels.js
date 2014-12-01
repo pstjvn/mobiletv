@@ -63,12 +63,18 @@ _.handleDataLoad = function(err, data) {
     pstj.error.throwError(pstj.error.ErrorHandler.Error.SERVER, undefined,
         err.message);
   } else {
-    if (goog.isArray(data)) {
-      this.handleFavorites(data);
-      this.data = new pstj.ds.List(data);
+    // we need to inspect the result.
+    if (data['status'] != 'OK') {
+      pstj.error.throwError(pstj.error.ErrorHandler.Error.SERVER, 401,
+          data['msg']);
     } else {
-      pstj.error.throwError(pstj.error.ErrorHandler.Error.NO_DATA, undefined,
-          'No channel list received');
+      if (goog.isArray(data['result'])) {
+        this.handleFavorites(data['result']);
+        this.data = new pstj.ds.List(data['result']);
+      } else {
+        pstj.error.throwError(pstj.error.ErrorHandler.Error.NO_DATA, undefined,
+            'No channel list received');
+      }
     }
   }
   this.dispatchEvent(mobiletv.Channels.EventType.LOAD);

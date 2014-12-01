@@ -267,21 +267,22 @@ mobiletv.Main.prototype.start = function() {
         });
   }
 
+  // Used to convert the channel loading to a Promise.
   var channels = new goog.async.Deferred();
-
-  (goog.async.DeferredList.gatherResults(
-      [channels, mobiletv.Epg.getInstance().load()])).addCallback(
-      this.handleDataLoad, this);
-
 
   // Handle channel load ready event. When this happen we are ready to render
   // the record view.
   goog.events.listenOnce(mobiletv.Channels.getInstance(),
       mobiletv.Channels.EventType.LOAD, function() {
+        // Resolve the channels promise
         channels.callback();
       }, undefined, this);
 
-
+  // Combine the loading of both channels and epg info to satisfy the loading
+  (goog.async.DeferredList.gatherResults([
+    channels,
+    mobiletv.Epg.getInstance().load()
+  ])).addCallback(this.handleDataLoad, this);
 
   // Hack away the auto start problem in IOS
   goog.events.listenOnce(document.body, goog.events.EventType.TOUCHSTART,

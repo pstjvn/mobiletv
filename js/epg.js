@@ -159,16 +159,16 @@ _.setCurrentShow = function(list, id, cache) {
  * externalized in order to put the structure in the library and only link the
  * loader code on runtime.
  * @param {?Error} err The error is one occured or null.
- * @param {Object.<string, Array.<Object>>} epg The list of epg records as
+ * @param {Object<string, Array<Object>>=} opt_epg The list of epg records as
  * received from the server (and wrapped in the loader logic).
  * @protected
  */
-_.handleLoad = function(err, epg) {
+_.handleLoad = function(err, opt_epg) {
   this.ready_ = true;
   if (goog.isNull(err)) {
     this.lastUpdateTimestamp_ = goog.now();
-    for (var key in epg) {
-      this.cache_.set(key, (new pstj.ds.List(epg[key])));
+    for (var key in opt_epg) {
+      this.cache_.set(key, (new pstj.ds.List(opt_epg[key])));
     }
     this.setupTasks();
   }
