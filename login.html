@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="width=device-width, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>..::Mobile TV::Login::..</title>
+<link rel="stylesheet" href="assets/login.css" type="text/css" media="screen">
+</head>
+<body>
+	<div class="login-table">
+		<div class="login-table-cell">
+			<div class="login">
+				<form action="/cgi-bin/if.cgi" method="POST">
+					<input type="hidden" name="run" value="mtvlog">
+					<input type="hidden" name="run2" value="mtvapp">
+					<input type="hidden" name="identifier" value="##identifier##">
+					<input type="hidden" name="platform" value="##platform##">
+					<input type="hidden" name="nopay" value="##nopay##">
+					<input type="text" name="pin" id="pin" value=""/>
+					<input type="text" name="ip" id="ip" value=""/>
+					<input type="submit" name="Submit" id="submit"  value="LOGIN" tabindex="502">
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
