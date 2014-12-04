@@ -56,6 +56,7 @@ CLOSURE_BUILDER=$(LIBRARY_PATH)closure/bin/build/closurebuilder.py
 # the files that do not use require/provide will be excluded from the compilation.
 define JSSOURCES
 --js="js/**.js" \
+--js="js/**.js" \
 --js="tpl/$(LOCALE)/**.js" \
 --js="../pstj/animation/**.js" \
 --js="../pstj/cast/**.js" \
@@ -99,7 +100,27 @@ endef
 define JSROOTS
 --root=js/ \
 --root=$(TEMPLATE_TMP_DIR)/$(LOCALE)/ \
---root=$(PSTJ) \
+--root=../pstj/animation \
+--root=../pstj/cast \
+--root=../pstj/color \
+--root=../pstj/config \
+--root=../pstj/control \
+--root=../pstj/date \
+--root=../pstj/debug \
+--root=../pstj/ds \
+--root=../pstj/error \
+--root=../pstj/fx \
+--root=../pstj/graphics \
+--root=../pstj/material \
+--root=../pstj/math \
+--root=../pstj/mvc \
+--root=../pstj/ng \
+--root=../pstj/object \
+--root=../pstj/resource \
+--root=../pstj/storage \
+--root=../pstj/style \
+--root=../pstj/themes \
+--root=../pstj/ui \
 --root=$(SMJS) \
 --root=$(TEMPLATES_PATH) \
 --root=$(LIBRARY_PATH)
@@ -146,7 +167,7 @@ endef
 # between the css names in the templates and the css names in the js. Thus we
 # first generate a list of files to include (with only closire deps) and then we
 # use that file list plus the css map
-FL=`cat $(BUILDDIR)/filelist.txt | tr '\n' ' '`
+FL=`cat $(BUILDDIR)/$(NS)-filelist.txt | tr '\n' ' '`
 
 
 
@@ -199,7 +220,7 @@ lintdeps = js/**.js
 	--strict \
 	--disable 0251 \
 	--max_line_length 80 \
-	-e "vendor,tpl,nodejs" \
+	-e "vendor,tpl,nodejs,demos" \
 	$(LINTFLAGS) \
 	../pstj/
 	touch .pstjlint
@@ -273,7 +294,7 @@ less/$(NS).css: $(lesssourcess)
 $(BUILDDIR)/$(NS).css: less/$(NS).css
 	@echo -n 'Building compact CSS...'
 	@java -jar $(STYLES_COMPILER_JAR) \
-	`cat options/css.ini | tr '\n' ' '` \
+	`(if [ -f options/$(NS).css.ini ] ; then cat options/$(NS).css.ini ; else cat options/css.ini ; fi ) | tr '\n' ' '` \
 	--output-file $(BUILDDIR)/$(NS).css \
 	--output-renaming-map $(BUILDDIR)/$(NS)-cssmap.js \
 	less/$(NS).css
@@ -288,8 +309,8 @@ $(BUILDDIR)/$(NS)-cssmap.js: $(BUILDDIR)/$(NS).css
 # of it so the compiler can find the class names.
 $(BUILDDIR)/$(NS).build.css: less/$(NS).css
 	@echo -n 'Advance compiling CSS...'
-	@java -jar $(STYLES_COMPILER_JAR) \
-	`cat options/cssbuild.ini | tr '\n' ' '` \
+	java -jar $(STYLES_COMPILER_JAR) \
+	`(if [ -f options/$(NS).cssbuild.ini ] ; then cat options/$(NS).cssbuild.ini ; else cat options/cssbuild.ini ; fi ) | tr '\n' ' '` \
 	--output-file $(BUILDDIR)/$(NS).build.css \
 	--output-renaming-map $(BUILDDIR)/cssmap-build.js \
   less/$(NS).css
@@ -303,12 +324,13 @@ $(BUILDDIR)/cssmap-build.js: $(BUILDDIR)/$(NS).build.css
 # pstj lib files
 # pstj templates
 # simple css names map
-simpledeps = $(BUILDDIR)/$(NS)-cssmap.js js/** ../pstj/*/**.js $(BUILDDIR)/filelist.txt
+simpledeps = $(BUILDDIR)/$(NS)-cssmap.js js/** ../pstj/*/**.js $(BUILDDIR)/$(NS)-filelist.txt
 $(BUILDDIR)/$(NS).simple.js: $(simpledeps)
 	@echo 'Performing simple compilation...'
 	$(COMPILER) \
 	--compilation_level=SIMPLE \
 	--js="$(BUILDDIR)/$(NS)-cssmap.js"  \
+	`(if [ -f options/$(NS).externs.ini ] ; then cat options/$(NS).externs.ini ; else cat options/externs.ini ; fi ) | tr '\n' ' '` \
 	--js_output_file=$(BUILDDIR)/$(NS).simple.js \
 	$(FL)
 	@wc -c $(BUILDDIR)/$(NS).simple.js
@@ -326,11 +348,11 @@ simple: $(BUILDDIR)/$(NS).simple.js
 # pstj lib js files
 # pstj templates
 advanceddeps=$(BUILDDIR)/cssmap-build.js js/** $(TEMPLATE_TMP_DIR)/$(LOCALE)/*.js ../pstj/*/**.js
-$(BUILDDIR)/$(NS).advanced.js: $(advanceddeps) $(BUILDDIR)/filelist.txt
+$(BUILDDIR)/$(NS).advanced.js: $(advanceddeps) $(BUILDDIR)/$(NS)-filelist.txt
 	@echo 'Performing advanced compilation...'
 	$(COMPILER) \
 	--compilation_level=ADVANCED \
-	--js="$(BUILDDIR)/cssmap-build.js"  \
+	`(if [ -f options/$(NS).externs.ini ] ; then cat options/$(NS).externs.ini ; else cat options/externs.ini ; fi ) | tr '\n' ' '` \
 	--js_output_file=$(BUILDDIR)/$(NS).advanced.js \
 	$(FL)
 	@wc -c $(BUILDDIR)/$(NS).advanced.js
@@ -343,12 +365,13 @@ advanced: $(BUILDDIR)/$(NS).build.css $(BUILDDIR)/$(NS).advanced.js options/*
 	@echo 'Done'
 
 
-$(BUILDDIR)/$(NS).debug.js: $(BUILDDIR)/$(NS)-cssmap.js $(advanced) $(BUILDDIR)/filelist.txt
+$(BUILDDIR)/$(NS).debug.js: $(BUILDDIR)/$(NS)-cssmap.js $(advanced) $(BUILDDIR)/$(NS)-filelist.txt
 	@echo 'Building debug JS...'
 	$(COMPILER) \
 	--compilation_level=ADVANCED \
 	--debug \
 	--formatting=PRETTY_PRINT \
+	`(if [ -f options/$(NS).externs.ini ] ; then cat options/$(NS).externs.ini ; else cat options/externs.ini ; fi ) | tr '\n' ' '` \
 	--js_output_file=$(BUILDDIR)/$(NS).debug.js \
 	$(FL)
 
@@ -358,12 +381,12 @@ debug: $(BUILDDIR)/$(NS).debug.js
 # Creates a file list that can be used to create the module list when compiling
 # the project with module support
 # Set target specific variables (output file name and compilation level)
-$(BUILDDIR)/filelist.txt: js/** tpl/$(LOCALE)/*.js ../pstj/*/**.js
+$(BUILDDIR)/$(NS)-filelist.txt: js/** tpl/$(LOCALE)/*.js ../pstj/*/**.js
 	@echo -n 'Compiling list of files for modules...'
 	@$(CLOSURE_BUILDER) -n $(NS) \
 	$(JSROOTS) $(JSDEPS) \
 	-o list \
-	--output_file=$(BUILDDIR)/filelist.txt
+	--output_file=$(BUILDDIR)/$(NS)-filelist.txt
 	@echo 'Done building filelist'
 
 
@@ -384,6 +407,7 @@ check: js/** ../pstj/*/**.js ../smjs/*/**.js $(BUILDDIR)/cssmap-build.js
 	--compilation_level=ADVANCED \
 	--js="$(BUILDDIR)/cssmap-build.js"  \
 	--js_output_file=/tmp/check.js \
+	`(if [ -f options/$(NS).externs.ini ] ; then cat options/$(NS).externs.ini ; else cat options/externs.ini ; fi ) | tr '\n' ' '` \
 	--only_closure_dependencies \
 	$(JSSOURCES)
 	@echo 'Done'
@@ -392,6 +416,7 @@ checkspecific:
 	$(COMPILER) \
 	--compilation_level=ADVANCED \
 	--js="$(BUILDDIR)/cssmap-build.js"  \
+	`(if [ -f options/$(NS).externs.ini ] ; then cat options/$(NS).externs.ini ; else cat options/externs.ini ; fi ) | tr '\n' ' '` \
 	--js_output_file=/tmp/check.js \
 	--only_closure_dependencies \
 	$(JSSOURCES)

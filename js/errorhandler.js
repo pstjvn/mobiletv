@@ -37,9 +37,9 @@ _.handleError = function(error_index, opt_status_id, opt_message) {
   // Handle the 401 statuses - user is not recognized on the server.
   if (opt_status_id == 401) {
     console.log('redirecting');
-    // window.location.href = goog.asserts.assertString(
-    //     pstj.configure.getRuntimeValue('LOGIN_URL',
-    //         '/login.html', 'SYSMASTER.APPS.MOBILETV'));
+    window.location.href = goog.asserts.assertString(
+        pstj.configure.getRuntimeValue('LOGIN_URL',
+            '/login.html', 'SYSMASTER.APPS.MOBILETV'));
     return;
   }
   var msg = '';

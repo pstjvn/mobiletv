@@ -1,27 +1,41 @@
 <!doctype html>
 <html>
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta content="width=device-width, maximum-scale=1.0, user-scalable=no" name="viewport">
-<title>..::Mobile TV::Login::..</title>
-<link rel="stylesheet" href="assets/login.css" type="text/css" media="screen">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta content="width=device-width, maximum-scale=1.0, user-scalable=no" name="viewport">
+	<title>..::Mobile TV::Login::..</title>
+	<link rel="stylesheet" href="build/mobiletv.login.css" type="text/css" media="screen">
 </head>
+
 <body>
 	<div class="login-table">
 		<div class="login-table-cell">
 			<div class="login">
-				<form action="/cgi-bin/if.cgi" method="POST">
+				<form id="form" action="/cgi-bin/if.cgi" method="GET">
 					<input type="hidden" name="run" value="mtvlog">
-					<input type="hidden" name="run2" value="mtvapp">
-					<input type="hidden" name="identifier" value="##identifier##">
-					<input type="hidden" name="platform" value="##platform##">
-					<input type="hidden" name="nopay" value="##nopay##">
-					<input type="text" name="pin" id="pin" value=""/>
-					<input type="text" name="ip" id="ip" value=""/>
-					<input type="submit" name="Submit" id="submit"  value="LOGIN" tabindex="502">
+					<div class="input-box">
+						<label for="text">PIN</label>
+						<input type="text" name="pin" id="pin" value="" />
+					</div>
+					<div class="input-box">
+						<label for="text">IP</label>
+						<input type="text" name="domain" id="domain" value="" />
+					</div>
+					<input type="submit" name="Submit" id="submit" value="LOGIN" tabindex="0">
 				</form>
 			</div>
 		</div>
 	</div>
+	<div class="notifications">
+    <div class="notification-content" data-model="text" data-usehtml="true"></div>
+  </div>
+  <script src="../../library/closure/goog/base.js"></script>
+  <script src="../../templates/deps.js"></script>
+  <script src="../pstj/deps.js"></script>
+  <script src="../smjs/deps.js"></script>
+  <script src="build/deps.js"></script>
+  <script>goog.require('mobiletv.login');</script>
 </body>
+
 </html>

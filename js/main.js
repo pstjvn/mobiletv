@@ -255,8 +255,14 @@ mobiletv.Main.prototype.toggleCasting = function() {
 
 /**
  * Initialize the app.
+ * @param {string=} errstr
  */
-mobiletv.Main.prototype.start = function() {
+mobiletv.Main.prototype.start = function(errstr) {
+
+  if (errstr) {
+    throw new Error(errstr);
+    return;
+  }
 
   // Disable native scroll when using nsview scrolling.
   if (!this.useNativeScroll_) {
