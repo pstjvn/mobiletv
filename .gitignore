@@ -2,7 +2,5 @@ build/
 tpl/
 help/
 *sublime-*
-.*deps
-.*lint
 .linted
-.tern-project
+less/*.css
