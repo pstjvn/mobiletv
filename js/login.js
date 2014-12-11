@@ -13,6 +13,17 @@ var _ = mobiletv.login;
 
 
 /**
+ * Hardocded the URL because closure library thinks it is a must to protect
+ *   the users from bugs in webkit adn thus does not allow 'username' in URL
+ *   and wrongly interprets the chrome-extension uris as ones having username
+ *   in them.
+ * @type {string}
+ * @private
+ */
+_.submitUrl_ = '/cgi-bin/if.cgi';
+
+
+/**
  * @type {goog.storage.mechanism.Mechanism}
  */
 _.storage = null;
@@ -126,7 +137,7 @@ _.tryLogin = function(pin, domain) {
   var uri = new goog.Uri();
   uri.setScheme('http');
   uri.setDomain(domain);
-  uri.setPath(_.getActionPath());
+  uri.setPath(_.submitUrl_);
   uri.setParameterValues(_.getPinName(), pin);
   uri.setParameterValues('run', _.runValue);
 
@@ -183,16 +194,6 @@ _.error = function(msg) {
  */
 _.getPinName = function() {
   return goog.dom.getElement('pin').name;
-};
-
-
-/**
- * Retrieves the action path directly from the form so it can woth with changes
- * in the HTML without the need to recompile this script.
- * @return {string}
- */
-_.getActionPath = function() {
-  return (new goog.Uri(_.getForm().action)).getPath();
 };
 
 

@@ -185,6 +185,11 @@ mobiletv.Main = function() {
       console.log('Enable cast on app');
     }
     this.useCast_ = true;
+    if (!pstj.cast.UseAutoInitialization) {
+      try {
+        pstj.cast.Cast.getInstance().initialize();
+      } catch (e) {}
+    }
   }
   /**
    * Flag, signifies if the app is currently expected to cast the video.

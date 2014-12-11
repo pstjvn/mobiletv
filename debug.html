@@ -3,6 +3,7 @@
   <head>
     <title>Mobile TV</title>
     <meta content="width=device-width, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="build/app.build.css">
     <script>
       DATASTREAM = 'remote';
@@ -17,14 +18,14 @@
             RUN_NAME: 'mtvcont',
             // DATA_URL: 'http://www.longa.com/cgi-bin/if.cgi',
             DATA_URL: 'http://192.168.0.11/cgi-bin/if.cgi',
-            PLATFORM: 'android',
+            PLATFORM: 'pc',
             DEFAULT_THUMBNAIL: 'assets/default-thumbnail.svg',
             DEFAULT_FOLDER_THUMBNAIL: 'assets/default-folder-thumbnail.svg',
-            LOGIN_URL: 'login.html',
+            LOGIN_URL: '/cgi-bin/if.cgi?run=mtvlog',
             PAYMENT_URL: '',
             STATEMENT_URL: '',
             NO_LOCAL_STORAGE: false,
-            EMBED: 1
+            EMBED: 0
           }
         }
       };
@@ -33,7 +34,7 @@
           USE_NEXT_TICK: false
         }
       };
-      CORDOVA = true;
+      CORDOVA = false;
     </script>
     <!-- Keep this style for the loader -->
     <style>
@@ -60,7 +61,8 @@
     <div class="loader">
       Loading...
     </div>
-    <script src="cordova.js"></script>
-    <script src="build/app.advanced.js"></script>
+    <script src="http://longa.com/mapp/assets/jwplayer.min.js"></script>
+    <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
+    <script src="build/app.build.js"></script>
   </body>
 </html>
