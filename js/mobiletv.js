@@ -15,7 +15,7 @@ goog.require('smstb.widget.LoginForm');
     mobiletv.loader.loadFakeData(goog.global['MOBILETV']);
   }
   var embed = goog.global['SYSMASTER']['APPS']['MOBILETV']['EMBED'];
-  if (!goog.global['cordova']) {
+  if (!!goog.global['cordova']) {
     document.addEventListener('deviceready', function() {
       goog.global['chrome']['cast']['_setup']();
       var lf = new smstb.widget.LoginForm();
