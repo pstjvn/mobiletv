@@ -43,7 +43,12 @@
           USE_NEXT_TICK: false
         }
       };
-      CORDOVA = false;
+      var CLOSURE_UNCOMPILED_DEFINES = {
+        // Allow the decoration of elements that are still in a fragment from the
+        // material design control. This allows the components to have decorable children auto
+        // assigned
+        'pstj.cast.OldAPI': false
+      };
     </script>
     <!--<script src="assets/testdata.js"></script>-->
     <!-- Keep this style for the loader -->

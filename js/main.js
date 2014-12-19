@@ -40,8 +40,6 @@ goog.require('pstj.ds.List');
 goog.require('pstj.ds.ListItem');
 goog.require('pstj.error');
 goog.require('pstj.error.ErrorHandler');
-goog.require('pstj.material.IconContainer');
-goog.require('pstj.material.icon');
 goog.require('pstj.ui.Button');
 goog.require('pstj.ui.Strings');
 goog.require('pstj.ui.TouchAgent');
@@ -137,10 +135,9 @@ mobiletv.Main = function() {
   /**
    * The cast icon we use to denote the cast presence to the user.
    * @protected
-   * @type {pstj.material.IconContainer}
+   * @type {Element}
    */
-  this.castIcon = new pstj.material.IconContainer();
-  this.castIcon.setIcon(pstj.material.icon.Name.CAST_READY);
+  this.castIcon = null;
 
   this.popup = new smstb.widget.MobilePopup();
 
@@ -185,18 +182,7 @@ mobiletv.Main = function() {
       console.log('Enable cast on app');
     }
     this.useCast_ = true;
-    if (!pstj.cast.UseAutoInitialization) {
-      try {
-        pstj.cast.Cast.getInstance().initialize();
-      } catch (e) {}
-    }
   }
-  /**
-   * Flag, signifies if the app is currently expected to cast the video.
-   * @type {boolean}
-   * @private
-   */
-  this.casting_ = false;
 };
 goog.addSingletonGetter(mobiletv.Main);
 
@@ -253,8 +239,17 @@ mobiletv.Main.GET_CURRENT_PRICE = '&t=30';
  * @protected
  */
 mobiletv.Main.prototype.toggleCasting = function() {
-  this.casting_ = !this.casting_;
-  mobiletv.Player.getInstance().enableCasting(this.casting_);
+  if (pstj.cast.Cast.getInstance().hasActiveSession()) {
+    if (goog.DEBUG) {
+      console.log('Destroying existing session...');
+    }
+    pstj.cast.Cast.getInstance().destroySession();
+  } else {
+    if (goog.DEBUG) {
+      console.log('Creating new session...');
+    }
+    pstj.cast.Cast.getInstance().createSession();
+  }
 };
 
 
@@ -343,6 +338,9 @@ mobiletv.Main.prototype.start = function(opt_errstr) {
   // play the item or show its EPG details.
   goog.events.listen(this.listElement, goog.ui.Component.EventType.ACTION,
       function(ev) {
+        if (goog.DEBUG) {
+          console.log('Action in list:' + goog.getUid(ev.target));
+        }
         var item = /** @type {smstb.widget.ListItem} */(ev.target);
         this.data.setCurrent(item.getModel());
 
@@ -388,16 +386,21 @@ mobiletv.Main.prototype.start = function(opt_errstr) {
 
 
   // Setup CAST
-  console.log('cast setup');
+  if (goog.DEBUG) {
+    console.log('cast setup', this.useCast_);
+  }
 
   if (this.useCast_) {
-    this.castIcon.render(
-        goog.dom.getElementByClass(goog.getCssName('iconcontainer')));
+    this.castIcon = document.querySelector('.' + goog.getCssName('icon-cast'));
+    console.log('Found cast icon', this.castIcon);
     goog.events.listen(
         pstj.cast.Cast.getInstance(),
         pstj.cast.Cast.EventType.AVAILABILITY_CHANGE,
         function() {
-          console.log('Availability change detected');
+          if (goog.DEBUG) {
+            console.log('Availability change detected');
+          }
+          this.setCastIcon(false);
           this.setCastIconVisibility(
               pstj.cast.Cast.getInstance().isAvailable());
         }, undefined, this);
@@ -406,14 +409,25 @@ mobiletv.Main.prototype.start = function(opt_errstr) {
     }
     goog.events.listen(
         pstj.cast.Cast.getInstance(),
-        [pstj.cast.Cast.EventType.READY, pstj.cast.Cast.EventType.DISCONNECT],
-        function() {
-          // device is sessioned, change icon.
-          this.castIcon.setIcon(
-              pstj.cast.Cast.getInstance().hasActiveSession() ?
-              pstj.material.icon.Name.CAST_ACTIVE :
-              pstj.material.icon.Name.CAST_READY);
+        [
+          pstj.cast.Cast.EventType.CONNECTED,
+          pstj.cast.Cast.EventType.DISCONNECTED
+        ],
+        function(e) {
+          console.log('Recevied event: ' + e.type);
+          this.setCastIcon(e.type == pstj.cast.Cast.EventType.CONNECTED);
+          mobiletv.Player.getInstance().setCastEnabled(
+              e.type == pstj.cast.Cast.EventType.CONNECTED);
         }, undefined, this);
+
+    if (pstj.cast.OldAPI) {
+      try {
+        if (goog.DEBUG) {
+          console.log('Initialize the API manually (OLD API)');
+        }
+        pstj.cast.Cast.getInstance().initialize();
+      } catch (e) {}
+    }
   }
 
 
@@ -473,8 +487,20 @@ mobiletv.Main.prototype.start = function(opt_errstr) {
  * @param {boolean} visible
  */
 mobiletv.Main.prototype.setCastIconVisibility = function(visible) {
-  goog.style.setElementShown(goog.dom.getElementByClass('iconcontainer'),
-      visible);
+  goog.style.setElementShown(goog.dom.getElementByClass(
+      goog.getCssName('icon-cast')), visible);
+};
+
+
+/**
+ * Updates the cast icon to match the session state.
+ * @param {boolean} active If the session with the cast is active.
+ * @protected
+ */
+mobiletv.Main.prototype.setCastIcon = function(active) {
+  this.castIcon.style.backgroundImage = (active ?
+      'url(assets/cast-active.svg)' :
+      'url(assets/cast-ready.svg)');
 };
 
 
@@ -519,6 +545,9 @@ mobiletv.Main.prototype.checkButtonAction_ = function(e) {
       }
       break;
     case 'cast':
+      if (goog.DEBUG) {
+        console.log('cast button pressed', e.type);
+      }
       this.toggleCasting();
       break;
   }
