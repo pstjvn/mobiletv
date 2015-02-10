@@ -40,7 +40,7 @@ _.ResourceProvider_ = (function() {
 _.getList = function(callback) {
   _.ResourceProvider_.get({
     'run': goog.asserts.assertString(pstj.configure.getRuntimeValue(
-        'RUN_NAME', 'mblcont', 'SYSMASTER.APPS.MOBILETV'))
+        'RUN_NAME', 'mtvcont', 'SYSMASTER.APPS.MOBILETV'))
   }, callback);
 };
 
