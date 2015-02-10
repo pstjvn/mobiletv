@@ -22,30 +22,28 @@ goog.require('smstb.widget.LoginForm');
       console.log('Using cordova environment');
     }
     document.addEventListener('deviceready', function() {
-      // Cordova has a nasty bug - it cannot stop click events
-      // from fireing no matter what we do to the touch events.
-      // This is a temporary work around for it.
-      goog.events.listen(document, [
-        goog.events.EventType.CLICK,
-        goog.events.EventType.MOUSEDOWN,
-        goog.events.EventType.MOUSEUP,
-        goog.events.EventType.MOUSEOVER,
-        goog.events.EventType.MOUSEOUT],
-      /** @param {goog.events.Event} e The wrapped click event.*/ (
-          function(e) {
-            e.getBrowserEvent().stopImmediatePropagation();
-            e.preventDefault();
-            return false;
-          }), true);
       if (goog.DEBUG) {
         console.log('Device ready in cordova, call cast setup plugin');
       }
       goog.global['chrome']['cast']['_setup']();
       var lf = new smstb.widget.LoginForm();
       lf.authorize(function() {
-        goog.global['SYSMASTER']['APPS']['MOBILETV']['DATA_URL'] = 'http://' +
-            lf.domain + '/cgi-bin/if.cgi';
         lf.dispose();
+        // Cordova has a nasty bug - it cannot stop click events
+        // from fireing no matter what we do to the touch events.
+        // This is a temporary work around for it.
+        goog.events.listen(document, [
+          goog.events.EventType.CLICK,
+          goog.events.EventType.MOUSEDOWN,
+          goog.events.EventType.MOUSEUP,
+          goog.events.EventType.MOUSEOVER,
+          goog.events.EventType.MOUSEOUT],
+        /** @param {goog.events.Event} e The wrapped click event.*/ (
+            function(e) {
+              e.getBrowserEvent().stopImmediatePropagation();
+              e.preventDefault();
+              return false;
+            }), true);
         document.body.appendChild(goog.dom.htmlToDocumentFragment(
             mobiletv.template.mobiletv({embed: !!embed}).toString()));
         mobiletv.Main.getInstance().start();
