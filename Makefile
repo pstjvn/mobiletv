@@ -153,6 +153,7 @@ $(shell for dir in $(smsj_public_source_dirs) ; do find $(smjs_lib_dir)/$$dir -n
 	$(compiler_js_sources)
 
 $(build_dir)/$(ns).build.js: \
+$(public_deps_file) \
 $(build_dir)/$(ns).filelist.txt \
 $(build_dir)/$(ns)-cssmap.build.js
 	$(java) $(js_compiler) \
@@ -164,6 +165,7 @@ $(build_dir)/$(ns)-cssmap.build.js
 	$(shell cat $(build_dir)/$(ns).filelist.txt | tr '\n' ' ')
 
 $(build_dir)/$(ns).debug.js: \
+$(public_deps_file) \
 $(build_dir)/$(ns).filelist.txt \
 $(build_dir)/$(ns)-cssmap.debug.js
 	$(java) $(js_compiler) \
