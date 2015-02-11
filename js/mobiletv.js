@@ -44,6 +44,18 @@ goog.require('smstb.widget.LoginForm');
               e.preventDefault();
               return false;
             }), true);
+        // Fix for cordova: we need the link to play store to work but in
+        // cordova in order to open link in the default browser you need to
+        // call window.open, however inline click handlers wont work
+        // because of the issue workaround above, so here we listen for
+        // touchstartys on anchors and open them.
+        goog.events.listen(document, goog.events.EventType.TOUCHSTART,
+            function(e) {
+              if (e.target.tagName.toUpperCase() == 'A' &&
+                  e.target.href.length > 3) {
+                window.open(e.target.href, '_system');
+              }
+            });
         document.body.appendChild(goog.dom.htmlToDocumentFragment(
             mobiletv.template.mobiletv({embed: !!embed}).toString()));
         mobiletv.Main.getInstance().start();
