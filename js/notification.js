@@ -1,5 +1,6 @@
 goog.provide('mobiletv.Notification');
 
+goog.require('goog.async.Delay');
 goog.require('smstb.widget.Notification');
 
 

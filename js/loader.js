@@ -6,6 +6,7 @@
 
 goog.provide('mobiletv.loader');
 
+goog.require('goog.net.Jsonp');
 goog.require('pstj.configure');
 goog.require('pstj.error');
 goog.require('pstj.resource');

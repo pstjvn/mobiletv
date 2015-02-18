@@ -13,6 +13,7 @@ goog.require('goog.dom');
 goog.require('goog.dom.ViewportSizeMonitor');
 goog.require('goog.dom.classlist');
 goog.require('goog.events');
+goog.require('goog.net.Jsonp');
 goog.require('goog.result.Result');
 goog.require('goog.result.SimpleResult');
 goog.require('goog.style');
