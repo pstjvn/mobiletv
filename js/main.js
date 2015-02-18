@@ -5,6 +5,7 @@
 
 goog.provide('mobiletv.Main');
 
+goog.require('goog.Promise');
 goog.require('goog.array');
 goog.require('goog.asserts');
 goog.require('goog.async.Deferred');
@@ -14,8 +15,6 @@ goog.require('goog.dom.ViewportSizeMonitor');
 goog.require('goog.dom.classlist');
 goog.require('goog.events');
 goog.require('goog.net.Jsonp');
-goog.require('goog.result.Result');
-goog.require('goog.result.SimpleResult');
 goog.require('goog.style');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.Component.EventType');
@@ -69,11 +68,11 @@ mobiletv.Main = function() {
    */
   this.listElement = null;
   /**
-   * Points to the current simple result used to handle playback.
-   * @type {goog.result.SimpleResult}
+   * Reference the original price check promise so we can cancel it.
+   * @type {goog.Promise<number>}
    * @private
    */
-  this.result_ = null;
+  this.priceCheckPromise_ = null;
   /**
    * Points to the current JSONP instance request.
    * @type {goog.net.Jsonp}
@@ -692,10 +691,12 @@ mobiletv.Main.prototype.handleLoadError = function(err) {
 
 /**
  * Handles the receiving of the current price from the server.
+ *
  * @private
+ * @param {number} cost
  */
-mobiletv.Main.prototype.handlePriceValue_ = function() {
-  var val = this.result_.getValue();
+mobiletv.Main.prototype.handlePriceValue_ = function(cost) {
+  var val = cost;
   if (goog.isNumber(val)) {
     if (val == 0) {
       this.startPlayback();
@@ -743,31 +744,35 @@ mobiletv.Main.prototype.askConfirmation_ = function(price) {
  * @protected
  */
 mobiletv.Main.prototype.attemptPlayback = function() {
-  if (!goog.isNull(this.jsonp_)) {
-    this.jsonp_.cancel(this.jsonpKey_);
-  }
+  this.priceCheckPromise_ = this.getCurrentPrice_();
+  this.priceCheckPromise_.then(this.handlePriceValue_, null, this);
+};
 
-  if (!goog.isNull(this.result_) &&
-      this.result_.getState() == goog.result.Result.State.PENDING) {
 
-    this.result_.setValue(-1);
-  }
-
+/**
+ * Goes to the server and checks the current price for an item if needed.
+ *
+ * @private
+ * @return {!goog.Promise<number>} A pomise that resolves to a number.
+ */
+mobiletv.Main.prototype.getCurrentPrice_ = function() {
   if (this.data.getCurrent().getProp(smstb.ds.Record.Property.COST) > 0) {
-
-    this.result_ = new goog.result.SimpleResult();
-    this.result_.wait(this.handlePriceValue_, this);
-
-    this.jsonp_ = new goog.net.Jsonp(this.data.getCurrent()
-        .getProp(smstb.ds.Record.Property.PLAYURL) +
+    if (!goog.isNull(this.jsonp_)) {
+      this.jsonp_.cancel(this.jsonpKey_);
+    }
+    if (!goog.isNull(this.priceCheckPromise_)) {
+      this.priceCheckPromise_.cancel('New request made, canceling old one');
+    }
+    this.jsonp_ = new goog.net.Jsonp(
+        this.data.getCurrent().getProp(smstb.ds.Record.Property.PLAYURL) +
         mobiletv.Main.GET_CURRENT_PRICE);
-
-    this.jsonpKey_ = this.jsonp_.send(null, goog.bind(function(response) {
-      this.result_.setValue(response);
-    }, this));
-
+    return new goog.Promise(function(resolve, reject) {
+      this.jsonpKey_ = this.jsonp_.send(null, function(response) {
+        resolve(response);
+      });
+    }, this);
   } else {
-    this.startPlayback();
+    return goog.Promise.resolve(0);
   }
 };
 
@@ -783,3 +788,4 @@ mobiletv.Main.prototype.startPlayback = function() {
         mobiletv.strings.get(mobiletv.strings.Symbol.ANDROID_PLAYER));
   }
 };
+
