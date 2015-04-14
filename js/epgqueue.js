@@ -16,6 +16,7 @@ goog.require('mobiletv.Player');
 goog.require('mobiletv.ShowQueue');
 goog.require('mobiletv.strings');
 goog.require('pstj.ds.List.EventType');
+goog.require('pstj.ds.ListItem');
 goog.require('pstj.error');
 goog.require('pstj.error.ErrorHandler');
 goog.require('smstb.ds.Epg.Property');
